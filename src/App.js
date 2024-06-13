@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './App.css'; // Archivo CSS para estilos personalizados
 
-function App() {
+const App = () => {
+  const [collapsed, setCollapsed] = useState(false);
+
+  // Función para manejar el colapso del sidebar
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <header className="header">Header</header>
+      <div className={`container ${collapsed ? 'collapsed' : ''}`}>
+        <div className="sidebar">
+          <button className="toggle-btn" onClick={toggleCollapsed}>
+            {collapsed ? 'Expandir' : 'Colapsar'}
+          </button>
+          Sidebar
+        </div>
+        <div className="content">Content</div>
+      </div>
+      <footer className="footer">Footer</footer>
     </div>
   );
-}
+};
 
 export default App;
