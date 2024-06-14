@@ -5,12 +5,7 @@
     text-align: center;
     
     width: 100%;
-    
-  
-  }
-  
-  .main-header {
-    margin-top: 60px; /* Adjust based on the height of the header */
+
   }
 
   @media (max-width: 768px) {

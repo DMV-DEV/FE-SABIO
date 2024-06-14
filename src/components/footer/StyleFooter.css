@@ -6,10 +6,7 @@
     width: 100%;
     
   }
-  
-  .main-footer {
-    margin-bottom: 60px; /* Adjust based on the height of the footer */
-  }
+
 
   @media (max-width: 768px) {
 
