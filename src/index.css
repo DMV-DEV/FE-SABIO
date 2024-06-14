@@ -4,6 +4,7 @@
   margin: 0;
   font-family: 'Anek Bangla';
   
+  
 }
 
 #root{
@@ -13,7 +14,7 @@
   --blue2: #013E69;
   --blue3: #021929;
   --red: #FF7171;
-  --grey: #F9FAFB;
+  --grey: #F2F4F5;
   
 }
 

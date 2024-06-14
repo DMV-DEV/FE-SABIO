@@ -1,28 +1,24 @@
-import React, { useState } from 'react';
-import './App.css'; // Archivo CSS para estilos personalizados
+import React from 'react';
+import Header from './components/header/Header';
+import Sidebar from './components/sidebar/Sidebar';
+import Footer from './components/footer/Footer';
+import './App.css';
 
+ 
 const App = () => {
-  const [collapsed, setCollapsed] = useState(false);
-
-  // Función para manejar el colapso del sidebar
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
   return (
+    <>
     <div className="app">
-      <header className="header">Header</header>
-      <div className={`container ${collapsed ? 'collapsed' : ''}`}>
-        <div className="sidebar">
-          <button className="toggle-btn" onClick={toggleCollapsed}>
-            {collapsed ? 'Expandir' : 'Colapsar'}
-          </button>
-          Sidebar
-        </div>
-        <div className="content">Content</div>
+    <Sidebar />
+    <div className='main_container'>
+      <Header />
+      <div className='body'>
+        <h1>Contenido ppal</h1>
       </div>
-      <footer className="footer">Footer</footer>
+      <Footer />
     </div>
+    </div>
+    </>
   );
 };
 

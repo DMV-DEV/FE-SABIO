@@ -1,0 +1,27 @@
+.header {
+    background-color: var(--grey);
+    color: var(--black);
+    padding: 1rem;
+    text-align: center;
+    
+    width: 100%;
+    
+  
+  }
+  
+  .main-header {
+    margin-top: 60px; /* Adjust based on the height of the header */
+  }
+
+  @media (max-width: 768px) {
+
+    .header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        
+      }
+      
+  }

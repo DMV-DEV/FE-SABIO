@@ -1,0 +1,25 @@
+.footer {
+    background-color: var(--grey);
+    color: var(--black);
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+    
+  }
+  
+  .main-footer {
+    margin-bottom: 60px; /* Adjust based on the height of the footer */
+  }
+
+  @media (max-width: 768px) {
+
+    .footer {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        
+      }
+      
+  }
