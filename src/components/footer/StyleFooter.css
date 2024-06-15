@@ -4,6 +4,9 @@
     padding: 1rem;
     text-align: center;
     width: 100%;
+    position: fixed;
+        bottom: 0;
+        left: 0;
     
   }
 
@@ -12,11 +15,8 @@
 
     .footer {
         position: fixed;
-        width: 100%;
         bottom: 0;
         left: 0;
-        width: 100%;
-        
       }
       
   }

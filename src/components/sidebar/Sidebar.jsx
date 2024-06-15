@@ -16,11 +16,12 @@ const Sidebar = () => {
   
   
     return (
-      <>
+      <div >
       <button className="sidebar-toggle" onClick={toggleSidebar}>
             =
           </button>
         <aside className={`sidebar ${isCollapsed ? '' : 'collapsed'}`}>
+          <div className='sidebar__content'>
             <div className='sidebar__header'>
                 <img className='sidebar__header--logo' alt='logo' src='/logo.png'/>
                 <img className='sidebar__header--name' src='/name.png'/>
@@ -40,8 +41,9 @@ const Sidebar = () => {
             <li>About</li>
             <li>Contact</li>
           </ul>
+          </div>
         </aside>
-      </>
+      </div>
     );
   };
 export default Sidebar;
