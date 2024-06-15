@@ -15,7 +15,6 @@ const App = () => {
       <Header />
       <div className='body'>
         <h1>Contenido ppal</h1>
-        <CardComponent title="Class 7" subject="Computer Lab" instructor="Ms. hermony" section="B"/>
       </div>
       <Footer />
     </div>
