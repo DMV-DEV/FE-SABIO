@@ -1,0 +1,37 @@
+.body__classes{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+.body__cards{
+    display: flex;
+    /* width: 100%; */
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+  }
+  
+  @media (max-width: 768px) {
+  
+    .app{
+      display: flex;
+      flex-direction: column;
+    }
+  
+      .main_container{
+        display: flex;
+        flex-direction: column;
+        
+      }
+      .body{
+        margin-left: 0;
+        display: flex;
+        flex-direction: column;
+      }
+  
+      .body__cards{
+       
+       flex-direction: column;
+      }
+  }

@@ -5,7 +5,15 @@ padding: 1rem;
     display: flex;
     flex-direction: column;
     z-index: 1000;
+    position: sticky;
+    /* height: 100vh; */
     
+  }
+
+  .sidebar__content{
+    position: sticky;
+    top: 0;
+    left: 0;
   }
   
   .sidebar__header{
@@ -70,7 +78,7 @@ padding: 1rem;
         
         transition: transform 0.3s ease;
       }
-
+      
     .sidebar.collapsed {
         transform: translateX(-100%);
       }
@@ -86,7 +94,7 @@ padding: 1rem;
     }
     .sidebar-toggle {
       display: flex;
-      position: absolute;
+      position: sticky;
       top: 10px;
     left: 10px;
     
