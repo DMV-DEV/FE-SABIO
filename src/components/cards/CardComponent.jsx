@@ -10,22 +10,20 @@ const CardComponent = ({ title, instructor, subject, section }) => {
     <>
     <Card
       hoverable
-      // style={{
-      //   width: 240,
-      // }}
       className="card"
       cover={<img alt="card image" src={cardImg} />}
     >
          <div className="card__meta">
         <div className="card__meta-title">
-          <span>{title}</span>
-          <span className="card__meta-additional">Section {section}</span>
+          <h3>{title}</h3>
+          <p className="card__meta-additional">Section {section}</p>
         </div>
         <Meta
-          description={[
-            `Instructor: ${instructor}`,
-            <br key="br" />,
-            `Subject: ${subject}`,
+          description={[<p>
+            Instructor: {instructor}
+            <br key="br" />
+            Subject: {subject}
+            </p>
           ]}
           />
           </div>
