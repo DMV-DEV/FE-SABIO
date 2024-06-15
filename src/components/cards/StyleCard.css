@@ -1,6 +1,6 @@
 .card {
-  background-color: #007ed6;
-  color: #ffffff;
+  background-color: var(--blue1);
+  color: var(--white);
   /* flex: 1; */
   margin: 10px;
   width: 25.813rem;
