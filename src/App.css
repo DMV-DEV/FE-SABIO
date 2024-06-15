@@ -1,8 +1,7 @@
 .app {
   display: grid;
   grid-template-columns: 1fr 4fr;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  
   
 }
 
@@ -20,20 +19,21 @@ footer {
 }
 
 .body {
- 
   padding: 1rem;
   background-color: var(--grey);
- 
- 
-  
+}
+
+.body__cards{
+  display: flex;
+  flex-shrink: 1;
 }
 
 @media (max-width: 768px) {
 
-  .app {
+  .app{
     display: flex;
     flex-direction: column;
-    }
+  }
 
     .main_container{
       display: flex;
@@ -42,5 +42,12 @@ footer {
     }
     .body{
       margin-left: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .body__cards{
+     
+     flex-direction: column;
     }
 }

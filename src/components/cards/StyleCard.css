@@ -20,3 +20,14 @@
 .card__meta .ant-card-meta-description {
   color: rgba(255, 255, 255, 1);
 }
+
+@media (max-width: 768px) {
+
+  .card {
+    background-color: var(--blue1);
+    /* flex: 1; */
+    margin: 10px;
+    width: 100%;
+  }
+ 
+}
