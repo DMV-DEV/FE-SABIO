@@ -1,0 +1,31 @@
+.contaienr-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem; 
+  margin:2rem
+}
+
+.contaienr-row__col1 {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contaienr-row__col2 {
+  flex: 3; 
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-left: 4rem;
+}
+
+
+
+.contaienr-row__col2__img {
+  width: 4.5625rem;
+  height: 4.5625rem;
+  /* object-fit: cover; */
+  border-radius: 50%; 
+  margin-right: 2rem;
+}

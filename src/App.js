@@ -4,6 +4,7 @@ import Sidebar from './components/sidebar/Sidebar';
 import Footer from './components/footer/Footer';
 import './App.css';
 import CardComponent from './components/cards/CardComponent';
+import { Outlet } from 'react-router-dom';
 
  
 const App = () => {
@@ -13,14 +14,7 @@ const App = () => {
     <Sidebar />
     <div className='main_container'>
       <Header />
-      <div className='body'>
-        <h1>My classes</h1>
-        <div className='body__cards'>
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
-        </div>
-      </div>
+      <Outlet/>
       <Footer />
     </div>
     </div>
