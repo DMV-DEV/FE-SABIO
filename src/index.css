@@ -3,8 +3,8 @@
 *{
   margin: 0;
   font-family: 'Anek Bangla';
-  overflow-y: hidden;
-  overflow-x: hidden;
+  box-sizing: border-box;
+  height: 100%;
   
 }
 
