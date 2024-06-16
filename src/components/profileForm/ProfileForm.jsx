@@ -1,55 +1,117 @@
-/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
-import "../profileForm/stylesProfileForm.css"
-import { Button, Input } from "antd";
+import "../profileForm/stylesProfileForm.css";
+import { UploadOutlined, UserOutlined } from "@ant-design/icons";
+import { Input, Button, message, Upload, Avatar } from "antd";
 
 const ProfileForm = () => {
+  const props = {
+    name: "file",
+    action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
+    headers: {
+      authorization: "authorization-text",
+    },
+    onChange(info) {
+      if (info.file.status !== "uploading") {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === "done") {
+        message.success(`${info.file.name} file uploaded successfully`);
+      } else if (info.file.status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
+
   return (
-    <>
-      <section>
-        <div className="contaienr-row">
-          <div className="contaienr-row__col1">
-            <h3> Profile picture </h3>
-            <p> Edit your profile picture. </p>
+    <div className="profile-form-container">
+      <section className="form-section">
+        <div className="container-row">
+          <div className="container-row__col1">
+            <h3>Profile picture</h3>
+            <span className="subtitle">Edit your profile picture.</span>
           </div>
-          <div className="contaienr-row__col2">
-            <img  class className="contaienr-row__col2__img" src="https://icon-library.com/images/person-icon-svg/person-icon-svg-2.jpg"/> 
-            <button><p>Change profile picture</p></button>
+          <div className="container-row__col2__1">
+            <Avatar size={64} icon={<UserOutlined />} className="avatar" />
+            <Upload {...props} className="upload-button">
+              <Button icon={<UploadOutlined />} className="button-picture">
+                Change profile picture
+              </Button>
+            </Upload>
           </div>
         </div>
       </section>
 
-      <section>
-        <div className="contaienr-row">
-          <div className="contaienr-row__col1">
-            <h3> Profile picture </h3>
-            <p> Edit your profile picture. </p>
-            <button><p>Change profile picture</p></button>
+      <section className="form-section">
+        <div className="container-row">
+          <div className="container-row__col1">
+            <h3>Contact information</h3>
+            <span className="subtitle">Change your identity information.</span>
+            <button className="button-save">Save changes</button>
           </div>
-          <div className="contaienr-row__col2">
-          <Input placeholder="First Name"/>
-          <Input placeholder="First Name"/>
+          <div className="container-row__col2">
+            <div className="form-group">
+              <label htmlFor="fullName">Full name</label>
+              <Input
+                id="fullName"
+                placeholder="Enter your first name"
+                type="text"
+                className="inputProfile"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <Input
+                id="email"
+                placeholder="Enter your last name"
+                type="email"
+                className="inputProfile"
+              />
+            </div>
           </div>
         </div>
       </section>
-      
-            <section>
-        <div className="contaienr-row">
-          <div className="contaienr-row__col1">
-            <h3> Profile picture </h3>
-            <p> Edit your profile picture. </p>
-            <button><p>Change profile picture</p></button>
+
+      <section className="form-section">
+        <div className="container-row">
+          <div className="container-row__col1">
+            <h3>Password information</h3>
+            <span className="subtitle">Update your password.</span>
+            <button className="button-save">Save changes</button>
           </div>
-          <div className="contaienr-row__col2">
-        <div>
-          <Input placeholder="First Name"/>
-          <Input placeholder="First Name"/>
-        </div>
-          <Input placeholder="First Name"/>
+          <div className="container-row__col2">
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="newPassword">New password</label>
+                <Input
+                  id="newPassword"
+                  placeholder="Enter your new password"
+                  type="password"
+                  className="inputProfile"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="oldPassword">Old password</label>
+                <Input
+                  id="oldPassword"
+                  placeholder="Enter your old password"
+                  type="password"
+                  className="inputProfile"
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <label htmlFor="confirmPassword">Confirm password</label>
+              <Input
+                id="confirmPassword"
+                placeholder="Re-enter your new password"
+                type="password"
+                className="inputProfile"
+              />
+            </div>
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

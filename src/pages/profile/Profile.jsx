@@ -5,10 +5,10 @@ import "../profile/styleProfile.css"
 const Profile = () => {
   return (
     <>
-    <div className="profile-container">
-      <h1>Hola Settings</h1>
+    <div className="containerPage">
+      <h1>Account Settings</h1>
       <ProfileForm />
-      </div>
+    </div>
     </>
   );
 };

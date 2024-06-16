@@ -1,31 +1,105 @@
-.contaienr-row {
+.profile-form-container {
+  flex: 1;
   display: flex;
-  align-items: center;
-  gap: 1rem; 
-  margin:2rem
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 1rem;
+  margin-top: 2rem;
+  overflow-y: auto;
+  background-color: var(--white);
+  border-radius: 8px;
 }
 
-.contaienr-row__col1 {
-  flex: 1; 
+.form-section {
+  flex: 1;
+  display: flex;
+  align-items: start;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+}
+
+.container-row {
+  display: flex;
+  align-items: start;
+  gap: 1rem;
+  width: 100%;
+}
+
+.container-row__col2__1 {
+  flex: 2;
+  margin-left: 5.313rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.container-row__col1 {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: start;
 }
 
-.contaienr-row__col2 {
-  flex: 3; 
+.container-row__col2 {
+  flex: 2;
+  margin-left: 5.313rem;
   display: flex;
-  align-items: center;
-  justify-content: start;
-  margin-left: 4rem;
+  align-items: start;
+  gap: 1rem; 
 }
 
 
+.button-save {
+  width: 7.688rem;
+  height: 2.25rem;
+  font-size: 0.9rem;
+}
+.subtitle{
+  color: #6c6d6e;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.75rem;
+}
 
-.contaienr-row__col2__img {
-  width: 4.5625rem;
-  height: 4.5625rem;
-  /* object-fit: cover; */
-  border-radius: 50%; 
-  margin-right: 2rem;
+.form-group label {
+  margin-bottom: 0.083rem;
+  color: #414344;
+  font-size: 0.8rem;
+}
+.form-group {
+  margin-bottom: 1.167rem;
+}
+
+.ant-btn-default {
+  font-size: 0.9rem;
+  font-weight: 460;
+  line-height: 1.5rem;
+  background-color: var(--blue1);
+  color: var(--white);
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.inputProfile::placeholder{
+  font-size: 0.75rem;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .profile-form-container {
+    padding: 0;
+  }
+  .container-row {
+    flex-direction: column;
+  }
+
+  .container-row__col2__1,
+  .container-row__col2 {
+    margin-left: 0;
+  }
+  
 }
