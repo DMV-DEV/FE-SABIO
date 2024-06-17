@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
 import Login from '../pages/login/Login';
-import AIcheck from '../pages/AIChecker/AIChecker';
 
 export const router = createBrowserRouter([
     {
@@ -10,7 +9,6 @@ export const router = createBrowserRouter([
         // errorElement: <ErrorPage/>,
         children:[
             {path: '/Login', element: <Login/>},
-            {path: '/checker', element: <AIcheck/>},
         ],
     },
 ]); 

@@ -1,11 +1,30 @@
 .header {
     background-color: var(--grey);
     color: var(--black);
-    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
     text-align: center;
-    
+    align-items: center;
     width: 100%;
-
+    padding: 2rem 2rem 0.5rem 3rem;
+  }
+  .header__paths{
+    display: flex;
+    color: #6c6d6e;
+  }
+  .header__dropdownMenuu{
+    display: flex;
+  }
+  .anticon-down{
+    color: #414344;
+  }
+  .header__user-info{
+    margin-bottom: 0.083rem;
+    color: #414344;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 0.5rem;
   }
 
   @media (max-width: 768px) {
