@@ -1,0 +1,59 @@
+.ai-checker {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .ai-checker__title {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  
+  .ai-checker__description {
+    color: #555;
+  }
+  
+  .ai-checker__textarea {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+    font-size: 16px;
+  }
+  
+  .ai-checker__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .ai-checker__button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .ai-checker__button:hover {
+    background-color: #0056b3;
+  }
+  
+  .ai-checker__file-input {
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .ai-checker__char-count {
+    font-size: 14px;
+    color: #888;
+  }
+  

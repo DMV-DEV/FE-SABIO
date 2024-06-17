@@ -1,0 +1,33 @@
+.card {
+  background-color: var(--blue1);
+  margin: 5px;
+  max-width: 19.5rem;
+
+}
+.card__meta {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card__meta-title {
+    display: flex;
+    color: var(--white);
+    justify-content: space-between;
+    align-items: center;
+    /* margin-bottom: 14px; */
+  }
+  
+.card__meta .ant-card-meta-description {
+  color: rgba(255, 255, 255, 1);
+}
+
+@media (max-width: 768px) {
+
+  .card {
+    background-color: var(--blue1);
+    /* flex: 1; */
+    margin: 10px;
+    width: 100%;
+  }
+ 
+}

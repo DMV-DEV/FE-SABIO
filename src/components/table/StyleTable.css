@@ -1,0 +1,48 @@
+.ant-table-cell {
+  /* Estilos para todas las celdas de la tabla */
+  text-align: center;
+  background-color: rgba(255, 255, 255, 1);
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.ant-table-thead th {
+  /* Estilos para los encabezados de columna */
+  text-align: center !important;
+  background-color: rgba(255, 255, 255, 1) !important;
+  border-bottom: 2px solid var(--grey) !important;
+  position: relative; 
+}
+
+/* Estilo para las filas de datos */
+.ant-table-tbody tr td {
+  padding: 8px 16px; /* Asegura un espacio uniforme entre las celdas de datos */
+  border: none !important;
+}
+
+.ant-table-tbody td {
+  /* Estilos para los datos de las celdas */
+  text-align: center;
+  background-color: var(--white);
+}
+
+th.ant-table-cell::before{
+    background-color:var(--white) !important;
+
+}
+
+.ant-pagination .ant-pagination-item  {
+    border-radius: 50%;
+    color: var(--black)!important;
+    border-color:var(--blue1);
+
+}
+.ant-pagination .ant-pagination-item-active a {
+    color: var(--black)!important;
+}
+.ant-pagination .ant-pagination-item-active {
+    border-radius: 50%;
+    color: var(--black)!important;
+    background-color: rgba(210, 229, 254, 1);
+    border-color: rgba(210, 229, 254, 1);
+}
