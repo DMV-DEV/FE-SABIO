@@ -17,11 +17,12 @@
     flex-wrap: wrap;
   }
   
-  @media (max-width: 768px) {
+  @media (max-width: 1180px) {
   
   
       .classes__body{
-       
        flex-direction: column;
+       gap: 2rem;
+       align-items: center;
       }
   }
