@@ -1,40 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CardComponent from '../../components/cards/CardComponent';
 import './StyleClasses.css';
 
  
 const Classes = () => {
+  const [classSelected, setClassSelected] = useState('');
+  const handleClick = (id) => {
+    setClassSelected(id);
     
+  };
+  console.log(classSelected)
     const data = [
         {
           title: 'Class 1',
           instructor: 'Marti',
           subject: 'biology',
           section: '10',
+          id:1,
         },
         {
             title: 'Class 2',
             instructor: 'Delfi',
             subject: 'biol',
             section: '1',
+            id:2,
           },
           {
             title: 'Class 3',
             instructor: 'Vicky',
             subject: 'biol',
             section: '1',
+            id:3,
           },
       
       ];
 
   return (
     
-      <div className='body__classes'>
+      <div className='classes'>
+        <div className='classes__header'>
         <h1>My classes</h1>
-        <div className='body__cards'>
+        <button>+ Add new class</button>
+        </div>
+        <div className='classes__body'>
         {data.map(data => (
-          <CardComponent title={data.title} instructor={data.instructor} subject={data.subject} section={data.section} />
+          <div onClick={() => handleClick(data.id)}> 
+          <CardComponent 
+          title={data.title} 
+          instructor={data.instructor} 
+          subject={data.subject} 
+          section={data.section}
+           
+          />
+          </div>
         ))}
+        
         </div>
       </div>
      
