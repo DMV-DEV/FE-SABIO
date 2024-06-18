@@ -21,7 +21,7 @@ const AIChecker = () => {
   return (
     <div className="ai-checker">
       <div className="ai-checker__header">
-        <h1 className="ai-checker__title">AI Checker</h1>
+        <h2 className="ai-checker__title">AI Checker</h2>
         <p className="ai-checker__description">
           AI Plagiarism checker detects plagiarism in your text and checks for other writing issues.
         </p>
