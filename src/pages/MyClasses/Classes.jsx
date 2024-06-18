@@ -29,9 +29,12 @@ const Classes = () => {
 
   return (
     
-      <div className='body__classes'>
+      <div className='classes'>
+        <div className='classes__header'>
         <h1>My classes</h1>
-        <div className='body__cards'>
+        <button>+ Add new class</button>
+        </div>
+        <div className='classes__body'>
         {data.map(data => (
           <CardComponent title={data.title} instructor={data.instructor} subject={data.subject} section={data.section} />
         ))}
