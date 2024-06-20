@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import './StyleSidebar.css';
-import { useNavigate } from 'react-router-dom';
 
 const Dropdown = () => {
-
-    const navigate = useNavigate();
 
     const data = [
         {
@@ -34,8 +31,6 @@ const Dropdown = () => {
 
     const handleChange = (event) => {
         setSelectedOption(event.target.value);
-        navigate(`/account`)
-        // navigate(`/dashboard/${id}`)
     };
 
 
