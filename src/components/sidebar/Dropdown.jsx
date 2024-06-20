@@ -34,7 +34,7 @@ const Dropdown = () => {
 
     const handleChange = (event) => {
         setSelectedOption(event.target.value);
-        navigate(`/account`)
+        navigate(`/dashboard`)
         // navigate(`/dashboard/${id}`)
     };
 
