@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import CardComponent from '../../components/cards/CardComponent';
 import './StyleClasses.css';
+import { useNavigate } from 'react-router-dom';
 
  
 const Classes = () => {
   const [classSelected, setClassSelected] = useState('');
+  const navigate = useNavigate();
+
   const handleClick = (id) => {
     setClassSelected(id);
+    navigate(`/account`)
+    // navigate(`/dashboard/${id}`)
+  
     
   };
   console.log(classSelected)
