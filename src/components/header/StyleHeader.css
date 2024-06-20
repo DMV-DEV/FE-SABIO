@@ -2,11 +2,13 @@
     background-color: var(--grey);
     color: var(--black);
     display: flex;
+    position: fixed;
     justify-content: space-between;
     text-align: center;
     align-items: center;
-    width: 100%;
+    width: 80vw;
     padding: 2rem 2rem 0.5rem 1.5rem;
+    /* flex: 1; */
   }
   .header__paths{
     display: flex;
@@ -34,7 +36,7 @@
         width: 100%;
         top: 0;
         left: 0;
-        width: 100%;
+        
         
       }
       
