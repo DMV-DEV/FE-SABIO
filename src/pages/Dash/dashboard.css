@@ -13,12 +13,19 @@
     width: 100%; 
     height: 100%; 
     background-color: #3498db; /* solo para ver los cuadrados */
-}
+ } 
 
 
 @media (max-width: 768px) {
     .dashboard__container {
-        grid-template-columns: 1fr; 
-        grid-template-rows: auto; 
+        display: flex;
+        flex-direction: column;
+        
     }
+
+    .dashboard__content {
+       
+        height: 10rem; 
+    }
+    
 }

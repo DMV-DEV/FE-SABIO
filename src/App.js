@@ -17,7 +17,9 @@ const App = () => {
     {isMyClassesRoute ? <SidebarNoClass /> : <Sidebar />}
     <div className='main_container'>
       <Header />
+    <div className='body'>
       <Outlet/>
+      </div>
     </div>
     </div>
     </>
