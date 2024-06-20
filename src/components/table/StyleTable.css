@@ -1,3 +1,6 @@
+.table{
+  margin-top: 2rem;
+}
 .ant-table-cell {
   /* Estilos para todas las celdas de la tabla */
   text-align: center;
@@ -45,4 +48,14 @@ th.ant-table-cell::before{
     color: var(--black)!important;
     background-color: rgba(210, 229, 254, 1);
     border-color: rgba(210, 229, 254, 1);
+}
+.black-link {
+  color: black;
+  text-decoration: underline black; /* opcional, para quitar el subrayado */
+  font-weight: 460;
+}
+.black-link:hover {
+  color: black!important;
+  text-decoration: underline black; /* opcional, para quitar el subrayado */
+  font-weight: 600;
 }
