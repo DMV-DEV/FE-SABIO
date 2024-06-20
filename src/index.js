@@ -9,10 +9,15 @@ import { router } from './routes/Router';
 // import { Provider } from 'react-redux';
 // import { store } from './redux/store'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-     <RouterProvider router={router} />
+    <App/>
+
+    {/* <Provider store={store}>
+    <RouterProvider router={router}/>
+    </Provider> */}
+    
   </React.StrictMode>
 );
 
