@@ -5,6 +5,7 @@ import Profile from '../pages/profile/Profile';
 import Classes from '../pages/MyClasses/Classes';
 import AIChecker from '../pages/AIChecker/AIChecker';
 import Dashboard from '../pages/Dash/Dashboard';
+import Chatbot from '../pages/chatbot/Chatbot';
 
 export const router = createBrowserRouter([
     {
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
             {path: '/account', element: <Profile/>},
             {path: '/checker', element: <AIChecker/>},
             {path: '/dashboard', element: <Dashboard/>},
+            {path: '/chatbot', element: <Chatbot/>},
         ],
     },
 ]);
