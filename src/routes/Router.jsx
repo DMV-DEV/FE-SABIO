@@ -4,6 +4,7 @@ import Login from '../pages/login/Login';
 import Profile from '../pages/profile/Profile';
 import Classes from '../pages/MyClasses/Classes';
 import AIChecker from '../pages/AIChecker/AIChecker';
+import Dashboard from '../pages/Dash/Dashboard';
 import ClassesDocuments from '../pages/classesDocuments/ClassesDocuments';
 
 export const router = createBrowserRouter([
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
             {path: '/classesdocuments', element: <ClassesDocuments/>},
             {path: '/accountsettings', element: <Profile/>},
             {path: '/checker', element: <AIChecker/>},
+            {path: '/dashboard', element: <Dashboard/>},
         ],
     },
 ]);

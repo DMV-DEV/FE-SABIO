@@ -20,7 +20,7 @@ const TableComponent = ({ columns, data, onDocumentClick, onInfoClick }) => {
     render: (text, record, index) => {
       if (column.key === 'document') {
         return (
-          <Button onClick={() => onDocumentClick(record.documents)}>Document</Button>
+          <Button className="button" onClick={() => onDocumentClick(record.documents)}>Document</Button>
         );
       }
       if (column.key === 'info') {

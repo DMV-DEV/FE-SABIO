@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "../classesDocuments/stylesClassesDocuments.css";
-import { Modal } from "antd";
+import { Modal, Button, message, Upload } from "antd";
 import TableComponent from "../../components/table/TableComponent";
-import { CloseOutlined  } from "@ant-design/icons"; // Importa el ícono de cierre de Ant Design
+import { CloseOutlined, UploadOutlined  } from "@ant-design/icons"; // Importa el ícono de cierre de Ant Design
 
 const ClassesDocuments = () => {
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
@@ -120,7 +120,23 @@ const ClassesDocuments = () => {
       key: 'info',
     },
   ];
-
+  const props = {
+    name: "file",
+    action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
+    headers: {
+      authorization: "authorization-text",
+    },
+    onChange(info) {
+      if (info.file.status !== "uploading") {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === "done") {
+        message.success(`${info.file.name} file uploaded successfully`);
+      } else if (info.file.status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
   const showDocumentModal = (documents) => {
     setCurrentDocuments(documents);
     setIsDocumentModalVisible(true);
@@ -149,7 +165,14 @@ const ClassesDocuments = () => {
 
   return (
     <div className="containerPage">
-      <h1>Classes</h1>
+        <div className="title-section">
+        <h1>Classes</h1>
+        <Upload {...props} >
+              <Button icon={<UploadOutlined />} className="button-upload">
+                Change profile picture
+              </Button>
+            </Upload>
+        </div>
       <TableComponent
         columns={columns}
         data={data}

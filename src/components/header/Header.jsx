@@ -1,15 +1,21 @@
 import React from 'react';
-import { DownOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { DownOutlined, UserOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons';
 import { Dropdown, Space, Avatar } from 'antd';
 import './StyleHeader.css';
 
 const Header = () => {
   const items = [
     {
-      label: <a href="/login">Logout</a>,
+      label: <a href="/account">Account settings</a>,
       key: '0',
+      icon: <SettingOutlined size={20} />
+    },
+    {
+      label: <a href="/login">Logout</a>,
+      key: '1',
       icon: <LogoutOutlined size={20} />
     },
+    
   ];
   return (
     <header className="header">

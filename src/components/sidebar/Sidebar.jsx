@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './StyleSidebar.css';
 import Dropdown from './Dropdown';
-import { AppstoreOutlined , TeamOutlined , ReadOutlined , CommentOutlined } from '@ant-design/icons';
+import { AppstoreOutlined , TeamOutlined , ReadOutlined , CommentOutlined , CheckOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
 
@@ -14,10 +15,13 @@ const Sidebar = () => {
 
 
 // logica selecciono opciones del sidebar
+const navigate = useNavigate();
+
 const [selectedButton, setSelectedButton] = useState(null);
 
-  const handleClick = (id) => {
+  const handleClick = (id, path) => {
     setSelectedButton(id);
+    navigate(path);
   };
 
   
@@ -39,27 +43,33 @@ const [selectedButton, setSelectedButton] = useState(null);
           <p className='sidebar__list--title'>Main menu</p>
             <li><button  
             className={selectedButton === 1 ? 'sidebar__list--button-select' : 'sidebar__list--button'}
-            onClick={() => handleClick(1)}>
+            onClick={() => handleClick(1, '/dashboard')}>
               <AppstoreOutlined />
               Dashboard Analytics
               </button></li>
               <li><button  
             className={selectedButton === 2 ? 'sidebar__list--button-select' : 'sidebar__list--button'}
-            onClick={() => handleClick(2)}>
+            onClick={() => handleClick(2, '/documents')}>
               <ReadOutlined />
               Class Documents
               </button></li>
               <li><button  
             className={selectedButton === 3 ? 'sidebar__list--button-select' : 'sidebar__list--button'}
-            onClick={() => handleClick(3)}>
+            onClick={() => handleClick(3, '/students')}>
               <TeamOutlined />
               Students
               </button></li>
               <li><button  
             className={selectedButton === 4 ? 'sidebar__list--button-select' : 'sidebar__list--button'}
-            onClick={() => handleClick(4)}>
+            onClick={() => handleClick(4, '/checker')}>
               <CommentOutlined />
               AI Chatbot
+              </button></li>
+              <li><button  
+            className={selectedButton === 5 ? 'sidebar__list--button-select' : 'sidebar__list--button'}
+            onClick={() => handleClick(5, '/checker')}>
+              <CheckOutlined />
+              AI Checker
               </button></li>
            
           </ul>
