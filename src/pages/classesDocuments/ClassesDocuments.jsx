@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../classesDocuments/stylesClassesDocuments.css";
 import { Modal, Button, message, Upload } from "antd";
 import TableComponent from "../../components/table/TableComponent";
-import { CloseOutlined, UploadOutlined  } from "@ant-design/icons"; // Importa el ícono de cierre de Ant Design
+import { CloseOutlined, PlusOutlined  } from "@ant-design/icons"; // Importa el ícono de cierre de Ant Design
 
 const ClassesDocuments = () => {
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
@@ -168,8 +168,8 @@ const ClassesDocuments = () => {
         <div className="title-section">
         <h1>Classes</h1>
         <Upload {...props} >
-              <Button icon={<UploadOutlined />} className="button-upload">
-                Change profile picture
+              <Button icon={<PlusOutlined />} className="button-upload">
+              Upload document
               </Button>
             </Upload>
         </div>
