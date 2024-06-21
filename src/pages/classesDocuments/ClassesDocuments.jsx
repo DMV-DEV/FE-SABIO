@@ -16,14 +16,14 @@ const ClassesDocuments = () => {
       class: 'Math 101',
       section: 'A',
       category: 'Assignment',
-      document: 'Assignment 1',
       date: '2024-01-01',
-      info: 'Due next week',
+      document: 'Assignment 1',
       documents: [
         { subject: 'Physics', title: 'Title of Document', link: '#' },
         { subject: 'Maths', title: 'Title of Document', link: '#' },
         { subject: 'English', title: 'Title of Document', link: '#' }
       ],
+      info: 'Due next week',
       classInfo: 'Math 101 - Section A: Basic Math assignments due next week.',
     },
     {
@@ -203,7 +203,7 @@ const ClassesDocuments = () => {
       </Modal>
 
      <Modal
-      title={<h2>List of documents</h2>}
+      title={<h2>Details</h2>}
       visible={isInfoModalVisible}
       onOk={handleInfoModalOk}
       onCancel={handleInfoModalCancel}

@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { Table, Button } from "antd";
+import { Table, Button, Avatar } from "antd";
 import "../table/StyleTable.css";
+import { UserOutlined } from "@ant-design/icons";
 
 
-const TableComponent = ({ columns, data, onDocumentClick, onInfoClick }) => {
+const TableComponent = ({ columns, data, onDocumentClick, onInfoClick, type  }) => {
   const scroll = { x: 'max-content' };
 
   // Renderiza el encabezado de la columna
@@ -25,9 +26,16 @@ const TableComponent = ({ columns, data, onDocumentClick, onInfoClick }) => {
       }
       if (column.key === 'info') {
         return (
-          <a href="#" className="black-link" onClick={() => onInfoClick(record.classInfo) }>Details</a>
+          <a href="#" className="black-link" onClick={() => onInfoClick(record.info) }>Details</a>
         );
       }
+      if (type === 'student' && column.key === 'image'){
+        return (
+          <Avatar size={36} icon={<UserOutlined />} className="avatar" src={record.image} />
+
+        );
+      };
+
       return renderTableCell(text, record, index);
     }
   }));
