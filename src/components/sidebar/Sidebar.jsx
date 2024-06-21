@@ -65,12 +65,6 @@ const [selectedButton, setSelectedButton] = useState(null);
               <CommentOutlined />
               AI Chatbot
               </button></li>
-              <li><button  
-            className={selectedButton === 5 ? 'sidebar__list--button-select' : 'sidebar__list--button'}
-            onClick={() => handleClick(5, '/checker')}>
-              <CheckOutlined />
-              AI Checker
-              </button></li>
            
           </ul>
           </div>

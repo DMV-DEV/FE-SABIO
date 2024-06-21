@@ -87,6 +87,22 @@
 .inputProfile::placeholder{
   font-size: 0.75rem;
 }
+.button-save:hover, .button-save:focus {
+  background-color: var(--blue1) !important;
+  color: white !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important; 
+}
+
+
+.button-upload:hover, .button-upload:focus {
+  background-color: var(--blue1) !important;
+  color: white !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important; 
+}
 
 /* Media query for mobile devices */
 @media (max-width: 768px) {

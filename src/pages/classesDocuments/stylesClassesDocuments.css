@@ -1,0 +1,85 @@
+.containerPage{
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    margin-bottom: 5.938rem;
+    margin-top: 3.313rem;
+}
+.title-section{
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+}
+.button-upload{
+  width: 11.438rem;
+  height: 2.25rem;
+}
+.button-upload:hover, .button-upload:focus {
+  background-color: var(--blue1) !important;
+  color: white !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important; 
+}
+.documentTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .documentTable td {
+    padding: 8px; 
+    text-align: left; 
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    color: #121415
+
+  }
+  .black-link {
+    color: black;
+    text-decoration: underline black; /* opcional, para quitar el subrayado */
+    font-weight: 460;
+}
+.black-link:hover {
+    color: black!important;
+    text-decoration: underline black; /* opcional, para quitar el subrayado */
+    font-weight: 600;
+  }
+  
+  .documentTable td:nth-child(1) {
+    width: 20%; 
+  }
+  
+  .documentTable td:nth-child(2) {
+    width: 60%; 
+  }
+  
+  .documentTable td:nth-child(3) {
+    width: 20%; 
+  }
+  
+  .ant-modal-title {
+    font-size: 24px; 
+    border-bottom: 1px solid #cfd0d0; /* Línea gris en la parte inferior del título */
+    padding-bottom: 16px;
+  }
+
+  
+
+@media (max-width: 768px) {
+    .containerPage{
+        margin-left: 2.5rem;
+        margin-right: 2.5rem;
+        margin-bottom: 5.938rem;
+        margin-top: 2.5rem;
+
+    }
+    .title-section{
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      gap: 10px;
+      align-items: start;
+    }
+  }

@@ -22,11 +22,19 @@
   }
   .header__user-info{
     margin-bottom: 0.083rem;
-    color: #414344;
-    font-size: 0.8rem;
+    color: #121415;
+    font-size: 1rem;
     display: flex;
     justify-content: flex-end;
     margin-right: 0.5rem;
+  }
+  .logout-button{
+    color: #121415;
+    background-color: #EF8F37;
+  }
+  .link{
+    margin-left: 10px;
+    color: #121415;
   }
 
   @media (max-width: 768px) {
@@ -38,6 +46,26 @@
         left: 0;
         
         
+      }
+      .header__user-info {
+        display: none; /* Ocultamos en dispositivos con ancho máximo de 768px (tablets y móviles) */
+      }
+      .header__paths{
+        display: flex;
+      }
+      .header__paths{
+        display: none;
+      }
+      .header {
+        background-color: var(--grey);
+        color: var(--black);
+        display: flex;
+        position: fixed;
+        justify-content: end;
+        text-align: center;
+        align-items: center;
+        width: 100vw;
+        padding: 2rem 2rem 0.5rem 1.5rem;
       }
       
   }
