@@ -61,7 +61,7 @@ const [selectedButton, setSelectedButton] = useState(null);
               </button></li>
               <li><button  
             className={selectedButton === 4 ? 'sidebar__list--button-select' : 'sidebar__list--button'}
-            onClick={() => handleClick(4, '/checker')}>
+            onClick={() => handleClick(4, '/chatbot')}>
               <CommentOutlined />
               AI Chatbot
               </button></li>
