@@ -20,19 +20,23 @@ const AIChecker = () => {
 
   return (
     <div className="ai-checker">
-      <h1 className="ai-checker__title">AI Checker</h1>
-      <p className="ai-checker__description">
-        AI Plagiarism checker detects plagiarism in your text and checks for other writing issues.
-      </p>
-      <textarea
-        className="ai-checker__textarea"
-        placeholder="Enter text or upload your file to check for plagiarism..."
-        value={text}
-        onChange={handleTextChange}
-      />
-      <div className="ai-checker__buttons">
-        <button className="ai-checker__button" onClick={handleScan}>Scan for plagiarism</button>
-        <input className="ai-checker__file-input" type="file" onChange={handleFileChange} />
+      <div className="ai-checker__header">
+        <h2 className="ai-checker__title">AI Checker</h2>
+        <p className="ai-checker__description">
+          AI Plagiarism checker detects plagiarism in your text and checks for other writing issues.
+        </p>
+      </div>
+      <div className="ai-checker__textarea-container">
+        <textarea
+          className="ai-checker__textarea"
+          placeholder="Enter text or upload your file to check for plagiarism..."
+          value={text}
+          onChange={handleTextChange}
+        />
+        <div className="ai-checker__buttons">
+          <button onClick={handleScan}>Scan for plagiarism</button>
+          <button className="button__nobackground" onClick={handleScan}>⇧  Upload file</button>
+        </div>
       </div>
       <p className="ai-checker__char-count">{text.length}/10000</p>
     </div>
@@ -40,3 +44,4 @@ const AIChecker = () => {
 }
 
 export default AIChecker;
+
