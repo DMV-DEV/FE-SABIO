@@ -33,7 +33,7 @@ const ProfileForm = () => {
           <div className="container-row__col2__1">
             <Avatar size={64} icon={<UserOutlined />} className="avatar" />
             <Upload {...props} className="upload-button">
-              <Button icon={<UploadOutlined />} className="button-picture">
+              <Button icon={<UploadOutlined />} className="button-upload">
                 Change profile picture
               </Button>
             </Upload>
