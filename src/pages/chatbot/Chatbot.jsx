@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './StyleChatbot.css';
-import { SendOutlined } from '@ant-design/icons';
+import { SendOutlined , UndoOutlined } from '@ant-design/icons';
 
 const Chatbot = () => {
 
@@ -51,6 +51,7 @@ const Chatbot = () => {
         <button ><SendOutlined rotate={(-35)} /></button>
       </div>
       <div className='chatbot__sidebar'>
+      {/* <UndoOutlined /> */}
 
       </div>
 
