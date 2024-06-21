@@ -17,6 +17,7 @@
 .input-search {
   border-color: #1214152B;
   /* width: 20.563rem; */
+  background-color: var(--grey);
 }
 .ant-input-affix-wrapper{
   height: 2.25rem!important;
