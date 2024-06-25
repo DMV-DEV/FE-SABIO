@@ -3,7 +3,7 @@ import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { Dropdown, Space, Avatar, Button, Menu } from 'antd';
 import './StyleHeader.css';
 import { SettingIcon } from '../../assets/icons/Settings';
-import { IacheckerIcon } from '../../assets/icons/IaChecker';
+// import { IacheckerIcon } from '../../assets/icons/IaChecker';
 import { LogoutIcon } from '../../assets/icons/LogoutIcon';
 import { useLocation } from 'react-router-dom';
 
@@ -29,11 +29,11 @@ const Header = () => {
       key: '0',
       icon: <SettingIcon />
     },
-    {
-      label: <a href="/checker" className='link'>AI Checker</a>,
-      key: '1',
-      icon: <IacheckerIcon />
-    }
+    // {
+    //   label: <a href="/checker" className='link'>AI Checker</a>,
+    //   key: '1',
+    //   icon: <IacheckerIcon />
+    // }
   ];
 
   const menu = (
