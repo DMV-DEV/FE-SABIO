@@ -1,0 +1,61 @@
+.frequently-misunderstood-concepts-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  }
+
+  
+  .frequently-misunderstood-concepts-header {
+    text-align: left;
+  }
+  
+  .frequently-misunderstood-concepts-list {
+    overflow-y: auto;
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+  color: var(--grey2);
+  }
+  
+  .frequently-misunderstood-concept-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .concept-icon {
+    flex: 0 0 auto;
+    font-size: 2rem;
+    color: #007bff;
+    margin-right: 1rem;
+    width: 2rem;
+    height: auto;
+  }
+  
+  .concept-details {
+    flex: 1;
+  }
+  
+  .concept-topic {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .concept-description {
+    color: #666;
+  }
+  
+  .concept-options {
+    flex: 0 0 auto;
+  }
+  
+  .options-button {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
