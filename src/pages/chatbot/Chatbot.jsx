@@ -51,7 +51,10 @@ const Chatbot = () => {
         <button ><SendOutlined rotate={(-35)} /></button>
       </div>
       <div className='chatbot__sidebar'>
-      {/* <UndoOutlined /> */}
+        <div>
+{/* <UndoOutlined /> */}
+        </div>
+      
 
       </div>
 

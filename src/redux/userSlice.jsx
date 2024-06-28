@@ -2,40 +2,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  timeSlot: '',
-  name: '',
-  surName: '',
-  identificationNumber: '',
-  customerEmail: '',
-  date: '',
+  username: '',
+  password: '',
+  
 };
 
 export const userSlice = createSlice({
   name: 'user', // este es el nombre de este slice, puedo crear varios
   initialState,
   reducers: {
-    addIdentificationNumer: (state, action) => {
-      const { identificationNumber } = action.payload;
-      state.identificationNumber = identificationNumber;
-    },
+    
     addUser: (state, action) => {
-      const { name, surName, customerEmail } = action.payload;
-      state.name = name;
-      state.surName = surName;
-      state.customerEmail = customerEmail;
+      const { username, password } = action.payload;
+      state.username = username;
+      state.password = password;
+      
     },
-    addTimeSlot: (state, action) => {
-      const { timeSlot } = action.payload;
-      state.timeSlot = timeSlot;
-    },
-    addDate: (state, action) => {
-      const {date} = action.payload;
-      state.date = date;
-    }
+ 
   },
 });
 
-export const { addIdentificationNumer, addUser, addTimeSlot, addDate } =
+export const { addUser} =
   userSlice.actions;
 
 export default userSlice.reducer;
