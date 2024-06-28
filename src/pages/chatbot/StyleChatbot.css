@@ -33,7 +33,12 @@
   .chatbot__sidebar{
     width: 6rem;
     height: 100%;
+    padding: 2rem;
     background-color: var(--grey);
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
    
   }
