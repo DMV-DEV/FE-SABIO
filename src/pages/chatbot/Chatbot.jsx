@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './StyleChatbot.css';
-import { SendOutlined , UndoOutlined, FileUnknownOutlined } from '@ant-design/icons';
+import { SendOutlined , UndoOutlined, FileUnknownOutlined, FolderOpenOutlined, TeamOutlined, UploadOutlined } from '@ant-design/icons';
 
 const Chatbot = () => {
 
@@ -51,8 +51,21 @@ const Chatbot = () => {
         <button ><SendOutlined rotate={(-35)} /></button>
       </div>
       <div className='chatbot__sidebar'>
+        <button className='chatbot__sidebar--button'>
       <UndoOutlined />
+      </button>
+      <button className='chatbot__sidebar--button'>
       <FileUnknownOutlined />
+      </button>
+      <button className='chatbot__sidebar--button'>
+      <FolderOpenOutlined />
+      </button>
+      <button className='chatbot__sidebar--button'>
+      <TeamOutlined />
+      </button>
+      <button className='chatbot__sidebar--upload'>
+      <UploadOutlined />
+      </button>
 
       </div>
 
