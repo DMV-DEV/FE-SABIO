@@ -10,9 +10,9 @@ const Authentication = () => {
   return (
     <div className="login__container">
       <img src={sabioIcon} alt="sabioIcon" className="login__icon"/>
-      <Signin/>
+      {/* <Signin/> */}
       {/* <Reset/> */}
-      {/* <Login/> */}
+      <Login/>
       {/* <NewPasw/> */}
     </div>
   );

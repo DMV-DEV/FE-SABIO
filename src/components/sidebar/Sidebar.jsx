@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './StyleSidebar.css';
 import Dropdown from './Dropdown';
-import { AppstoreOutlined , TeamOutlined , ReadOutlined , CommentOutlined , CheckOutlined } from '@ant-design/icons';
+import { AppstoreOutlined , TeamOutlined , ReadOutlined , CommentOutlined , FileDoneOutlined  } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+// import { IacheckerIcon } from '../../assets/icons/IaChecker';
 
 const Sidebar = () => {
 
@@ -61,14 +62,14 @@ const [selectedButton, setSelectedButton] = useState(null);
               </button></li>
               <li><button  
             className={selectedButton === 4 ? 'sidebar__list--button-select' : 'sidebar__list--button'}
-            onClick={() => handleClick(4, '/checker')}>
+            onClick={() => handleClick(4, '/chatbot')}>
               <CommentOutlined />
               AI Chatbot
               </button></li>
               <li><button  
             className={selectedButton === 5 ? 'sidebar__list--button-select' : 'sidebar__list--button'}
             onClick={() => handleClick(5, '/checker')}>
-              <CheckOutlined />
+              <FileDoneOutlined />
               AI Checker
               </button></li>
            
