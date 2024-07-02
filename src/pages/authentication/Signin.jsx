@@ -1,26 +1,54 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import "./authentication.css";
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser } from '../../redux/userSlice';
+// import { postUser } from '../../services/PostUser';
+import { useNavigate } from 'react-router-dom';
+
 
 const Signin = () => {
   const navigate = useNavigate();
 
-  const handleSignIn = () => {
-    
-    navigate('/myclasses');
-  };
+  const dispatch = useDispatch();
+  // const { email, password } =
+  //   useSelector((state) => state.user);
+
+    const [formData, setFormData] = useState({
+      email: '',
+      password: '',
+    });
+
+    const handleChange = (event) => {
+      const { name, value } = event.target;
+      setFormData((prevformData) => ({
+        ...prevformData,
+        [name]: value,
+      }));
+    };
+  
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      console.log('Form data submitted:', formData);
+      // Aquí puedes enviar los datos a un servidor o hacer algo con ellos
+      // navigate('/myclasses');
+    };
+
 
   return (
     <div className="login__card">
       <h2 className="login__title">Sign In</h2>
+      <form onSubmit={handleSubmit}>
       <label className="login__label" htmlFor="email">
         Email
       </label>
       <input
         type="email"
         id="email"
+         name='email'
         className="login__input"
         placeholder="Enter your email"
+        value={formData.email}
+        onChange={handleChange}
       />
       <label className="login__label" htmlFor="password">
         Password
@@ -28,8 +56,11 @@ const Signin = () => {
       <input
         type="password"
         id="password"
+        name='password'
         className="login__input"
         placeholder="Enter your password"
+        value={formData.password}
+        onChange={handleChange}
       />
       <div className="login__options">
         <div className="login__checkbox-container">
@@ -46,12 +77,13 @@ const Signin = () => {
           Forgot password
         </button>
       </div>
-      <button className="login__button" onClick={handleSignIn}>Sign In</button>
+      <button className="login__button" type='submit' onClick={handleSubmit} >Sign In</button>
       <p className="login__lorem">
         By connecting with the services above you agree to our Terms of
         Services and acknowledge our Privacy Policy describing how we handle
         your personal data.
       </p>
+      </form>
     </div>
   );
 };

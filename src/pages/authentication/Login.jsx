@@ -25,7 +25,14 @@ const Login = () => {
   
     const handleSubmit = (event) => {
       event.preventDefault();
-      console.log('Form data submitted:', formData);
+      dispatch(
+        addUser({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      );
+      console.log('Form data submitted:', {name, email, password});
       // Aquí puedes enviar los datos a un servidor o hacer algo con ellos
     };
 
@@ -41,11 +48,12 @@ const Login = () => {
         </label>
         <input
           type="text"
-          id="username"
+          id="name"
+          name= 'name'
           className="login__input"
           placeholder="Enter your name"
           value={formData.name}
-              onChange={handleChange}
+          onChange={handleChange}
         />
         <label className="login__label" htmlFor="email">
           Email
@@ -53,6 +61,7 @@ const Login = () => {
         <input
           type="email"
           id="email"
+          name='email'
           className="login__input"
           placeholder="Enter your email"
           value={formData.email}
@@ -63,6 +72,7 @@ const Login = () => {
         </label>
         <input
           type="password"
+          name='password'
           id="password"
           className="login__input"
           placeholder="Enter your password"
@@ -72,18 +82,19 @@ const Login = () => {
         <div className="login__options">
           <div className="login__checkbox-container">
           </div>
-          <button type="submit" className="button__underlined login__forgot-password button__underlined">
-            Login
+          <button  className="button__underlined login__forgot-password button__underlined">
+            Sign Up
           </button>
         </div>
-        </form>
-        <button className="login__button">Sign Up</button>
+        
+        <button type="submit" className="login__button">Sign in</button>
         
         <p className="login__lorem">
           By connecting with the services above you agree to our Terms of
           Services and acknowledge our Privacy Policy describing how we handle
           your personal data.
         </p>
+        </form>
       </div>
   )
 }
