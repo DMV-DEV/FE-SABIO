@@ -6,7 +6,7 @@ import { addUser } from '../../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 
-const Signin = () => {
+const Log = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -36,17 +36,17 @@ const Signin = () => {
 
   return (
     <div className="login__card">
-      <h2 className="login__title">Sign In</h2>
+      <h2 className="login__title">Log In</h2>
       <form onSubmit={handleSubmit}>
       <label className="login__label" htmlFor="email">
-        Email
+        Username
       </label>
       <input
         type="email"
         id="email"
          name='email'
         className="login__input"
-        placeholder="Enter your email"
+        placeholder="Enter your username"
         value={formData.email}
         onChange={handleChange}
       />
@@ -88,4 +88,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default Log;
