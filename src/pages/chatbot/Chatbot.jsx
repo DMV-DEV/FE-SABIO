@@ -6,6 +6,11 @@ const Chatbot = () => {
 
     // const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
+
+    const [isExpanded, setIsExpanded] = useState(false);
+    const toggleSidebar = () => {
+      setIsExpanded(!isExpanded);
+  };
   
     // const sendMessage = async () => {
     //   if (input.trim() === '') return;
@@ -50,21 +55,26 @@ const Chatbot = () => {
         />
         <button ><SendOutlined rotate={(-35)} /></button>
       </div>
-      <div className='chatbot__sidebar'>
+      <div className={`chatbot__sidebar ${isExpanded ? 'expanded' : ''}`} onClick={toggleSidebar}>
         <button className='chatbot__sidebar--button'>
       <UndoOutlined />
+      {isExpanded && <span> History</span>}
       </button>
       <button className='chatbot__sidebar--button'>
       <FileUnknownOutlined />
+      {isExpanded && <span> Quizzes</span>}
       </button>
       <button className='chatbot__sidebar--button'>
       <FolderOpenOutlined />
+      {isExpanded && <span> My Uploads</span>}
       </button>
       <button className='chatbot__sidebar--button'>
       <TeamOutlined />
+      {isExpanded && <span> Teacher’s uploaded</span>}
       </button>
       <button className='chatbot__sidebar--upload'>
       <UploadOutlined />
+      {isExpanded && <span> Upload document</span>}
       </button>
 
       </div>
