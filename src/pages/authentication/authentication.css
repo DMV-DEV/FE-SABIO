@@ -6,26 +6,42 @@
 
 body {
   height: 100%;
+  margin: 0;
 }
 
 .login__container {
   background-image: url("../authentication/loginBackground.png");
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   position: relative;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.login__icon--container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  /* padding: 1rem; */
+ 
 }
 
 .login__icon {
-  width: 7rem;
+  width: 5rem;
   height: auto;
-  position: absolute;
-  padding: 1rem;
-  top: 0;
-  left: 0;
+}
+
+.login__form--container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  width: 100%;
+  margin-top: 1rem;
 }
 
 .login__card {
@@ -61,8 +77,8 @@ body {
 
 .login__label {
   align-self: flex-start;
-  margin-bottom: 0.25rem;
-  margin-top: 0.5rem;
+  margin-bottom: 0.1rem;
+  margin-top: 0.1rem;
   font-size: 0.875rem;
 }
 
@@ -77,15 +93,7 @@ body {
 
 .login__button {
   width: 100%;
-  padding: 0.5rem;
-  border: none;
-  border-radius: 4px;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  /* margin-bottom: 1rem; */
 }
-
 
 .login__lorem {
   font-size: 0.75rem;
@@ -113,11 +121,10 @@ body {
   width: 100%;
   margin-bottom: 1rem;
 }
+
 .login__checkbox-label {
   margin: 1rem;
 }
-
-
 
 @media (max-width: 768px) {
   .login__form {
@@ -129,12 +136,11 @@ body {
   }
 
   .login__card {
-    margin: 2rem;
-    margin-top: 10rem;
-    width: 90%;
+    width: 100%;
   }
 
-  .login__container {
-    overflow-y: scroll;
-  }
+  
+
+  
 }
+
