@@ -29,7 +29,10 @@ export const chatApi = createApi({
         body: { message },
       }),
     }),
+    getDocuments: builder.query({
+      query: (hilo_id) => `/documents/list_documents/chat/?hilo_id=${hilo_id}`, 
+    }),
   }),
 });
 
-export const { useGetHilosQuery, useCreateHiloMutation, useDeleteHiloMutation, useGetMessagesQuery, usePostMessageMutation } = chatApi;
+export const { useGetHilosQuery, useCreateHiloMutation, useDeleteHiloMutation, useGetMessagesQuery, usePostMessageMutation, useGetDocumentsQuery } = chatApi;

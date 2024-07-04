@@ -1,7 +1,7 @@
 // Chatbot.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useGetHilosQuery, useGetMessagesQuery, usePostMessageMutation } from '../../redux/chatApi';
+import { useGetHilosQuery, useGetMessagesQuery, useCreateHiloMutation, useDeleteHiloMutation, usePostMessageMutation, useGetDocumentsQuery } from '../../redux/chatApi';
 import { SendOutlined, UndoOutlined, FileUnknownOutlined, FolderOpenOutlined, TeamOutlined, UploadOutlined } from '@ant-design/icons';
 import './StyleChatbot.css';
 
