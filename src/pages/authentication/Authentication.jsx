@@ -26,7 +26,9 @@ const Authentication = () => {
       <div className="login__icon--container">
         <img src={sabioIcon} alt="sabioIcon" className="login__icon" />
       </div>
-      {renderComponent()}
+      <div className="login__form--container">
+        {renderComponent()}
+      </div>
     </div>
   );
 };
