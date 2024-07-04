@@ -1,19 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import "./authentication.css";
 import sabioIcon from "../authentication/sabioLogin.png";
-import Signin from "./Signin";
+import Log from "./Log";
+import Signup from "./Signup";
 import Reset from "./Reset";
-import Login from "./Login";
-import NewPasw from "./NewPasw";
 
 const Authentication = () => {
+  const [activeComponent, setActiveComponent] = useState("Log");
+
+  const renderComponent = () => {
+    switch (activeComponent) {
+      case "Log":
+        return <Log setActiveComponent={setActiveComponent} />;
+      case "Signup":
+        return <Signup setActiveComponent={setActiveComponent} />;
+      case "Reset":
+        return <Reset setActiveComponent={setActiveComponent} />;
+      default:
+        return <Log setActiveComponent={setActiveComponent} />;
+    }
+  };
+
   return (
     <div className="login__container">
-      <img src={sabioIcon} alt="sabioIcon" className="login__icon"/>
-      {/* <Signin/> */}
-      {/* <Reset/> */}
-      <Login/>
-      {/* <NewPasw/> */}
+      <div className="login__icon--container">
+        <img src={sabioIcon} alt="sabioIcon" className="login__icon" />
+      </div>
+      {renderComponent()}
     </div>
   );
 };
