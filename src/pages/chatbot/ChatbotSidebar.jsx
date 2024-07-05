@@ -5,8 +5,7 @@ import { useGetHilosQuery, useGetMessagesQuery, useCreateHiloMutation, useDelete
 import { SendOutlined, UndoOutlined, FileUnknownOutlined, FolderOpenOutlined, TeamOutlined, UploadOutlined } from '@ant-design/icons';
 import './StyleChatbot.css';
 
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
-import { Dropdown, Space, Avatar, Button, Menu } from 'antd';
+import { Dropdown, Upload ,  message, Button, Menu } from 'antd';
 
 const ChatbotSidebar = () => {
   const dispatch = useDispatch();
@@ -120,28 +119,43 @@ const ChatbotSidebar = () => {
       key: 'history',
       icon: <UndoOutlined />,
       text: 'History',
-      dropdown: menuHistory
+      dropdown: menuHistory,
+      
     },
     {
       key: 'uploads',
       icon: <FolderOpenOutlined />,
       text: 'My Uploads',
-      dropdown: menuUploads
+      dropdown: menuUploads,
+      
     },
     {
       key: 'teachersUploaded',
       icon: <TeamOutlined />,
       text: 'Teacher’s uploaded',
-      dropdown: menuTeachers
+      dropdown: menuTeachers,
+     
     },
-    {
-      key: 'upload',
-      icon: <UploadOutlined />,
-      text: 'Upload document',
-      onClick: () => handleButtonClick('Upload'),
-      className: 'chatbot__sidebar--upload'
-    }
+ 
   ];
+
+  const props = {
+    name: "file",
+    action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
+    headers: {
+      authorization: "authorization-text",
+    },
+    onChange(info) {
+      if (info.file.status !== "uploading") {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === "done") {
+        message.success(`${info.file.name} file uploaded successfully`);
+      } else if (info.file.status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
 
   return (
     <div
@@ -152,7 +166,7 @@ const ChatbotSidebar = () => {
       {buttons.map(button => (
         <Dropdown key={button.key} overlay={button.dropdown} trigger={['click']} className="header__dropdownMenu">
           <button
-            className={`chatbot__sidebar--button ${button.className || ''}`}
+            className={`chatbot__sidebar--button `}
             onClick={(e) => e.preventDefault()}
           >
             {button.icon}
@@ -160,6 +174,12 @@ const ChatbotSidebar = () => {
           </button>
         </Dropdown>
       ))}
+       <Upload {...props} className='chatbot__sidebar--upload'>
+              <button  className='chatbot__sidebar--upload'>
+              { <UploadOutlined />}
+              {isExpanded && <span>Upload Document</span>}
+              </button>
+            </Upload>
     </div>
   );
 };
