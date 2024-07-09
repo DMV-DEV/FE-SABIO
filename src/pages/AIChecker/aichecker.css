@@ -1,14 +1,16 @@
 .ai-checker {
   max-width: 100%;
-  
-  padding-left: 3rem;
-  padding-right: 2rem;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+  margin-bottom: 5.938rem;
+  margin-top: 3.313rem;
 }
 
 .ai-checker__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2rem;
 }
 
 .ai-checker__title {
@@ -31,7 +33,7 @@
   padding: 1rem;
   margin-bottom: 10px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   resize: none;
   font-size: 16px;
   box-sizing: border-box;
@@ -46,6 +48,18 @@
   gap: 10px;
   margin-bottom: 2rem;
   margin-left: 0.5rem;
+}
+
+.ai-checker__buttons__noBack {
+  background-color: #ffffff;
+  color: var(--blue1);
+  border: 1px solid var(--blue1) !important;
+  height: 2.25rem;
+  width: 8.438rem;
+}
+
+.ai-checker__buttons__noBack :hover {
+  background-color: none !important; 
 }
 
 .ai-checker__char-count {
