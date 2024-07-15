@@ -33,7 +33,7 @@
   .chatbot__sidebar{
     width: 6rem;
     height: 100%;
-    padding: 1.5rem .5rem;
+    padding: 1.5rem .4rem;
     background-color: var(--grey);
     border-radius: 10px;
     display: flex;
@@ -61,3 +61,18 @@
   .chatbot__sidebar--upload{  
   margin-top: auto ; 
   }
+
+
+  
+  @media (max-width: 768px) {
+
+    .chatbot__sidebar{
+     position: sticky;
+     top: 0;
+     right: 0;
+     height: auto;
+    }
+
+    
+  
+}
