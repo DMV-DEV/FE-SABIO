@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./authentication.css";
-import sabioIcon from "../authentication/sabioLogin.png";
+import sabioIcon from "./sabioLogin.png";
 import Log from "./Log";
 import Signup from "./Signup";
 import Reset from "./Reset";
 
-const Authentication = () => {
+const Auth = () => {
   const [activeComponent, setActiveComponent] = useState("Log");
 
   const renderComponent = () => {
@@ -33,4 +33,4 @@ const Authentication = () => {
   );
 };
 
-export default Authentication;
+export default Auth;
