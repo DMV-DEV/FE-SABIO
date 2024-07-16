@@ -18,6 +18,8 @@ const ChatbotSidebar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const sidebarRef = useRef(null);
 
+  console.log(hilos)
+
   useEffect(() => {
     if (selectedHilo) {
       refetchMessages();
@@ -44,26 +46,26 @@ const ChatbotSidebar = () => {
     console.log(action);
   };
 
-  const hiloss = [
-    {
-      "hilo_id": "3",
-      "mensajes": [
-        {
-          "id": 18,
-          "texto": "Me llamo SABIO. Estoy aquí para ayudarte con cualquier consulta relacionada con tus estudios. ¿En qué puedo asistirte hoy?",
-          "es_del_bot": "assistant",
-          "timestamp": "2024-06-27 17:03:55"
-        },
-        {
-          "id": 17,
-          "texto": "como te llamas?",
-          "es_del_bot": "user",
-          "timestamp": "2024-06-27 17:03:52"
-        }
-      ],
-      "is_last_page": true
-    }
-  ];
+  // const hiloss = [
+  //   {
+  //     "hilo_id": "3",
+  //     "mensajes": [
+  //       {
+  //         "id": 18,
+  //         "texto": "Me llamo SABIO. Estoy aquí para ayudarte con cualquier consulta relacionada con tus estudios. ¿En qué puedo asistirte hoy?",
+  //         "es_del_bot": "assistant",
+  //         "timestamp": "2024-06-27 17:03:55"
+  //       },
+  //       {
+  //         "id": 17,
+  //         "texto": "como te llamas?",
+  //         "es_del_bot": "user",
+  //         "timestamp": "2024-06-27 17:03:52"
+  //       }
+  //     ],
+  //     "is_last_page": true
+  //   }
+  // ];
 
   const uploads = [
     {
@@ -85,9 +87,9 @@ const ChatbotSidebar = () => {
 
   const menuHistory = (
     <Menu>
-      {hiloss.map(hilo => (
-        <Menu.Item key={hilo.hilo_id} style={{ fontSize: 16 }}>
-          {hilo.hilo_id}
+      {hilos.map(hilo => (
+        <Menu.Item key={hilo.id} style={{ fontSize: 16 }}>
+          {hilo.id}
         </Menu.Item>
       ))}
     </Menu>
