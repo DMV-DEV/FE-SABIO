@@ -2,7 +2,7 @@
 //     // const BASE_URL = import.meta.env.VITE_API_URL;
 //     // const URL = ${BASE_URL + url};
 //     try {
-//       const response = await fetch(URL, {
+//       const response = (URawait fetchL, {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/json',
