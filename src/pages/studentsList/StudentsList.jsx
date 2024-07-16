@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import "../studentsList/stylesStudentsList.css";
 import { Modal, Button, Input, Space } from "antd";
 import TableComponent from "../../components/table/TableComponent";
-import { CloseOutlined, PlusOutlined } from "@ant-design/icons"; // Importa el ícono de cierre de Ant Design
+import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import { SearchIcon } from "../../assets/icons/SearchIcon";
 import { CopyIcon } from "../../assets/icons/copyIcon";
+import {
+  useGetStudentsQuery,
+  useAddStudentMutation,
+  useUpdateStudentMutation,
+  useDeleteStudentMutation,
+} from "../../redux/studentsApi";
 
 const StudentsList = () => {
   const [isAddStudentModalVisible, setIsAddStudentModalVisible] =
@@ -13,77 +19,54 @@ const StudentsList = () => {
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
   const [currentDocuments, setCurrentDocuments] = useState([]);
   const [currentInfo, setCurrentInfo] = useState("");
+
+  const { data: students, error, isLoading } = useGetStudentsQuery();
+  const [addStudent] = useAddStudentMutation();
+  const [updateStudent] = useUpdateStudentMutation();
+  const [deleteStudent] = useDeleteStudentMutation();
+
   const onSearch = (value, _e, info) => console.log(info?.source, value);
 
-  const data = [
-    {
-      key: "1",
-      image: "https://example.com/images/student1.jpg",
-      name: "Juan Pérez",
-      roll: "A001",
-      document: 'Assignment 1',
-      documents: [
-        { subject: 'Physics', title: 'Title of Document', link: '#' },
-        { subject: 'Maths', title: 'Title of Document', link: '#' },
-        { subject: 'English', title: 'Title of Document', link: '#' }
-      ],
-      info: "Estudiante de ingeniería en sistemas",
-    },
-    {
-      key: "2",
-      image: "https://example.com/images/student2.jpg",
-      name: "María López",
-      roll: "A002",
-      document: 'Assignment 1',
-      documents: [
-        { subject: 'Physics', title: 'Title of Document', link: '#' },
-        { subject: 'Maths', title: 'Title of Document', link: '#' },
-        { subject: 'English', title: 'Title of Document', link: '#' }
-      ],
-      info: "Estudiante de medicina",
-    },
-    {
-      key: "3",
-      image: "https://example.com/images/student3.jpg",
-      name: "Carlos García",
-      roll: "A003",
-      date: '2024-01-01',
-      info: 'Due next week',
-      document: 'Assignment 1',
-      documents: [
-        { subject: 'Physics', title: 'Title of Document', link: '#' },
-        { subject: 'Maths', title: 'Title of Document', link: '#' },
-        { subject: 'English', title: 'Title of Document', link: '#' }
-      ],
-      classInfo: 'Math 101 - Section A: Basic Math assignments due next week.',
-    },
-    {
-      key: "4",
-      image: "https://example.com/images/student4.jpg",
-      name: "Ana Martínez",
-      roll: "A004",
-      document: 'Assignment 1',
-      documents: [
-        { subject: 'Physics', title: 'Title of Document', link: '#' },
-        { subject: 'Maths', title: 'Title of Document', link: '#' },
-        { subject: 'English', title: 'Title of Document', link: '#' }
-      ],
-      info: "Estudiante de arquitectura",
-    },
-    {
-      key: "5",
-      image: "https://example.com/images/student5.jpg",
-      name: "Luis Rodríguez",
-      roll: "A005",
-      document: 'Assignment 1',
-      documents: [
-        { subject: 'Physics', title: 'Title of Document', link: '#' },
-        { subject: 'Maths', title: 'Title of Document', link: '#' },
-        { subject: 'English', title: 'Title of Document', link: '#' }
-      ],
-      info: "Estudiante de economía",
-    },
-  ];
+  const showAddStudentModal = () => {
+    setIsAddStudentModalVisible(true);
+  };
+
+  const showDocumentModal = (documents) => {
+    setCurrentDocuments(documents);
+    setIsDocumentModalVisible(true);
+  };
+
+  const showInfoModal = (info) => {
+    setCurrentInfo(info);
+    setIsInfoModalVisible(true);
+  };
+
+  const handleAddStudentModalOk = () => {
+    setIsAddStudentModalVisible(false);
+  };
+
+  const handleAddStudentModalCancel = () => {
+    setIsAddStudentModalVisible(false);
+  };
+
+  const handleDocumentModalOk = () => {
+    setIsDocumentModalVisible(false);
+  };
+
+  const handleDocumentModalCancel = () => {
+    setIsDocumentModalVisible(false);
+  };
+
+  const handleInfoModalOk = () => {
+    setIsInfoModalVisible(false);
+  };
+
+  const handleInfoModalCancel = () => {
+    setIsInfoModalVisible(false);
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading students</div>;
 
   const columns = [
     {
@@ -113,42 +96,6 @@ const StudentsList = () => {
     },
   ];
 
-  const showAddStudentModal = () => {
-    setIsAddStudentModalVisible(true);
-  };
-
-  const showDocumentModal = (documents) => {
-    setCurrentDocuments(documents);
-    setIsDocumentModalVisible(true);
-  };
-
-  const showInfoModal = (info) => {
-    setCurrentInfo(info);
-    setIsInfoModalVisible(true);
-  };
-  const handleAddStudentModalOk = () => {
-    setIsAddStudentModalVisible(false);
-  };
-
-  const handleAddStudentModalCancel = () => {
-    setIsAddStudentModalVisible(false);
-  };
-  const handleDocumentModalOk = () => {
-    setIsDocumentModalVisible(false);
-  };
-
-  const handleDocumentModalCancel = () => {
-    setIsDocumentModalVisible(false);
-  };
-
-  const handleInfoModalOk = () => {
-    setIsInfoModalVisible(false);
-  };
-
-  const handleInfoModalCancel = () => {
-    setIsInfoModalVisible(false);
-  };
-
   return (
     <div className="containerPage">
       <div className="title-section">
@@ -173,7 +120,7 @@ const StudentsList = () => {
       <TableComponent
         type="student"
         columns={columns}
-        data={data}
+        data={students}
         onDocumentClick={showDocumentModal}
         onInfoClick={showInfoModal}
       />
