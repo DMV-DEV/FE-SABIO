@@ -10,7 +10,7 @@ body {
 }
 
 .login__container {
-  background-image: url("../authentication/loginBackground.png");
+  background-image: url("../login/loginBackground.png");
   background-size: cover;
   background-position: center;
   min-height: 100vh;
