@@ -6,8 +6,10 @@ import { SettingIcon } from '../../assets/icons/Settings';
 // import { IacheckerIcon } from '../../assets/icons/IaChecker';
 import { LogoutIcon } from '../../assets/icons/LogoutIcon';
 import { useLocation } from 'react-router-dom';
+import {  useSelector } from "react-redux";
 
 const Header = () => {
+  const user = useSelector((state) => state.user);
   const location = useLocation();
   let pathText = '';
   if (location.pathname === '/dashboard') {
@@ -74,7 +76,7 @@ const Header = () => {
         <a onClick={(e) => e.preventDefault()}>
           <Space>
             <div>
-              <p className="header__user-info">Username</p>
+              <p className="header__user-info">{user.name}</p>
               <p className="header__user-info">School Code: 1235</p>
             </div>
             <Avatar size={50} icon={<UserOutlined />} />
