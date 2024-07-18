@@ -1,13 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BASE_URL } from '../app.config.ts';
 
-const backendUrl = process.env.REACT_APP_BASE_URL;
+
 
 export const studentsApi = createApi({
   reducerPath: 'studentsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: backendUrl }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     getStudents: builder.query({
-      query: () => '/class/students/?clase_id=',
+      query: () => '/class/students/?clase_id=2'
     }),
     addStudent: builder.mutation({
       query: (newStudent) => ({

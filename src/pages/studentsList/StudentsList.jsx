@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../studentsList/stylesStudentsList.css";
 import { Modal, Button, Input, Space } from "antd";
 import TableComponent from "../../components/table/TableComponent";
@@ -13,60 +13,25 @@ import {
 } from "../../redux/studentsApi";
 
 const StudentsList = () => {
-  const [isAddStudentModalVisible, setIsAddStudentModalVisible] =
-    useState(false);
+  const [isAddStudentModalVisible, setIsAddStudentModalVisible] = useState(false);
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
   const [currentDocuments, setCurrentDocuments] = useState([]);
   const [currentInfo, setCurrentInfo] = useState("");
+  const [error, setError] = useState(null);
 
-  const { data: students, error, isLoading } = useGetStudentsQuery();
+  const { data: students, error: queryError, isLoading } = useGetStudentsQuery();
   const [addStudent] = useAddStudentMutation();
   const [updateStudent] = useUpdateStudentMutation();
   const [deleteStudent] = useDeleteStudentMutation();
 
+  useEffect(() => {
+    if (queryError) {
+      setError(queryError);
+    }
+  }, [queryError]);
+
   const onSearch = (value, _e, info) => console.log(info?.source, value);
-
-  const showAddStudentModal = () => {
-    setIsAddStudentModalVisible(true);
-  };
-
-  const showDocumentModal = (documents) => {
-    setCurrentDocuments(documents);
-    setIsDocumentModalVisible(true);
-  };
-
-  const showInfoModal = (info) => {
-    setCurrentInfo(info);
-    setIsInfoModalVisible(true);
-  };
-
-  const handleAddStudentModalOk = () => {
-    setIsAddStudentModalVisible(false);
-  };
-
-  const handleAddStudentModalCancel = () => {
-    setIsAddStudentModalVisible(false);
-  };
-
-  const handleDocumentModalOk = () => {
-    setIsDocumentModalVisible(false);
-  };
-
-  const handleDocumentModalCancel = () => {
-    setIsDocumentModalVisible(false);
-  };
-
-  const handleInfoModalOk = () => {
-    setIsInfoModalVisible(false);
-  };
-
-  const handleInfoModalCancel = () => {
-    setIsInfoModalVisible(false);
-  };
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading students</div>;
 
   const columns = [
     {
@@ -96,6 +61,11 @@ const StudentsList = () => {
     },
   ];
 
+  if (isLoading) return <div>Loading...</div>;
+  if (error) {
+    console.log(error)
+  }
+
   return (
     <div className="containerPage">
       <div className="title-section">
@@ -111,7 +81,7 @@ const StudentsList = () => {
           <Button
             icon={<PlusOutlined />}
             className="button-upload"
-            onClick={showAddStudentModal}
+            onClick={() => setIsAddStudentModalVisible(true)}
           >
             Add New Student
           </Button>
@@ -121,14 +91,20 @@ const StudentsList = () => {
         type="student"
         columns={columns}
         data={students}
-        onDocumentClick={showDocumentModal}
-        onInfoClick={showInfoModal}
+        onDocumentClick={(documents) => {
+          setCurrentDocuments(documents);
+          setIsDocumentModalVisible(true);
+        }}
+        onInfoClick={(info) => {
+          setCurrentInfo(info);
+          setIsInfoModalVisible(true);
+        }}
       />
       <Modal
         title="Add New Student"
         visible={isAddStudentModalVisible}
-        onOk={handleAddStudentModalOk}
-        onCancel={handleAddStudentModalCancel}
+        onOk={() => setIsAddStudentModalVisible(false)}
+        onCancel={() => setIsAddStudentModalVisible(false)}
         footer={null}
         wrapClassName="custom-modal-wrapper"
         style={{ top: "30%" }}
@@ -165,7 +141,6 @@ const StudentsList = () => {
               <label>Email</label>
               <Input className="inputModal" defaultValue="user3456@mail.com" />
             </div>
-
             <Button className="button-copy-invite" type="primary">
               Invite by email
             </Button>
@@ -175,8 +150,8 @@ const StudentsList = () => {
       <Modal
         title={<h2>List of documents</h2>}
         visible={isDocumentModalVisible}
-        onOk={handleDocumentModalOk}
-        onCancel={handleDocumentModalCancel}
+        onOk={() => setIsDocumentModalVisible(false)}
+        onCancel={() => setIsDocumentModalVisible(false)}
         footer={null}
         wrapClassName="custom-modal-wrapper"
         style={{ top: "30%" }}
@@ -213,12 +188,11 @@ const StudentsList = () => {
           </tbody>
         </table>
       </Modal>
-
       <Modal
         title={<h2>Details</h2>}
         visible={isInfoModalVisible}
-        onOk={handleInfoModalOk}
-        onCancel={handleInfoModalCancel}
+        onOk={() => setIsInfoModalVisible(false)}
+        onCancel={() => setIsInfoModalVisible(false)}
         footer={null}
         wrapClassName="custom-modal-wrapper"
         style={{ top: "30%" }}
@@ -241,3 +215,5 @@ const StudentsList = () => {
 };
 
 export default StudentsList;
+
+
