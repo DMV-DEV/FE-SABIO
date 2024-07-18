@@ -61,10 +61,10 @@ const StudentsList = () => {
     },
   ];
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) {
-    console.log(error)
-  }
+  // if (isLoading) return <div>Loading</div>;
+  // if (error) {
+  //   console.log(error)
+  // }
 
   return (
     <div className="containerPage">
@@ -83,7 +83,7 @@ const StudentsList = () => {
             className="button-upload"
             onClick={() => setIsAddStudentModalVisible(true)}
           >
-            Add New Student
+            Add new student
           </Button>
         </Space>
       </div>
