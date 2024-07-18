@@ -9,6 +9,7 @@ const Classes = () => {
   const [classSelected, setClassSelected] = useState('');
   const navigate = useNavigate();
   // const profesorId = useSelector((state) => state.user.id);
+  const profesorId = 7
 
   // Verificar si profesorId está definido
   // if (!profesorId) {
@@ -16,9 +17,9 @@ const Classes = () => {
   //   return <div>Error: El ID del profesor no está definido</div>;
   // }
 
-  const { data: classes, error, isLoading } = useGetClassesByEducatorQuery(7);
+  const { data: classes, error, isLoading } = useGetClassesByEducatorQuery(profesorId);
   const [addClass, { isLoading: isAdding }] = useAddClassMutation();
-console.log(data)
+// console.log(classes);
   const handleClick = (id) => {
     setClassSelected(id);
     navigate(`/dashboard`);
@@ -26,7 +27,10 @@ console.log(data)
 
   // Mostrar mensajes de carga y error
   if (isLoading) return <div>Cargando clases...</div>;
-  if (error) return <div>Error al cargar las clases</div>;
+  if (error){
+    console.log(error)
+    return <div>Error al cargar las clases</div>; } 
+
 
   return (
     <div className='classes'>
@@ -34,7 +38,7 @@ console.log(data)
         <h1>My classes</h1>
         <button>+ Add new class</button>
       </div>
-      {/* <div className='classes__body'>
+      <div className='classes__body'>
         {classes && classes.map((data) => (
           <div key={data.id} onClick={() => handleClick(data.id)}> 
             <CardComponent 
@@ -45,7 +49,7 @@ console.log(data)
             />
           </div>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };
