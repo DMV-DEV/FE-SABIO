@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import "./authentication.css";
-import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../../redux/userSlice";
-// import { postUser } from '../../services/PostUser';
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../redux/authApi";
+import { addUser } from "../../redux/userSlice";
 
 const Log = ({ setActiveComponent }) => {
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
-  // const { email, password } =
-  //   useSelector((state) => state.user);
+  const [login, { isLoading }] = useLoginMutation();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -19,28 +17,34 @@ const Log = ({ setActiveComponent }) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prevformData) => ({
-      ...prevformData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form data submitted:", formData);
-    // Aquí puedes enviar los datos a un servidor o hacer algo con ellos
-    // navigate('/myclasses');
+    try {
+      const { email, password } = formData;
+      const response = await login({ username: email, password }).unwrap();
+      const { access, refresh } = response;
+      dispatch(addUser({ name: email, email, id: '', accessToken: access, refreshToken: refresh }));
+      navigate('/');
+    } catch (err) {
+      console.error('Failed to login:', err);
+    }
   };
 
   return (
     <div className="login__card">
       <h2 className="login__title">Log In</h2>
       <form onSubmit={handleSubmit}>
-        <label className="login__label" htmlFor="email">
+        <label className="login__label" htmlFor="name">
           Username
         </label>
         <input
-          type="email"
+          type="name"
           id="email"
           name="email"
           className="login__input"
@@ -78,8 +82,8 @@ const Log = ({ setActiveComponent }) => {
             Forgot Password
           </button>
         </div>
-        <button className="login__button" type="submit" onClick={handleSubmit}>
-          Sign In
+        <button className="login__button" type="submit" disabled={isLoading}>
+          {isLoading ? 'Logging in...' : 'Sign In'}
         </button>
         <div className="account__container">
           <h4>
