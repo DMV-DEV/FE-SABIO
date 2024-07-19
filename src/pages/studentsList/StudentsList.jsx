@@ -86,13 +86,9 @@ const StudentsList = () => {
       key: "sexo",
     },
     {
-      title: "Actions",
-      key: "actions",
-      render: (text, record) => (
-        <>
-          <Button onClick={() => handleDeleteStudent(record.id)}>Delete</Button>
-        </>
-      ),
+      title: "Document",
+      dataIndex: "document",
+      key: "document",
     },
   ];
 
@@ -102,10 +98,29 @@ const StudentsList = () => {
     return (
       <div>
         <div>Error: {error.message}</div>
-        <pre>{JSON.stringify(error, null, 2)}</pre> {/* Muestra más detalles del error */}
+        {/* <pre>{JSON.stringify(error, null, 2)}</pre> Muestra más detalles del error */}
       </div>
     );
   }
+
+  const  documents= [
+    { subject: 'Physics', title: 'Title of Document', link: '#' },
+    { subject: 'Maths', title: 'Title of Document', link: '#' },
+    { subject: 'English', title: 'Title of Document', link: '#' }
+  ];
+
+  const showDocumentModal = (documents) => {
+    setCurrentDocuments(documents);
+    setIsDocumentModalVisible(true);
+  };
+
+  const handleDocumentModalOk = () => {
+    setIsDocumentModalVisible(false);
+  };
+
+  const handleDocumentModalCancel = () => {
+    setIsDocumentModalVisible(false);
+  };
 
   return (
     <div className="containerPage">
@@ -128,19 +143,12 @@ const StudentsList = () => {
           </Button>
         </Space>
       </div>
-      {/* <TableComponent
+      <TableComponent
         type="student"
         columns={columns}
         data={students}
-        onDocumentClick={(documents) => {
-          setCurrentDocuments(documents);
-          setIsDocumentModalVisible(true);
-        }}
-        onInfoClick={(info) => {
-          setCurrentInfo(info);
-          setIsInfoModalVisible(true);
-        }}
-      /> */}
+        onDocumentClick={showDocumentModal}
+      />
       <Modal
         title="Add New Student"
         visible={isAddStudentModalVisible}
@@ -225,7 +233,7 @@ const StudentsList = () => {
       >
         <table className="documentTable">
           <tbody>
-            {currentDocuments.map((doc, index) => (
+            {documents.map((doc, index) => (
               <tr key={index}>
                 <td>{doc.subject}</td>
                 <td>{doc.title}</td>
