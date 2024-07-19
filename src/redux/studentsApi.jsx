@@ -1,6 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../app.config.ts";
 
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'https://sabiobackend-1a734c145440.herokuapp.com',
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState().user.accessToken;
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
+
 export const studentsApi = createApi({
   reducerPath: "studentsApi",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),

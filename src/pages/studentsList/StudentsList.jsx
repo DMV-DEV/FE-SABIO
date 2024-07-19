@@ -32,6 +32,12 @@ const StudentsList = () => {
     }
   }, [queryError]);
 
+  useEffect(() => {
+    if (students) {
+      console.log('Fetched students:', students); // Añadir este console.log para verificar los datos
+    }
+  }, [students]);
+
   const handleAddStudent = async () => {
     try {
       await addStudent(newStudent).unwrap();
@@ -91,7 +97,15 @@ const StudentsList = () => {
   ];
 
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) {
+    console.error('Error fetching students:', error);
+    return (
+      <div>
+        <div>Error: {error.message}</div>
+        <pre>{JSON.stringify(error, null, 2)}</pre> {/* Muestra más detalles del error */}
+      </div>
+    );
+  }
 
   return (
     <div className="containerPage">
@@ -257,3 +271,4 @@ const StudentsList = () => {
 };
 
 export default StudentsList;
+
