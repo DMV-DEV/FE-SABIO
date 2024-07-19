@@ -5,12 +5,14 @@ import { classesApi } from './classesApi';
 import { authApi } from './authApi';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { studentsApi } from './studentsApi'
+import classesSlice  from './classesSlice';
 
 
 
 export const store = configureStore({
   reducer: {
     user: userSlice,
+    classes: classesSlice,
     [chatApi.reducerPath]: chatApi.reducer,
     [classesApi.reducerPath]: classesApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
