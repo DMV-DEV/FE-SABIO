@@ -86,26 +86,22 @@ const StudentsList = () => {
       key: "sexo",
     },
     {
-      title: "Actions",
-      key: "actions",
-      render: (text, record) => (
-        <>
-          <Button onClick={() => handleDeleteStudent(record.id)}>Delete</Button>
-        </>
-      ),
+      title: "Document",
+      dataIndex: "document",
+      key: "document",
     },
   ];
 
-  // if (isLoading) return <div>Loading...</div>;
-  // if (error) {
-  //   console.error('Error fetching students:', error);
-  //   return (
-  //     <div>
-  //       <div>Error: {error.message}</div>
-  //       <pre>{JSON.stringify(error, null, 2)}</pre> {/* Muestra más detalles del error */}
-  //     </div>
-  //   );
-  // }
+  if (isLoading) return <div>Loading...</div>;
+  if (error) {
+    console.error('Error fetching students:', error);
+    return (
+      <div>
+        <div>Error: {error.message}</div>
+        <pre>{JSON.stringify(error, null, 2)}</pre> {/* Muestra más detalles del error */}
+      </div>
+    );
+  }
 
   return (
     <div className="containerPage">
@@ -128,19 +124,12 @@ const StudentsList = () => {
           </Button>
         </Space>
       </div>
-      {/* <TableComponent
+      <TableComponent
         type="student"
         columns={columns}
         data={students}
-        onDocumentClick={(documents) => {
-          setCurrentDocuments(documents);
-          setIsDocumentModalVisible(true);
-        }}
-        onInfoClick={(info) => {
-          setCurrentInfo(info);
-          setIsInfoModalVisible(true);
-        }}
-      /> */}
+        onDocumentClick={showDocumentModal}
+      />
       <Modal
         title="Add New Student"
         visible={isAddStudentModalVisible}
@@ -225,7 +214,7 @@ const StudentsList = () => {
       >
         <table className="documentTable">
           <tbody>
-            {currentDocuments.map((doc, index) => (
+            {documents.map((doc, index) => (
               <tr key={index}>
                 <td>{doc.subject}</td>
                 <td>{doc.title}</td>
