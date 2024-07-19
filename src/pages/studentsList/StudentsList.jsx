@@ -96,16 +96,16 @@ const StudentsList = () => {
     },
   ];
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) {
-    console.error('Error fetching students:', error);
-    return (
-      <div>
-        <div>Error: {error.message}</div>
-        <pre>{JSON.stringify(error, null, 2)}</pre> {/* Muestra más detalles del error */}
-      </div>
-    );
-  }
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) {
+  //   console.error('Error fetching students:', error);
+  //   return (
+  //     <div>
+  //       <div>Error: {error.message}</div>
+  //       <pre>{JSON.stringify(error, null, 2)}</pre> {/* Muestra más detalles del error */}
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="containerPage">
