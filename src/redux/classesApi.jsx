@@ -1,29 +1,31 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BASE_URL } from '../app.config.ts';
+
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'https://sabiobackend-1a734c145440.herokuapp.com',
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState().user.accessToken;
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
 
 export const classesApi = createApi({
-    reducerPath: 'classesApi',
-    baseQuery: fetchBaseQuery({
-      baseUrl: BASE_URL,
+  reducerPath: 'classesApi',
+  baseQuery,
+  endpoints: (builder) => ({
+    getClassesByEducator: builder.query({
+      query: (profesorId) => `/educator/clases/?profesor_id=${profesorId}`,
     }),
-    endpoints: (builder) => ({
-      getClassesByEducator: builder.query({
-        query: (profesorId) => `/educator/clases/?profesor_id=${profesorId}`,
-        providesTags: ['Classes'],
-      }),
-      addClass: builder.mutation({
-        query: (newClass) => ({
-          url: '/educator/clases/',
-          method: 'POST',
-          body: newClass,
-        }),
-        invalidatesTags: ['Classes'],
+    addClass: builder.mutation({
+      query: (newClass) => ({
+        url: '/educator/clases/',
+        method: 'POST',
+        body: newClass,
       }),
     }),
-  });
-  
-  export const {
-    useGetClassesByEducatorQuery,
-    useAddClassMutation,
-  } = classesApi;
-  export default classesApi.reducer;
+  }),
+});
+
+export const { useGetClassesByEducatorQuery, useAddClassMutation } = classesApi;

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CardComponent from '../../components/cards/CardComponent';
 import './StyleClasses.css';
 import { useNavigate } from 'react-router-dom';
-import { useGetClassesByEducatorQuery, useAddClassMutation } from '../../redux/classesApi.jsx';
+import { useGetClassesByEducatorQuery, useAddClassMutation } from '../../redux/classesApi';
 import { useSelector } from 'react-redux';
 
 const Classes = () => {
@@ -10,27 +10,25 @@ const Classes = () => {
   const navigate = useNavigate();
   // const profesorId = useSelector((state) => state.user.id);
   const profesorId = 7
-
-  // Verificar si profesorId está definido
-  // if (!profesorId) {
-  //   console.error('El ID del profesor no está definido');
-  //   return <div>Error: El ID del profesor no está definido</div>;
-  // }
+  const token = useSelector((state) => state.user.accessToken);
+  
+  useEffect(() => {
+    console.log('Access Token:', token);
+  }, [token]);
 
   const { data: classes, error, isLoading } = useGetClassesByEducatorQuery(profesorId);
   const [addClass, { isLoading: isAdding }] = useAddClassMutation();
-// console.log(classes);
+
   const handleClick = (id) => {
     setClassSelected(id);
     navigate(`/dashboard`);
   };
 
-  // Mostrar mensajes de carga y error
-  if (isLoading) return <div>Cargando clases...</div>;
-  if (error){
-    console.log(error)
-    return <div>Error al cargar las clases</div>; } 
-
+  if (isLoading) return <div>Loading...</div>;
+  if (error) {
+    console.error('Error:', error);
+    return <div>Error: {error.data?.error || 'An error occurred'}</div>;
+  }
 
   return (
     <div className='classes'>
@@ -39,12 +37,12 @@ const Classes = () => {
         <button>+ Add new class</button>
       </div>
       <div className='classes__body'>
-        {classes && classes.map((data) => (
-          <div key={data.id} onClick={() => handleClick(data.id)}> 
-            <CardComponent 
-              title={data.name} 
-              instructor={data.name} 
-              subject={data.name} 
+        {classes.map(data => (
+          <div key={data.id} onClick={() => handleClick(data.id)}>
+            <CardComponent
+              title={data.name}
+              instructor={data.name}
+              subject={data.name}
               section={data.id}
             />
           </div>
