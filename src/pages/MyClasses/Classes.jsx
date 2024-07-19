@@ -3,16 +3,16 @@ import CardComponent from '../../components/cards/CardComponent';
 import './StyleClasses.css';
 import { useNavigate } from 'react-router-dom';
 import { useGetClassesByEducatorQuery, useAddClassMutation } from '../../redux/classesApi';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addClass } from '../../redux/classesSlice';
 
 const Classes = () => {
-  const [classSelected, setClassSelected] = useState('');
   const navigate = useNavigate();
   // const profesorId = useSelector((state) => state.user.id);
   const profesorId = 7
   const token = useSelector((state) => state.user.accessToken);
   const profesor = useSelector((state) => state.user.name)
-  
+  const dispatch = useDispatch();
   
 
   const { data, error, isLoading } = useGetClassesByEducatorQuery(profesorId);
@@ -27,8 +27,9 @@ const Classes = () => {
     }
   }, [data, error]);
 
-  const handleClick = (id) => {
-    setClassSelected(id);
+  const handleClick = (name, id) => {
+    
+    dispatch(addClass({ nombre: name,  id: id }));
     navigate(`/dashboard`);
   };
 
@@ -46,7 +47,7 @@ const Classes = () => {
       </div>
       <div className='classes__body'>
         {data.map(data => (
-          <div key={data.id} onClick={() => handleClick(data.id)}>
+          <div key={data.id} onClick={() => handleClick(data.nombre, data.id)}>
             <CardComponent
               title={data.id}
               instructor={profesor}
