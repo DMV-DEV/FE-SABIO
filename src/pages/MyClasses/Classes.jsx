@@ -11,13 +11,21 @@ const Classes = () => {
   // const profesorId = useSelector((state) => state.user.id);
   const profesorId = 7
   const token = useSelector((state) => state.user.accessToken);
+  const profesor = useSelector((state) => state.user.name)
   
-  useEffect(() => {
-    console.log('Access Token:', token);
-  }, [token]);
+  
 
-  const { data: classes, error, isLoading } = useGetClassesByEducatorQuery(profesorId);
+  const { data, error, isLoading } = useGetClassesByEducatorQuery(profesorId);
   const [addClass, { isLoading: isAdding }] = useAddClassMutation();
+
+  useEffect(() => {
+    if (data) {
+      console.log('Clases:', data);
+    }
+    if (error) {
+      console.error('Error:', error);
+    }
+  }, [data, error]);
 
   const handleClick = (id) => {
     setClassSelected(id);
@@ -37,12 +45,12 @@ const Classes = () => {
         <button>+ Add new class</button>
       </div>
       <div className='classes__body'>
-        {classes.map(data => (
+        {data.map(data => (
           <div key={data.id} onClick={() => handleClick(data.id)}>
             <CardComponent
-              title={data.name}
-              instructor={data.name}
-              subject={data.name}
+              title={data.id}
+              instructor={profesor}
+              subject={data.nombre}
               section={data.id}
             />
           </div>
