@@ -128,7 +128,7 @@ const StudentsList = () => {
           </Button>
         </Space>
       </div>
-      <TableComponent
+      {/* <TableComponent
         type="student"
         columns={columns}
         data={students}
@@ -140,7 +140,7 @@ const StudentsList = () => {
           setCurrentInfo(info);
           setIsInfoModalVisible(true);
         }}
-      />
+      /> */}
       <Modal
         title="Add New Student"
         visible={isAddStudentModalVisible}

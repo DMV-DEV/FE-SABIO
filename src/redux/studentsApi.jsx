@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL } from "../app.config.ts";
+
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://sabiobackend-1a734c145440.herokuapp.com',
@@ -14,10 +14,10 @@ const baseQuery = fetchBaseQuery({
 
 export const studentsApi = createApi({
   reducerPath: "studentsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery,
   endpoints: (builder) => ({
     getStudents: builder.query({
-      query: () => "/class/students/?clase_id=2",
+      query: () => "/class/students/?clase_id=5",
     }),
     addStudent: builder.mutation({
       query: (newStudent) => ({
