@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../studentsList/stylesStudentsList.css";
-import { Modal, Button, Input, Space } from "antd";
+import { Modal, Button, Input, Space, message } from "antd";
 import TableComponent from "../../components/table/TableComponent";
 import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import { SearchIcon } from "../../assets/icons/SearchIcon";
@@ -18,6 +18,7 @@ const StudentsList = () => {
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
   const [currentDocuments, setCurrentDocuments] = useState([]);
   const [currentInfo, setCurrentInfo] = useState("");
+  const [newStudent, setNewStudent] = useState({ firstName: "", lastName: "", email: "", birthDate: "", gender: "" });
   const [error, setError] = useState(null);
 
   const { data: students, error: queryError, isLoading } = useGetStudentsQuery();
@@ -31,40 +32,66 @@ const StudentsList = () => {
     }
   }, [queryError]);
 
-  const onSearch = (value, _e, info) => console.log(info?.source, value);
+  const handleAddStudent = async () => {
+    try {
+      await addStudent(newStudent).unwrap();
+      message.success('Student added successfully');
+      setIsAddStudentModalVisible(false);
+    } catch (error) {
+      message.error('Failed to add student');
+    }
+  };
+
+  const handleDeleteStudent = async (id) => {
+    try {
+      await deleteStudent(id).unwrap();
+      message.success('Student deleted successfully');
+    } catch (error) {
+      message.error('Failed to delete student');
+    }
+  };
+
+  const onSearch = (value) => console.log(value);
 
   const columns = [
     {
-      title: "Image",
-      dataIndex: "image",
-      key: "image",
+      title: "First Name",
+      dataIndex: "first_name",
+      key: "first_name",
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Last Name",
+      dataIndex: "last_name",
+      key: "last_name",
     },
     {
-      title: "Roll No.",
-      dataIndex: "roll",
-      key: "roll",
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: "Document",
-      dataIndex: "document",
-      key: "document",
+      title: "Date of Birth",
+      dataIndex: "fecha_nacimiento",
+      key: "fecha_nacimiento",
     },
     {
-      title: "Info",
-      dataIndex: "info",
-      key: "info",
+      title: "Gender",
+      dataIndex: "sexo",
+      key: "sexo",
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      render: (text, record) => (
+        <>
+          <Button onClick={() => handleDeleteStudent(record.id)}>Delete</Button>
+        </>
+      ),
     },
   ];
 
-  // if (isLoading) return <div>Loading</div>;
-  // if (error) {
-  //   console.log(error)
-  // }
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="containerPage">
@@ -103,7 +130,7 @@ const StudentsList = () => {
       <Modal
         title="Add New Student"
         visible={isAddStudentModalVisible}
-        onOk={() => setIsAddStudentModalVisible(false)}
+        onOk={handleAddStudent}
         onCancel={() => setIsAddStudentModalVisible(false)}
         footer={null}
         wrapClassName="custom-modal-wrapper"
@@ -122,29 +149,44 @@ const StudentsList = () => {
         }
       >
         <Space direction="vertical" className="modal-content">
-          <div className="input-group">
-            <Input
-              className="inputModal"
-              defaultValue="wwwinterfacefjfd5345/we23fwf4g851d14g414/g43ertetrr"
-            />
-            <Button
-              icon={<CopyIcon />}
-              className="button-copy-invite"
-              type="primary"
-            >
-              Copy
-            </Button>
-          </div>
-          <p className="tx-or">Or</p>
-          <div className="input-group">
-            <div className="inputModal">
-              <label>Email</label>
-              <Input className="inputModal" defaultValue="user3456@mail.com" />
-            </div>
-            <Button className="button-copy-invite" type="primary">
-              Invite by email
-            </Button>
-          </div>
+          <Input
+            className="inputModal"
+            placeholder="First Name"
+            value={newStudent.firstName}
+            onChange={(e) => setNewStudent({ ...newStudent, firstName: e.target.value })}
+          />
+          <Input
+            className="inputModal"
+            placeholder="Last Name"
+            value={newStudent.lastName}
+            onChange={(e) => setNewStudent({ ...newStudent, lastName: e.target.value })}
+          />
+          <Input
+            className="inputModal"
+            placeholder="Email"
+            value={newStudent.email}
+            onChange={(e) => setNewStudent({ ...newStudent, email: e.target.value })}
+          />
+          <Input
+            className="inputModal"
+            placeholder="Date of Birth"
+            value={newStudent.birthDate}
+            onChange={(e) => setNewStudent({ ...newStudent, birthDate: e.target.value })}
+          />
+          <Input
+            className="inputModal"
+            placeholder="Gender"
+            value={newStudent.gender}
+            onChange={(e) => setNewStudent({ ...newStudent, gender: e.target.value })}
+          />
+          <Button
+            icon={<CopyIcon />}
+            className="button-copy-invite"
+            type="primary"
+            onClick={handleAddStudent}
+          >
+            Add Student
+          </Button>
         </Space>
       </Modal>
       <Modal
@@ -160,7 +202,7 @@ const StudentsList = () => {
             style={{
               fontSize: 20,
               backgroundColor: "#EF8F37",
-              borderRadius: " 50%",
+              borderRadius: "50%",
               borderColor: "#EF8F37",
               padding: "4px",
             }}
@@ -201,7 +243,7 @@ const StudentsList = () => {
             style={{
               fontSize: 20,
               backgroundColor: "#EF8F37",
-              borderRadius: " 50%",
+              borderRadius: "50%",
               borderColor: "#EF8F37",
               padding: "4px",
             }}
@@ -215,5 +257,3 @@ const StudentsList = () => {
 };
 
 export default StudentsList;
-
-

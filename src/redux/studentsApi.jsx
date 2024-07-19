@@ -1,33 +1,31 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BASE_URL } from '../app.config.ts';
-
-
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { BASE_URL } from "../app.config.ts";
 
 export const studentsApi = createApi({
-  reducerPath: 'studentsApi',
+  reducerPath: "studentsApi",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     getStudents: builder.query({
-      query: () => '/class/students/?clase_id=2'
+      query: () => "/class/students/?clase_id=2",
     }),
     addStudent: builder.mutation({
       query: (newStudent) => ({
-        url: '/class/students/?clase_id=',
-        method: 'POST',
+        url: "/class/students/?clase_id=",
+        method: "POST",
         body: newStudent,
       }),
     }),
     updateStudent: builder.mutation({
       query: ({ id, ...rest }) => ({
         url: `/class/students/?clase_id=${id}`,
-        method: 'PUT',
+        method: "PUT",
         body: rest,
       }),
     }),
     deleteStudent: builder.mutation({
       query: (id) => ({
         url: `/class/students/?clase_id=${id}`,
-        method: 'DELETE',
+        method: "DELETE",
       }),
     }),
   }),
