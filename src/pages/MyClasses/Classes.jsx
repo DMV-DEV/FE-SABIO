@@ -10,7 +10,7 @@ const Classes = () => {
   const navigate = useNavigate();
   // const profesorId = useSelector((state) => state.user.id);
   const profesorId = 7
-  const token = useSelector((state) => state.user.accessToken);
+  const token = localStorage.getItem('accessToken');
   
   useEffect(() => {
     console.log('Access Token:', token);
