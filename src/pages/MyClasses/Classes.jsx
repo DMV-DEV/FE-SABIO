@@ -3,26 +3,45 @@ import CardComponent from '../../components/cards/CardComponent';
 import './StyleClasses.css';
 import { useNavigate } from 'react-router-dom';
 import { useGetClassesByEducatorQuery, useAddClassMutation } from '../../redux/classesApi';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addClasses } from '../../redux/classesSlice';
 
 const Classes = () => {
-  const [classSelected, setClassSelected] = useState('');
   const navigate = useNavigate();
   // const profesorId = useSelector((state) => state.user.id);
   const profesorId = 7
   const token = localStorage.getItem('accessToken');
+  const profesor = useSelector((state) => state.user.name)
+  const dispatch = useDispatch();
   
-  useEffect(() => {
-    console.log('Access Token:', token);
-  }, [token]);
 
-  const { data: classes, error, isLoading } = useGetClassesByEducatorQuery(profesorId);
+  const { data, error, isLoading } = useGetClassesByEducatorQuery(profesorId);
   const [addClass, { isLoading: isAdding }] = useAddClassMutation();
 
-  const handleClick = (id) => {
-    setClassSelected(id);
+  useEffect(() => {
+    if (data) {
+      console.log('Clases:', data);
+    }
+    if (error) {
+      console.error('Error:', error);
+    }
+  }, [data, error]);
+
+  const handleClick = (name, id) => {
+    
+    dispatch(addClasses({ nombre: name,  id: id }));
     navigate(`/dashboard`);
   };
+
+  const selectedClassId = useSelector((state) => state.classes.id);
+  const selectedClassName = useSelector((state) => state.classes.nombre);
+
+  useEffect(() => {
+    console.log(`Selected Class ID in Redux: ${selectedClassId}`);
+    console.log(`Selected Class Name in Redux: ${selectedClassName}`);
+  }, [selectedClassId, selectedClassName]);
+ 
+
 
   if (isLoading) return <div>Loading...</div>;
   if (error) {
@@ -37,12 +56,12 @@ const Classes = () => {
         <button>+ Add new class</button>
       </div>
       <div className='classes__body'>
-        {classes.map(data => (
-          <div key={data.id} onClick={() => handleClick(data.id)}>
+        {data.map(data => (
+          <div key={data.id} onClick={() => handleClick(data.nombre, data.id)}>
             <CardComponent
-              title={data.name}
-              instructor={data.name}
-              subject={data.name}
+              title={data.id}
+              instructor={profesor}
+              subject={data.nombre}
               section={data.id}
             />
           </div>

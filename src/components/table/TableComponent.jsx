@@ -1,18 +1,20 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { Table, Button, Avatar } from "antd";
 import "../table/StyleTable.css";
 import { UserOutlined } from "@ant-design/icons";
 
-
-const TableComponent = ({ columns, data, onDocumentClick, onInfoClick, type  }) => {
+const TableComponent = ({ columns, data, onDocumentClick, onInfoClick, type }) => {
   const scroll = { x: 'max-content' };
 
   // Renderiza el encabezado de la columna
   const renderColumnHeader = (text) => <p>{text}</p>;
 
   // Renderiza el contenido de la celda
-  const renderTableCell = (text, record, index) => <p>{text}</p>;
+  const renderTableCell = (text, record, index) => {
+    // Verifica si text es un objeto, si es así, convierte a JSON
+    const cellContent = typeof text === 'object' ? JSON.stringify(text) : text;
+    return <p>{cellContent}</p>;
+  };
 
   // Modifica las columnas para incluir renderizadores personalizados
   const columnsWithRender = columns.map(column => ({
@@ -32,16 +34,14 @@ const TableComponent = ({ columns, data, onDocumentClick, onInfoClick, type  }) 
       if (type === 'student' && column.key === 'image'){
         return (
           <Avatar size={36} icon={<UserOutlined />} className="avatar" src={record.image} />
-
         );
-      };
-
+      }
       return renderTableCell(text, record, index);
     }
   }));
 
   return (
-    <Table className="table" columns={columnsWithRender} dataSource={data} scroll={scroll}  />
+    <Table className="table" columns={columnsWithRender} dataSource={data} scroll={scroll} />
   );
 };
 
