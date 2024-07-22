@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../classesDocuments/stylesClassesDocuments.css";
 import { Modal, Button, message, Upload } from "antd";
 import TableComponent from "../../components/table/TableComponent";
-import { CloseOutlined, PlusOutlined  } from "@ant-design/icons"; // Importa el ícono de cierre de Ant Design
+import { CloseOutlined, PlusOutlined  } from "@ant-design/icons"; 
 
 const ClassesDocuments = () => {
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);

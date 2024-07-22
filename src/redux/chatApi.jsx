@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BASE_URL } from '../app.config.ts'
+import { BASE_URL } from '../app.config.js'
 
 export const chatApi = createApi({
   reducerPath: 'chatApi',

@@ -9,18 +9,18 @@ export const classesSlice = createSlice({
   name: 'classes',
   initialState,
   reducers: {
-    addClass: (state, action) => {
-      const { name, id} = action.payload;
-      state.nombre = name;
+    addClasses: (state, action) => {
+      const { nombre, id} = action.payload;
+      state.nombre = nombre;
       state.id = id;
     },
-    removeClass: (state) => {
+    removeClasses: (state) => {
       state.nombre = '';
       state.id = '';
     },
   },
 });
 
-export const { addClass, removeClass } = classesSlice.actions;
+export const { addClasses, removeClass } = classesSlice.actions;
 
 export default classesSlice.reducer;

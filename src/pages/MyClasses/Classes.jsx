@@ -4,13 +4,13 @@ import './StyleClasses.css';
 import { useNavigate } from 'react-router-dom';
 import { useGetClassesByEducatorQuery, useAddClassMutation } from '../../redux/classesApi';
 import { useSelector, useDispatch } from 'react-redux';
-import { addClass } from '../../redux/classesSlice';
+import { addClasses } from '../../redux/classesSlice';
 
 const Classes = () => {
   const navigate = useNavigate();
   // const profesorId = useSelector((state) => state.user.id);
   const profesorId = 7
-  const token = useSelector((state) => state.user.accessToken);
+  const token = localStorage.getItem('accessToken');
   const profesor = useSelector((state) => state.user.name)
   const dispatch = useDispatch();
   
@@ -29,9 +29,19 @@ const Classes = () => {
 
   const handleClick = (name, id) => {
     
-    dispatch(addClass({ nombre: name,  id: id }));
+    dispatch(addClasses({ nombre: name,  id: id }));
     navigate(`/dashboard`);
   };
+
+  const selectedClassId = useSelector((state) => state.classes.id);
+  const selectedClassName = useSelector((state) => state.classes.nombre);
+
+  useEffect(() => {
+    console.log(`Selected Class ID in Redux: ${selectedClassId}`);
+    console.log(`Selected Class Name in Redux: ${selectedClassName}`);
+  }, [selectedClassId, selectedClassName]);
+ 
+
 
   if (isLoading) return <div>Loading...</div>;
   if (error) {
