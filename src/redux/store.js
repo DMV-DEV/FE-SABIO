@@ -17,7 +17,7 @@ export const store = configureStore({
     [chatApi.reducerPath]: chatApi.reducer,
     [classesApi.reducerPath]: classesApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
-    [accountApi.reducerPath]: accountApi.reducer
+    [accountApi.reducerPath]: accountApi.reducer,
     [studentsApi.reducerPath]: studentsApi.reducer, 
   },
   
