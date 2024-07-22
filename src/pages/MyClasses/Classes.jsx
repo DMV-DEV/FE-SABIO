@@ -9,7 +9,7 @@ import { addClasses } from '../../redux/classesSlice';
 const Classes = () => {
   const navigate = useNavigate();
   // const profesorId = useSelector((state) => state.user.id);
-  const profesorId = 7
+  const profesorId = 8
   const token = localStorage.getItem('accessToken');
   const profesor = useSelector((state) => state.user.name)
   const dispatch = useDispatch();

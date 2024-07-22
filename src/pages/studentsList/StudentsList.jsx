@@ -1,30 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import "../studentsList/stylesStudentsList.css";
-import { Modal, Button, Input, Space, message } from 'antd';
-import TableComponent from '../../components/table/TableComponent';
-import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
-import { SearchIcon } from '../../assets/icons/SearchIcon';
-import { CopyIcon } from '../../assets/icons/copyIcon';
+import { Modal, Button, Input, Space, message } from "antd";
+import TableComponent from "../../components/table/TableComponent";
+import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
+import { SearchIcon } from "../../assets/icons/SearchIcon";
+import { CopyIcon } from "../../assets/icons/copyIcon";
 import {
   useGetStudentsQuery,
   useAddStudentMutation,
   useUpdateStudentMutation,
   useDeleteStudentMutation,
-} from '../../redux/studentsApi';
-import { useGetDocumentsQuery } from '../../redux/documentsApi';
+} from "../../redux/studentsApi";
+import { useGetDocumentsQuery } from "../../redux/documentsApi";
+import { useSelector } from "react-redux";
 
 const StudentsList = () => {
-  const [isAddStudentModalVisible, setIsAddStudentModalVisible] = useState(false);
+  const classId = useSelector((state) => state.classes.id);
+
+  const [isAddStudentModalVisible, setIsAddStudentModalVisible] =
+    useState(false);
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
   const [currentDocuments, setCurrentDocuments] = useState([]);
-  const [currentInfo, setCurrentInfo] = useState('');
-  const [newStudent, setNewStudent] = useState({ firstName: '', lastName: '', email: '', birthDate: '', gender: '' });
-  const [selectedClassId, setSelectedClassId] = useState(1); // Asegúrate de definir un ID de clase válido
+  const [currentInfo, setCurrentInfo] = useState("");
+  const [newStudent, setNewStudent] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    birthDate: "",
+    gender: "",
+  });
   const [error, setError] = useState(null);
 
-  const { data: students, error: studentsError, isLoading } = useGetStudentsQuery();
-  const { data: documents, error: documentsError } = useGetDocumentsQuery(selectedClassId);
+  const {
+    data: students,
+    error: studentsError,
+    isLoading,
+  } = useGetStudentsQuery(classId);
+  const { data: documents, error: documentsError } =
+    useGetDocumentsQuery(classId);
   const [addStudent] = useAddStudentMutation();
   const [updateStudent] = useUpdateStudentMutation();
   const [deleteStudent] = useDeleteStudentMutation();
@@ -37,19 +51,19 @@ const StudentsList = () => {
 
   useEffect(() => {
     if (documentsError) {
-      console.error('Error fetching documents:', documentsError);
+      console.error("Error fetching documents:", documentsError);
     }
   }, [documentsError]);
 
   useEffect(() => {
     if (students) {
-      console.log('Fetched students:', students);
+      console.log("Fetched students:", students);
     }
   }, [students]);
 
   useEffect(() => {
     if (documents) {
-      console.log('Fetched documents:', documents);
+      console.log("Fetched documents:", documents);
       setCurrentDocuments(documents); // Actualiza el estado con los documentos recibidos
     }
   }, [documents]);
@@ -57,19 +71,19 @@ const StudentsList = () => {
   const handleAddStudent = async () => {
     try {
       await addStudent(newStudent).unwrap();
-      message.success('Student added successfully');
+      message.success("Student added successfully");
       setIsAddStudentModalVisible(false);
     } catch (error) {
-      message.error('Failed to add student');
+      message.error("Failed to add student");
     }
   };
 
   const handleDeleteStudent = async (id) => {
     try {
       await deleteStudent(id).unwrap();
-      message.success('Student deleted successfully');
+      message.success("Student deleted successfully");
     } catch (error) {
-      message.error('Failed to delete student');
+      message.error("Failed to delete student");
     }
   };
 
@@ -110,7 +124,7 @@ const StudentsList = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (error) {
-    console.error('Error fetching students:', error);
+    console.error("Error fetching students:", error);
     return (
       <div>
         <div>Error: {error.message}</div>
@@ -120,7 +134,7 @@ const StudentsList = () => {
 
   const showDocumentModal = () => {
     if (documents) {
-      console.log('Documents to show in modal:', documents);
+      console.log("Documents to show in modal:", documents);
       setCurrentDocuments(documents);
     }
     setIsDocumentModalVisible(true);
@@ -187,31 +201,41 @@ const StudentsList = () => {
             className="inputModal"
             placeholder="First Name"
             value={newStudent.firstName}
-            onChange={(e) => setNewStudent({ ...newStudent, firstName: e.target.value })}
+            onChange={(e) =>
+              setNewStudent({ ...newStudent, firstName: e.target.value })
+            }
           />
           <Input
             className="inputModal"
             placeholder="Last Name"
             value={newStudent.lastName}
-            onChange={(e) => setNewStudent({ ...newStudent, lastName: e.target.value })}
+            onChange={(e) =>
+              setNewStudent({ ...newStudent, lastName: e.target.value })
+            }
           />
           <Input
             className="inputModal"
             placeholder="Email"
             value={newStudent.email}
-            onChange={(e) => setNewStudent({ ...newStudent, email: e.target.value })}
+            onChange={(e) =>
+              setNewStudent({ ...newStudent, email: e.target.value })
+            }
           />
           <Input
             className="inputModal"
             placeholder="Date of Birth"
             value={newStudent.birthDate}
-            onChange={(e) => setNewStudent({ ...newStudent, birthDate: e.target.value })}
+            onChange={(e) =>
+              setNewStudent({ ...newStudent, birthDate: e.target.value })
+            }
           />
           <Input
             className="inputModal"
             placeholder="Gender"
             value={newStudent.gender}
-            onChange={(e) => setNewStudent({ ...newStudent, gender: e.target.value })}
+            onChange={(e) =>
+              setNewStudent({ ...newStudent, gender: e.target.value })
+            }
           />
           <Button
             icon={<CopyIcon />}
@@ -247,7 +271,8 @@ const StudentsList = () => {
           <tbody>
             {currentDocuments.map((doc, index) => (
               <tr key={index}>
-                <td>{doc.archivo}</td> {/* Utiliza el nombre correcto del campo */}
+                <td>{doc.archivo}</td>{" "}
+                {/* Utiliza el nombre correcto del campo */}
                 <td>
                   <a
                     href={doc.archivo}
