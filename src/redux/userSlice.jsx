@@ -1,4 +1,3 @@
-
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -33,10 +32,16 @@ export const userSlice = createSlice({
     },
     updateAccessToken: (state, action) => {
       state.accessToken = action.payload;
-    }
+    },
+    updateUser: (state, action) => {
+      const { name, email, profileImage } = action.payload;
+      state.name = name;
+      state.email = email;
+      state.profileImage = profileImage;  // assuming you have this field in your state
+    },
   },
 });
 
-export const { addUser, removeUser, updateAccessToken } = userSlice.actions;
+export const { addUser, removeUser, updateAccessToken, updateUser } = userSlice.actions;
 
 export default userSlice.reducer;

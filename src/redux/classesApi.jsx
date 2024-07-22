@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://sabiobackend-1a734c145440.herokuapp.com',
-  prepareHeaders: (headers, { getState }) => {
-    const token = getState().user.accessToken;
+  prepareHeaders: (headers) => {
+    const token = localStorage.getItem('accessToken');
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);
     }

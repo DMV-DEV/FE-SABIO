@@ -5,11 +5,12 @@ import './StyleHeader.css';
 import { SettingIcon } from '../../assets/icons/Settings';
 // import { IacheckerIcon } from '../../assets/icons/IaChecker';
 import { LogoutIcon } from '../../assets/icons/LogoutIcon';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {  useSelector } from "react-redux";
 
 const Header = () => {
   const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const location = useLocation();
   let pathText = '';
   if (location.pathname === '/dashboard') {
@@ -27,16 +28,21 @@ const Header = () => {
   }
   const items = [
     {
-      label: <a href="/accountsettings" className='link'>Account settings</a>,
+      label: (
+        <span
+          className="link"
+          onClick={() => {
+            navigate('/accountsettings');
+          }}
+        >
+          Account settings
+        </span>
+      ),
       key: '0',
       icon: <SettingIcon />
     },
-    // {
-    //   label: <a href="/checker" className='link'>AI Checker</a>,
-    //   key: '1',
-    //   icon: <IacheckerIcon />
-    // }
   ];
+  
 
   const menu = (
     <Menu>

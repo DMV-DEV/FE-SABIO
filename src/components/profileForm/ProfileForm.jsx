@@ -1,27 +1,64 @@
-import React from "react";
+import  React from "react";
 import "../profileForm/stylesProfileForm.css";
 import { UploadOutlined, UserOutlined } from "@ant-design/icons";
 import { Input, Button, message, Upload, Avatar } from "antd";
+import { useState, useEffect } from "react";
+import { useGetProfilePictureUrlQuery, useUploadProfilePictureMutation , useUpdateUserInfoMutation} from "../../redux/accountApi";
+import { useSelector } from "react-redux";
 
 const ProfileForm = () => {
-  const props = {
-    name: "file",
-    action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
-    headers: {
-      authorization: "authorization-text",
-    },
-    onChange(info) {
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
+  const userEmail = useSelector((state) => state.user.email);
+  const username = useSelector((state) => state.user.name);
+
+  const [email, setEmail] = useState(userEmail);
+  const [fullName, setFullName] = useState(username);
+  const [profilePicture, setProfilePicture] = useState(null);
+  // const [newPassword, setNewPassword] = useState();
+  // const [oldPassword, setOldPassword] = useState();
+  // const [confirmPassword, setConfirmPassword] = useState();
+
+  const { data: profilePictureUrl, isLoading: isProfilePictureLoading, isError: isProfilePictureError } = useGetProfilePictureUrlQuery();
+  const [uploadProfilePicture, { isLoading: isUploading, isError: isUploadError }] = useUploadProfilePictureMutation();
+  const [updateUserInfo, { isLoading: isUpdating, isError: isUpdateError }] = useUpdateUserInfoMutation();
+ 
+  useEffect(() => {
+    if (profilePictureUrl) {
+      setProfilePicture(profilePictureUrl.imageUrl);
+    }
+  }, [profilePictureUrl]);
+
+  const handleUploadProfilePicture = async (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = async () => {
+      const base64String = reader.result;
+      try {
+        await uploadProfilePicture({ imageUrl: base64String });
+        setProfilePicture(base64String)
+        message.success("Profile picture updated successfully!");
+      } catch (error) {
+        message.error("Error uploading profile picture!");
       }
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
+    };
+    reader.onerror = () => {
+      message.error("Error reading file!");
+    };
+  };
+  const beforeUpload = (file) => {
+    handleUploadProfilePicture(file);
+    return false;
   };
 
+
+
+  const handleUpdateUserInfo = async () => {
+    try {
+      await updateUserInfo({ username: fullName, email });
+      message.success("User info updated successfully!");
+    } catch (error) {
+      message.error("Error updating user info!");
+    }
+  };
   return (
     <div className="profile-form-container">
       <section className="form-section">
@@ -31,8 +68,15 @@ const ProfileForm = () => {
             <span className="subtitle">Edit your profile picture.</span>
           </div>
           <div className="container-row__col2__1">
-            <Avatar size={64} icon={<UserOutlined />} className="avatar" />
-            <Upload {...props} className="upload-button">
+            <Avatar size={64} icon={<UserOutlined />} className="avatar" src={profilePicture} />
+            <Upload
+              action="https://sabiobackend-1a734c145440.herokuapp.com/upload/profile-picture/"  
+              beforeUpload={beforeUpload} 
+              className="upload-button"
+              showUploadList={false}
+              accept="image/*" 
+              maxCount={1}
+            >
               <Button icon={<UploadOutlined />} className="button-upload">
                 Change profile picture
               </Button>
@@ -46,7 +90,9 @@ const ProfileForm = () => {
           <div className="container-row__col1">
             <h3>Contact information</h3>
             <span className="subtitle">Change your identity information.</span>
-            <button className="button-save">Save changes</button>
+            <button className="button-save" onClick={handleUpdateUserInfo}>
+              Save changes
+            </button>
           </div>
           <div className="container-row__col2">
             <div className="form-group">
@@ -56,6 +102,8 @@ const ProfileForm = () => {
                 placeholder="Enter your first name"
                 type="text"
                 className="inputProfile"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -65,6 +113,8 @@ const ProfileForm = () => {
                 placeholder="Enter your last name"
                 type="email"
                 className="inputProfile"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </div>

@@ -10,7 +10,7 @@ const Classes = () => {
   const navigate = useNavigate();
   // const profesorId = useSelector((state) => state.user.id);
   const profesorId = 7
-  const token = useSelector((state) => state.user.accessToken);
+  const token = localStorage.getItem('accessToken');
   const profesor = useSelector((state) => state.user.name)
   const dispatch = useDispatch();
   

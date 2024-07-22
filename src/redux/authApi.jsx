@@ -1,7 +1,7 @@
 // src/redux/authApi.js
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BASE_URL } from '../app.config.ts';
+import { BASE_URL } from '../app.config.js';
 import { addUser, removeUser, updateAccessToken } from './userSlice';
 
 export const authApi = createApi({
@@ -21,7 +21,9 @@ export const authApi = createApi({
       async onQueryStarted({ email, password }, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          dispatch(addUser({ name: email, email, id: '', accessToken: data.access, refreshToken: data.refresh }));
+          localStorage.setItem('accessToken', data.access);
+          localStorage.setItem('refreshToken', data.refresh);
+          dispatch(addUser({ name: data.username, email, id: data.id, accessToken: data.access, refreshToken: data.refresh }));
         } catch (error) {
           console.error('Failed to login:', error);
         }
@@ -40,6 +42,7 @@ export const authApi = createApi({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
+          localStorage.setItem('accessToken', data.access);
           dispatch(updateAccessToken(data.access));
         } catch (error) {
           console.error('Failed to refresh access token:', error);
