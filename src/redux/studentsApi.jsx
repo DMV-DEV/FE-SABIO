@@ -17,7 +17,7 @@ export const studentsApi = createApi({
   baseQuery,
   endpoints: (builder) => ({
     getStudents: builder.query({
-      query: () => "/class/students/?clase_id=5",
+      query: () => "/class/students/?clase_id=2",
     }),
     addStudent: builder.mutation({
       query: (newStudent) => ({
