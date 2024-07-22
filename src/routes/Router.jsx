@@ -27,6 +27,9 @@ export const router = createBrowserRouter([
 
       //student interface
       { path: "/student/classes", element: <ClassesStudents /> },
+      { path: "/student/accountsettings", element: <Profile /> },
+      { path: "/student/chatbot", element: <Chatbot /> },
+      
     ],
   },
   {
