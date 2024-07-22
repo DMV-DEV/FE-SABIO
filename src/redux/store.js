@@ -4,10 +4,9 @@ import { chatApi } from './chatApi';
 import { classesApi } from './classesApi';
 import { authApi } from './authApi';
 import { studentsApi } from './studentsApi';
-import { documentsApi } from './documentsApi'; // Importa documentsApi
+import { documentsApi } from './documentsApi';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { accountApi } from './accountApi';
-import { studentsApi } from './studentsApi'
 import classesSlice  from './classesSlice';
 
 
@@ -21,7 +20,6 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [accountApi.reducerPath]: accountApi.reducer,
     [studentsApi.reducerPath]: studentsApi.reducer, 
-    [studentsApi.reducerPath]: studentsApi.reducer,
     [documentsApi.reducerPath]: documentsApi.reducer, // Agrega documentsApi.reducer
   },
   
