@@ -1,42 +1,58 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import "../studentsList/stylesStudentsList.css";
-import { Modal, Button, Input, Space, message } from "antd";
-import TableComponent from "../../components/table/TableComponent";
-import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
-import { SearchIcon } from "../../assets/icons/SearchIcon";
-import { CopyIcon } from "../../assets/icons/copyIcon";
+import { Modal, Button, Input, Space, message } from 'antd';
+import TableComponent from '../../components/table/TableComponent';
+import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import { SearchIcon } from '../../assets/icons/SearchIcon';
+import { CopyIcon } from '../../assets/icons/copyIcon';
 import {
   useGetStudentsQuery,
   useAddStudentMutation,
   useUpdateStudentMutation,
   useDeleteStudentMutation,
-} from "../../redux/studentsApi";
+} from '../../redux/studentsApi';
+import { useGetDocumentsQuery } from '../../redux/documentsApi';
 
 const StudentsList = () => {
   const [isAddStudentModalVisible, setIsAddStudentModalVisible] = useState(false);
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
   const [currentDocuments, setCurrentDocuments] = useState([]);
-  const [currentInfo, setCurrentInfo] = useState("");
-  const [newStudent, setNewStudent] = useState({ firstName: "", lastName: "", email: "", birthDate: "", gender: "" });
+  const [currentInfo, setCurrentInfo] = useState('');
+  const [newStudent, setNewStudent] = useState({ firstName: '', lastName: '', email: '', birthDate: '', gender: '' });
+  const [selectedClassId, setSelectedClassId] = useState(1); // Asegúrate de definir un ID de clase válido
   const [error, setError] = useState(null);
 
-  const { data: students, error: queryError, isLoading } = useGetStudentsQuery();
+  const { data: students, error: studentsError, isLoading } = useGetStudentsQuery();
+  const { data: documents, error: documentsError } = useGetDocumentsQuery(selectedClassId);
   const [addStudent] = useAddStudentMutation();
   const [updateStudent] = useUpdateStudentMutation();
   const [deleteStudent] = useDeleteStudentMutation();
 
   useEffect(() => {
-    if (queryError) {
-      setError(queryError);
+    if (studentsError) {
+      setError(studentsError);
     }
-  }, [queryError]);
+  }, [studentsError]);
+
+  useEffect(() => {
+    if (documentsError) {
+      console.error('Error fetching documents:', documentsError);
+    }
+  }, [documentsError]);
 
   useEffect(() => {
     if (students) {
-      console.log('Fetched students:', students); // Añadir este console.log para verificar los datos
+      console.log('Fetched students:', students);
     }
   }, [students]);
+
+  useEffect(() => {
+    if (documents) {
+      console.log('Fetched documents:', documents);
+      setCurrentDocuments(documents); // Actualiza el estado con los documentos recibidos
+    }
+  }, [documents]);
 
   const handleAddStudent = async () => {
     try {
@@ -98,19 +114,15 @@ const StudentsList = () => {
     return (
       <div>
         <div>Error: {error.message}</div>
-        {/* <pre>{JSON.stringify(error, null, 2)}</pre> Muestra más detalles del error */}
       </div>
     );
   }
 
-  const  documents= [
-    { subject: 'Physics', title: 'Title of Document', link: '#' },
-    { subject: 'Maths', title: 'Title of Document', link: '#' },
-    { subject: 'English', title: 'Title of Document', link: '#' }
-  ];
-
-  const showDocumentModal = (documents) => {
-    setCurrentDocuments(documents);
+  const showDocumentModal = () => {
+    if (documents) {
+      console.log('Documents to show in modal:', documents);
+      setCurrentDocuments(documents);
+    }
     setIsDocumentModalVisible(true);
   };
 
@@ -214,8 +226,8 @@ const StudentsList = () => {
       <Modal
         title={<h2>List of documents</h2>}
         visible={isDocumentModalVisible}
-        onOk={() => setIsDocumentModalVisible(false)}
-        onCancel={() => setIsDocumentModalVisible(false)}
+        onOk={handleDocumentModalOk}
+        onCancel={handleDocumentModalCancel}
         footer={null}
         wrapClassName="custom-modal-wrapper"
         style={{ top: "30%" }}
@@ -233,13 +245,12 @@ const StudentsList = () => {
       >
         <table className="documentTable">
           <tbody>
-            {documents.map((doc, index) => (
+            {currentDocuments.map((doc, index) => (
               <tr key={index}>
-                <td>{doc.subject}</td>
-                <td>{doc.title}</td>
+                <td>{doc.archivo}</td> {/* Utiliza el nombre correcto del campo */}
                 <td>
                   <a
-                    href={doc.link}
+                    href={doc.archivo}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="black-link"
@@ -279,5 +290,3 @@ const StudentsList = () => {
 };
 
 export default StudentsList;
-
-
