@@ -1,79 +1,78 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import "../studentsList/stylesStudentsList.css";
-import { Modal, Button, Input, Space, message } from 'antd';
-import TableComponent from '../../components/table/TableComponent';
-import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
-import { SearchIcon } from '../../assets/icons/SearchIcon';
-import { CopyIcon } from '../../assets/icons/copyIcon';
+import { Modal, Button, Input, Space, message } from "antd";
+import TableComponent from "../../components/table/TableComponent";
+import { CloseOutlined, PlusOutlined, CopyOutlined } from "@ant-design/icons"; 
+import { SearchIcon } from "../../assets/icons/SearchIcon";
+import { CopyIcon } from "../../assets/icons/copyIcon";
 import {
   useGetStudentsQuery,
   useAddStudentMutation,
-  useUpdateStudentMutation,
   useDeleteStudentMutation,
-} from '../../redux/studentsApi';
-import { useGetDocumentsQuery } from '../../redux/documentsApi';
+} from "../../redux/studentsApi";
+import { useGetDocumentsQuery } from "../../redux/documentsApi";
+import { useSelector } from "react-redux";
 
 const StudentsList = () => {
+  const classId = useSelector((state) => state.classes.id);
+
   const [isAddStudentModalVisible, setIsAddStudentModalVisible] = useState(false);
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
-  const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
   const [currentDocuments, setCurrentDocuments] = useState([]);
-  const [currentInfo, setCurrentInfo] = useState('');
-  const [newStudent, setNewStudent] = useState({ firstName: '', lastName: '', email: '', birthDate: '', gender: '' });
-  const [selectedClassId, setSelectedClassId] = useState(1); // Asegúrate de definir un ID de clase válido
-  const [error, setError] = useState(null);
+  const [newStudentEmail, setNewStudentEmail] = useState("");
+  const [searchText, setSearchText] = useState("");
 
-  const { data: students, error: studentsError, isLoading } = useGetStudentsQuery();
-  const { data: documents, error: documentsError } = useGetDocumentsQuery(selectedClassId);
+  const { data: students, error: studentsError, isLoading } = useGetStudentsQuery(classId);
+  const { data: documents, error: documentsError } = useGetDocumentsQuery(classId);
   const [addStudent] = useAddStudentMutation();
-  const [updateStudent] = useUpdateStudentMutation();
   const [deleteStudent] = useDeleteStudentMutation();
 
   useEffect(() => {
     if (studentsError) {
-      setError(studentsError);
+      console.error("Error fetching students:", studentsError);
     }
   }, [studentsError]);
 
   useEffect(() => {
     if (documentsError) {
-      console.error('Error fetching documents:', documentsError);
+      console.error("Error fetching documents:", documentsError);
     }
   }, [documentsError]);
 
   useEffect(() => {
-    if (students) {
-      console.log('Fetched students:', students);
-    }
-  }, [students]);
-
-  useEffect(() => {
     if (documents) {
-      console.log('Fetched documents:', documents);
-      setCurrentDocuments(documents); // Actualiza el estado con los documentos recibidos
+      setCurrentDocuments(documents);
     }
   }, [documents]);
 
   const handleAddStudent = async () => {
     try {
-      await addStudent(newStudent).unwrap();
-      message.success('Student added successfully');
+      await addStudent({ email: newStudentEmail });
+      message.success("Student added successfully");
       setIsAddStudentModalVisible(false);
     } catch (error) {
-      message.error('Failed to add student');
+      message.error("Failed to add student");
     }
   };
 
   const handleDeleteStudent = async (id) => {
     try {
-      await deleteStudent(id).unwrap();
-      message.success('Student deleted successfully');
+      await deleteStudent(id);
+      message.success("Student deleted successfully");
     } catch (error) {
-      message.error('Failed to delete student');
+      message.error("Failed to delete student");
     }
   };
 
-  const onSearch = (value) => console.log(value);
+  const handleSearchChange = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  const filteredStudents = students?.filter(student =>
+    student.first_name.toLowerCase().includes(searchText.toLowerCase()) ||
+    student.last_name.toLowerCase().includes(searchText.toLowerCase()) ||
+    student.email.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   const columns = [
     {
@@ -108,19 +107,8 @@ const StudentsList = () => {
     },
   ];
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) {
-    console.error('Error fetching students:', error);
-    return (
-      <div>
-        <div>Error: {error.message}</div>
-      </div>
-    );
-  }
-
   const showDocumentModal = () => {
     if (documents) {
-      console.log('Documents to show in modal:', documents);
       setCurrentDocuments(documents);
     }
     setIsDocumentModalVisible(true);
@@ -143,7 +131,7 @@ const StudentsList = () => {
             suffix={<SearchIcon />}
             placeholder="Search your student..."
             allowClear
-            onSearch={onSearch}
+            onChange={handleSearchChange}
             className="input-search"
           />
           <Button
@@ -158,13 +146,12 @@ const StudentsList = () => {
       <TableComponent
         type="student"
         columns={columns}
-        data={students}
+        data={filteredStudents}
         onDocumentClick={showDocumentModal}
       />
       <Modal
         title="Add New Student"
         visible={isAddStudentModalVisible}
-        onOk={handleAddStudent}
         onCancel={() => setIsAddStudentModalVisible(false)}
         footer={null}
         wrapClassName="custom-modal-wrapper"
@@ -183,50 +170,42 @@ const StudentsList = () => {
         }
       >
         <Space direction="vertical" className="modal-content">
-          <Input
-            className="inputModal"
-            placeholder="First Name"
-            value={newStudent.firstName}
-            onChange={(e) => setNewStudent({ ...newStudent, firstName: e.target.value })}
-          />
-          <Input
-            className="inputModal"
-            placeholder="Last Name"
-            value={newStudent.lastName}
-            onChange={(e) => setNewStudent({ ...newStudent, lastName: e.target.value })}
-          />
-          <Input
-            className="inputModal"
-            placeholder="Email"
-            value={newStudent.email}
-            onChange={(e) => setNewStudent({ ...newStudent, email: e.target.value })}
-          />
-          <Input
-            className="inputModal"
-            placeholder="Date of Birth"
-            value={newStudent.birthDate}
-            onChange={(e) => setNewStudent({ ...newStudent, birthDate: e.target.value })}
-          />
-          <Input
-            className="inputModal"
-            placeholder="Gender"
-            value={newStudent.gender}
-            onChange={(e) => setNewStudent({ ...newStudent, gender: e.target.value })}
-          />
-          <Button
-            icon={<CopyIcon />}
-            className="button-copy-invite"
-            type="primary"
-            onClick={handleAddStudent}
-          >
-            Add Student
-          </Button>
+          <div className="input-group">
+            <Input
+              className="inputModal"
+              defaultValue="wwwinterfacefjfd5345/we23fwf4g851d14g414/g43ertetrr"
+            />
+            <Button
+              icon={<CopyOutlined />}
+              className="button-copy-invite"
+              type="primary"
+            >
+              Copy
+            </Button>
+          </div>
+          <p className="tx-or">Or</p>
+          <div className="input-group">
+            <div className="inputModal">
+              <label>Email</label>
+              <Input
+                className="inputModal"
+                defaultValue="user3456@mail.com"
+                onChange={(e) => setNewStudentEmail(e.target.value)}
+              />
+            </div>
+            <Button
+              className="button-copy-invite"
+              type="primary"
+              onClick={handleAddStudent}
+            >
+              Invite by email
+            </Button>
+          </div>
         </Space>
       </Modal>
       <Modal
         title={<h2>List of documents</h2>}
         visible={isDocumentModalVisible}
-        onOk={handleDocumentModalOk}
         onCancel={handleDocumentModalCancel}
         footer={null}
         wrapClassName="custom-modal-wrapper"
@@ -247,7 +226,7 @@ const StudentsList = () => {
           <tbody>
             {currentDocuments.map((doc, index) => (
               <tr key={index}>
-                <td>{doc.archivo}</td> {/* Utiliza el nombre correcto del campo */}
+                <td>{doc.archivo}</td>
                 <td>
                   <a
                     href={doc.archivo}
@@ -262,28 +241,6 @@ const StudentsList = () => {
             ))}
           </tbody>
         </table>
-      </Modal>
-      <Modal
-        title={<h2>Details</h2>}
-        visible={isInfoModalVisible}
-        onOk={() => setIsInfoModalVisible(false)}
-        onCancel={() => setIsInfoModalVisible(false)}
-        footer={null}
-        wrapClassName="custom-modal-wrapper"
-        style={{ top: "30%" }}
-        closeIcon={
-          <CloseOutlined
-            style={{
-              fontSize: 20,
-              backgroundColor: "#EF8F37",
-              borderRadius: "50%",
-              borderColor: "#EF8F37",
-              padding: "4px",
-            }}
-          />
-        }
-      >
-        <p>{currentInfo}</p>
       </Modal>
     </div>
   );
