@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../studentsList/stylesStudentsList.css";
 import { Modal, Button, Input, Space, message } from "antd";
 import TableComponent from "../../components/table/TableComponent";
-import { CloseOutlined, PlusOutlined, CopyOutlined } from "@ant-design/icons"; // Aquí están todos los íconos que necesitas importar
+import { CloseOutlined, PlusOutlined, CopyOutlined } from "@ant-design/icons"; 
 import { SearchIcon } from "../../assets/icons/SearchIcon";
 import { CopyIcon } from "../../assets/icons/copyIcon";
 import {
@@ -13,22 +13,17 @@ import {
 import { useGetDocumentsQuery } from "../../redux/documentsApi";
 import { useSelector } from "react-redux";
 
-
-
 const StudentsList = () => {
   const classId = useSelector((state) => state.classes.id);
 
-  const [isAddStudentModalVisible, setIsAddStudentModalVisible] =
-    useState(false);
+  const [isAddStudentModalVisible, setIsAddStudentModalVisible] = useState(false);
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
-  const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
   const [currentDocuments, setCurrentDocuments] = useState([]);
   const [newStudentEmail, setNewStudentEmail] = useState("");
+  const [searchText, setSearchText] = useState("");
 
-  const { data: students, error: studentsError, isLoading } =
-    useGetStudentsQuery(classId);
-  const { data: documents, error: documentsError } =
-    useGetDocumentsQuery(classId);
+  const { data: students, error: studentsError, isLoading } = useGetStudentsQuery(classId);
+  const { data: documents, error: documentsError } = useGetDocumentsQuery(classId);
   const [addStudent] = useAddStudentMutation();
   const [deleteStudent] = useDeleteStudentMutation();
 
@@ -69,7 +64,15 @@ const StudentsList = () => {
     }
   };
 
-  const onSearch = (value) => console.log(value);
+  const handleSearchChange = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  const filteredStudents = students?.filter(student =>
+    student.first_name.toLowerCase().includes(searchText.toLowerCase()) ||
+    student.last_name.toLowerCase().includes(searchText.toLowerCase()) ||
+    student.email.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   const columns = [
     {
@@ -128,7 +131,7 @@ const StudentsList = () => {
             suffix={<SearchIcon />}
             placeholder="Search your student..."
             allowClear
-            onSearch={onSearch}
+            onChange={handleSearchChange}
             className="input-search"
           />
           <Button
@@ -143,7 +146,7 @@ const StudentsList = () => {
       <TableComponent
         type="student"
         columns={columns}
-        data={students}
+        data={filteredStudents}
         onDocumentClick={showDocumentModal}
       />
       <Modal
@@ -223,8 +226,7 @@ const StudentsList = () => {
           <tbody>
             {currentDocuments.map((doc, index) => (
               <tr key={index}>
-                <td>{doc.archivo}</td>{" "}
-                {/* Utiliza el nombre correcto del campo */}
+                <td>{doc.archivo}</td>
                 <td>
                   <a
                     href={doc.archivo}
