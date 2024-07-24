@@ -1,98 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../classesDocuments/stylesClassesDocuments.css";
 import { Modal, Button, message, Upload } from "antd";
 import TableComponent from "../../components/table/TableComponent";
 import { CloseOutlined, PlusOutlined  } from "@ant-design/icons"; 
+import { useGetClassesByEducatorQuery } from "../../redux/classesApi"
+
 
 const ClassesDocuments = () => {
+  // const classId = useSelector((state) => state.classes.id);
+  const profesorId = 8
+
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
   const [currentDocuments, setCurrentDocuments] = useState([]);
   const [currentInfo, setCurrentInfo] = useState('');
 
-  const data = [
-    {
-      key: '1',
-      class: 'Math 101',
-      section: 'A',
-      category: 'Assignment',
-      date: '2024-01-01',
-      document: 'Assignment 1',
-      documents: [
-        { subject: 'Physics', title: 'Title of Document', link: '#' },
-        { subject: 'Maths', title: 'Title of Document', link: '#' },
-        { subject: 'English', title: 'Title of Document', link: '#' }
-      ],
-      info: 'Due next week',
-      classInfo: 'Math 101 - Section A: Basic Math assignments due next week.',
-    },
-    {
-      key: '2',
-      class: 'History 201',
-      section: 'B',
-      category: 'Exam',
-      document: 'Midterm Exam',
-      date: '2024-02-15',
-      info: 'Study chapters 1-5',
-      documents: [
-        { subject: 'Physics', title: 'Title of Document', link: '#' },
-        { subject: 'Maths', title: 'Title of Document', link: '#' },
-        { subject: 'English', title: 'Title of Document', link: '#' }
-      ],
-      classInfo: 'History 201 - Section B: Study chapters 1-5 for the midterm.',
-    },
-    {
-      key: '3',
-      class: 'Science 301',
-      section: 'A',
-      category: 'Project',
-      document: 'Science Fair Project',
-      date: '2024-03-10',
-      info: 'Group project',
-      documents: [
-        { subject: 'Physics', title: 'Title of Document', link: '#' },
-        { subject: 'Maths', title: 'Title of Document', link: '#' },
-        { subject: 'English', title: 'Title of Document', link: '#' }
-      ],
-      classInfo: 'Science 301 - Section A: Group project on various science topics.',
-    },
-    {
-      key: '4',
-      class: 'English 101',
-      section: 'C',
-      category: 'Essay',
-      document: 'Final Essay',
-      date: '2024-04-22',
-      info: 'Minimum 2000 words',
-      documents: [
-        { subject: 'Physics', title: 'Title of Document', link: '#' },
-        { subject: 'Maths', title: 'Title of Document', link: '#' },
-        { subject: 'English', title: 'Title of Document', link: '#' }
-      ],
-      classInfo: 'English 101 - Section C: Final essay should be at least 2000 words.',
-    },
-    {
-      key: '5',
-      class: 'Art 101',
-      section: 'B',
-      category: 'Portfolio',
-      document: 'Art Portfolio',
-      date: '2024-05-30',
-      info: 'Submit online',
-      documents: [
-        { subject: 'Physics', title: 'Title of Document', link: '#' },
-        { subject: 'Maths', title: 'Title of Document', link: '#' },
-        { subject: 'English', title: 'Title of Document', link: '#' }
-      ],
-      classInfo: 'Art 101 - Section B: Submit your art portfolio online.',
-    },
-  ];
+  const { data, error, isLoading } = useGetClassesByEducatorQuery(profesorId);
+
+  useEffect(() => {
+    if (data) {
+      console.log('Clases:', data);
+    }
+    if (error) {
+      console.error('Error:', error);
+    }
+  }, [data, error]);
 
   const columns = [
     {
       title: 'Class',
-      dataIndex: 'class',
-      key: 'class',
+      dataIndex: 'nombre',
+      key: 'nombre',
     },
     {
       title: 'Section',
