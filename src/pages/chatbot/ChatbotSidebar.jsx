@@ -3,16 +3,20 @@ import { useGetHilosQuery } from '../../redux/chatApi';
 import { useGetDocumentsQuery, useGetDocumentsByHiloQuery, useUploadDocumentsMutation } from '../../redux/documentsApi';
 import { UndoOutlined, FolderOpenOutlined, TeamOutlined, UploadOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, message, Upload } from 'antd';
+import {  useSelector } from 'react-redux';
 import './StyleChatbot.css';
 
 const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
+  const clase_id = useSelector((state) => state.classes.id);
   const { data: hilos = [], refetch: refetchHilos } = useGetHilosQuery();
-  const { data: documentsByclass = [], refetch: refetchDocumentsByclass } = useGetDocumentsQuery();
-  const { data: documentsByHilo = [], refetch: refetchDocumentsByHilo } = useGetDocumentsByHiloQuery(selectedHilo);
-  const [uploadDocuments] = useUploadDocumentsMutation();
+  const { data: documentsByclass = [], refetch: refetchDocumentsByclass } = useGetDocumentsQuery(clase_id);
+  const { data: documentsByHilo = [], refetch: refetchUploadsByHilo } = useGetDocumentsByHiloQuery(selectedHilo, {
+    skip: !selectedHilo,
+  });
+
   const [isExpanded, setIsExpanded] = useState(false);
   const sidebarRef = useRef(null);
-  // const [selectedHilo, setSelectedHilo] = useState()
+  console.log(documentsByHilo, documentsByclass )  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -40,56 +44,31 @@ const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
     </Menu>
   );
 
-  console.log(selectedHilo)
-
   const menuDocumentsByHilo = (
     <Menu>
-      {documentsByHilo.map(upload => (
+      {Array.isArray(documentsByHilo) ? documentsByHilo.map(upload => (
         <Menu.Item key={upload.id} style={{ fontSize: 16 }}>
           {upload.id} <a href={upload.archivo} className="black-link">View pdf</a>
         </Menu.Item>
-      ))}
+      )) : <Menu.Item>Sin documentos disponibles</Menu.Item>}
     </Menu>
   );
 
   const menuDocumentsByClass = (
     <Menu>
-      {documentsByclass.map(document => (
+      {Array.isArray(documentsByclass) ? documentsByclass.map(document => (
         <Menu.Item key={document.id} style={{ fontSize: 16 }}>
           id: {document.id} <a href={document.archivo} className="black-link">View pdf</a>
         </Menu.Item>
-      ))}
+      )) : <Menu.Item>Sin documentos disponibles</Menu.Item>}
     </Menu>
   );
 
   const buttons = [
     { key: 'history', icon: <UndoOutlined />, text: 'History', dropdown: menuHistory },
     { key: 'uploads', icon: <FolderOpenOutlined />, text: 'My Uploads', dropdown: menuDocumentsByHilo },
-    { key: 'documents', icon: <TeamOutlined />, text: 'Teacher’s uploaded', dropdown: menuDocumentsByClass }
+    { key: 'documents', icon: <TeamOutlined />, text: 'Teacher’s uploaded', dropdown: menuDocumentsByClass}
   ];
-
-  const props = {
-    name: "file",
-    action: async (file) => {
-      if (!selectedHilo) {
-        message.error("Please select a chat thread (hilo) first.");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('hilo_id', selectedHilo);
-      formData.append('archivo', file);
-
-      try {
-        await uploadDocuments({ formData }).unwrap();
-        message.success(`${file.name} file uploaded successfully`);
-        refetchDocumentsByHilo();
-      } catch (error) {
-        message.error(`${file.name} file upload failed.`);
-      }
-    },
-    showUploadList: false,
-  };
 
   return (
     <div
@@ -108,12 +87,6 @@ const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
           </button>
         </Dropdown>
       ))}
-      <Upload {...props} className='chatbot__sidebar--upload'>
-        <button className='chatbot__sidebar--upload'>
-          {<UploadOutlined />}
-          {isExpanded && <span>Upload Document</span>}
-        </button>
-      </Upload>
     </div>
   );
 };

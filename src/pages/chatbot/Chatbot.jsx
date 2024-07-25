@@ -23,8 +23,9 @@ const Chatbot = () => {
   const messagesEndRef = useRef(null);
   const class_id = useSelector((state) => state.classes.id);
   const Token = useSelector((state) =>state.user.accessToken );
-  console.log(messagesData);
-  console.log(Token, class_id);
+  // console.log(messagesData);
+  // console.log(Token, class_id);
+
 
   useEffect(() => {
     if (selectedHilo) {
@@ -111,7 +112,7 @@ const Chatbot = () => {
           <button onClick={handleSendMessage}><SendOutlined rotate={-35} /></button>
         </div>
       </div>
-      <ChatbotSidebar setSelectedHilo={setSelectedHilo} />
+      <ChatbotSidebar selectedHilo = {selectedHilo} setSelectedHilo={setSelectedHilo} />
     </div>
   );
 };
