@@ -15,7 +15,7 @@ const CardComponent = ({ title, instructor, subject, section }) => {
     >
          <div className="card__meta">
         <div className="card__meta-title">
-          <h3>{title}</h3>
+          <h3>Clase : {title}</h3>
           <p className="card__meta-additional">Section {section}</p>
         </div>
         <Meta
