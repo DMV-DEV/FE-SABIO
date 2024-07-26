@@ -4,79 +4,109 @@ import { Modal, Button, message, Upload } from "antd";
 import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import TableComponent from "../../components/table/TableComponent";
 import { useGetClassesByEducatorQuery } from "../../redux/classesApi";
-import { useUploadDocumentsMutation } from "../../redux/documentsApi";
+import {
+  useUploadDocumentsMutation,
+  useGetDocumentsQuery,
+} from "../../redux/documentsApi";
+import { useSelector } from "react-redux";
 
 const ClassesDocuments = () => {
   const profesorId = 8; // ID del profesor
+  const classId = useSelector((state) => state.classes.id);
   const [uploadDocuments] = useUploadDocumentsMutation(); // Hook para subir documentos
 
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
   const [currentDocuments, setCurrentDocuments] = useState([]);
-  const [currentInfo, setCurrentInfo] = useState('');
+  const [currentInfo, setCurrentInfo] = useState("");
 
-  const { data, error, isLoading } = useGetClassesByEducatorQuery(profesorId);
+  // Obtener datos y errores de los hooks
+  const {
+    data: classesData,
+    error: classesError,
+    isLoading: classesLoading,
+  } = useGetClassesByEducatorQuery(profesorId);
+  const {
+    data: documentsData,
+    error: documentsError,
+    isLoading: documentsLoading,
+  } = useGetDocumentsQuery(classId);
 
   useEffect(() => {
-    if (data) {
-      console.log('Clases:', data);
+    if (classesError) {
+      console.error("Error fetching classes:", classesError);
     }
-    if (error) {
-      console.error('Error:', error);
+  }, [classesError]);
+
+  useEffect(() => {
+    if (documentsError) {
+      console.error("Error fetching documents:", documentsError);
     }
-  }, [data, error]);
+  }, [documentsError]);
+
+  useEffect(() => {
+    if (classesData) {
+      console.log("Clases:", classesData);
+    }
+  }, [classesData]);
 
   const columns = [
     {
-      title: 'Class',
-      dataIndex: 'nombre',
-      key: 'nombre',
+      title: "Class",
+      dataIndex: "nombre",
+      key: "nombre",
     },
     {
-      title: 'Section',
-      dataIndex: 'section',
-      key: 'section',
+      title: "Section",
+      dataIndex: "section",
+      key: "section",
     },
     {
-      title: 'Category',
-      dataIndex: 'category',
-      key: 'category',
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
     },
     {
-      title: 'Document',
-      dataIndex: 'document',
-      key: 'document',
+      title: "Document",
+      dataIndex: "document",
+      key: "document",
     },
     {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
     },
     {
-      title: 'Info',
-      dataIndex: 'info',
-      key: 'info',
+      title: "Info",
+      dataIndex: "info",
+      key: "info",
     },
   ];
 
   const handleUpload = async (file) => {
     const formData = new FormData();
-    formData.append('archivo', file);
-    const claseId = data?.[0]?.id; // O el id de la clase que elijas
+    formData.append("archivo", file);
+    const claseId = classesData?.[0]?.id; // O el id de la clase que elijas
     const hiloId = null; // O el id del hilo si es aplicable
-    if (claseId) formData.append('clase_id', claseId);
-    if (hiloId) formData.append('hilo_id', hiloId);
+    if (claseId) formData.append("clase_id", claseId);
+    if (hiloId) formData.append("hilo_id", hiloId);
 
     try {
-      await uploadDocuments({ clase_id: claseId, hilo_id: hiloId, archivo: file }).unwrap();
+      await uploadDocuments({
+        clase_id: claseId,
+        hilo_id: hiloId,
+        archivo: file,
+      }).unwrap();
       message.success(`${file.name} file uploaded successfully`);
     } catch (error) {
       message.error(`${file.name} file upload failed.`);
     }
   };
 
-  const showDocumentModal = (documents) => {
-    setCurrentDocuments(documents);
+  const showDocumentModal = () => {
+    if (documentsData) {
+      setCurrentDocuments(documentsData);
+    }
     setIsDocumentModalVisible(true);
   };
 
@@ -101,11 +131,15 @@ const ClassesDocuments = () => {
     setIsInfoModalVisible(false);
   };
 
+  if (classesLoading || documentsLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="containerPage">
       <div className="title-section">
         <h1>Classes</h1>
-        <Upload 
+        <Upload
           customRequest={({ file, onSuccess, onError }) => {
             handleUpload(file)
               .then(() => onSuccess())
@@ -120,27 +154,44 @@ const ClassesDocuments = () => {
       </div>
       <TableComponent
         columns={columns}
-        data={data}
+        data={classesData}
         onDocumentClick={showDocumentModal}
         onInfoClick={showInfoModal}
       />
       <Modal
         title={<h2>List of documents</h2>}
         visible={isDocumentModalVisible}
-        onOk={handleDocumentModalOk}
         onCancel={handleDocumentModalCancel}
         footer={null}
         wrapClassName="custom-modal-wrapper"
         style={{ top: "30%" }}
-        closeIcon={<CloseOutlined style={{ fontSize: 20, backgroundColor: "#EF8F37", borderRadius: "50%", borderColor: "#EF8F37", padding: "4px" }} />}
+        closeIcon={
+          <CloseOutlined
+            style={{
+              fontSize: 20,
+              backgroundColor: "#EF8F37",
+              borderRadius: "50%",
+              borderColor: "#EF8F37",
+              padding: "4px",
+            }}
+          />
+        }
       >
         <table className="documentTable">
           <tbody>
             {currentDocuments.map((doc, index) => (
               <tr key={index}>
-                <td>{doc.subject}</td>
-                <td>{doc.title}</td>
-                <td><a href={doc.link} target="_blank" rel="noopener noreferrer" className="black-link">View PDF</a></td>
+                <td>{doc.archivo}</td>
+                <td>
+                  <a
+                    href={doc.archivo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="black-link"
+                  >
+                    View PDF
+                  </a>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -155,7 +206,17 @@ const ClassesDocuments = () => {
         footer={null}
         wrapClassName="custom-modal-wrapper"
         style={{ top: "30%" }}
-        closeIcon={<CloseOutlined style={{ fontSize: 20, backgroundColor: "#EF8F37", borderRadius: "50%", borderColor: "#EF8F37", padding: "4px" }} />}
+        closeIcon={
+          <CloseOutlined
+            style={{
+              fontSize: 20,
+              backgroundColor: "#EF8F37",
+              borderRadius: "50%",
+              borderColor: "#EF8F37",
+              padding: "4px",
+            }}
+          />
+        }
       >
         <p>{currentInfo}</p>
       </Modal>
@@ -164,4 +225,3 @@ const ClassesDocuments = () => {
 };
 
 export default ClassesDocuments;
-
