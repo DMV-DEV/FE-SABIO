@@ -23,8 +23,9 @@ const Chatbot = () => {
   const messagesEndRef = useRef(null);
   const class_id = useSelector((state) => state.classes.id);
   const Token = useSelector((state) =>state.user.accessToken );
-  console.log(messagesData);
-  console.log(Token, class_id);
+  // console.log(messagesData);
+  // console.log(Token, class_id);
+
 
   useEffect(() => {
     if (selectedHilo) {
@@ -55,6 +56,7 @@ const Chatbot = () => {
       if (!selectedHilo) {
         // Crear un nuevo hilo y enviar el mensaje
         const newHilo = await createHilo({class_id}).unwrap();
+        console.log(newHilo);
         setSelectedHilo(newHilo.hilo_id);
         await postMessage({ hilo_id: newHilo.hilo_id, message: input });
         refetchHilos();
@@ -111,7 +113,7 @@ const Chatbot = () => {
           <button onClick={handleSendMessage}><SendOutlined rotate={-35} /></button>
         </div>
       </div>
-      <ChatbotSidebar setSelectedHilo={setSelectedHilo} />
+      <ChatbotSidebar selectedHilo = {selectedHilo} setSelectedHilo={setSelectedHilo} />
     </div>
   );
 };
