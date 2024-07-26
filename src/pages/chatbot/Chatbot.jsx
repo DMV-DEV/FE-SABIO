@@ -56,6 +56,7 @@ const Chatbot = () => {
       if (!selectedHilo) {
         // Crear un nuevo hilo y enviar el mensaje
         const newHilo = await createHilo({class_id}).unwrap();
+        console.log(newHilo);
         setSelectedHilo(newHilo.hilo_id);
         await postMessage({ hilo_id: newHilo.hilo_id, message: input });
         refetchHilos();

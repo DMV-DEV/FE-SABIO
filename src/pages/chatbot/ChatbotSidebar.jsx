@@ -3,20 +3,19 @@ import { useGetHilosQuery } from '../../redux/chatApi';
 import { useGetDocumentsQuery, useGetDocumentsByHiloQuery, useUploadDocumentsMutation } from '../../redux/documentsApi';
 import { UndoOutlined, FolderOpenOutlined, TeamOutlined, UploadOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, message, Upload } from 'antd';
-import {  useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import './StyleChatbot.css';
 
 const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
   const clase_id = useSelector((state) => state.classes.id);
   const { data: hilos = [], refetch: refetchHilos } = useGetHilosQuery();
   const { data: documentsByclass = [], refetch: refetchDocumentsByclass } = useGetDocumentsQuery(clase_id);
-  const { data: documentsByHilo = [], refetch: refetchUploadsByHilo } = useGetDocumentsByHiloQuery(selectedHilo, {
+  const { data: documentsByHilo = [], refetch: refetchDocumentsByHilo} = useGetDocumentsByHiloQuery(selectedHilo, {
     skip: !selectedHilo,
   });
-
+  const [uploadDocuments] = useUploadDocumentsMutation();
   const [isExpanded, setIsExpanded] = useState(false);
   const sidebarRef = useRef(null);
-  console.log(documentsByHilo, documentsByclass )  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -70,6 +69,30 @@ const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
     { key: 'documents', icon: <TeamOutlined />, text: 'Teacher’s uploaded', dropdown: menuDocumentsByClass}
   ];
 
+  const props = {
+    name: "file",
+    customRequest: async ({ file }) => {
+      if (!selectedHilo) {
+        message.error("Please select a chat thread (hilo) first.");
+        return;
+      }
+  
+      // const formData = new FormData();
+      // formData.append('hilo_id', selectedHilo);
+      // formData.append('archivo', file);
+  
+      try {
+        await uploadDocuments({  hilo_id: selectedHilo, archivo: file }).unwrap();
+        message.success(`${file.name} file uploaded successfully`);
+        refetchDocumentsByHilo();
+      } catch (error) {
+        console.error("Error uploading document:", error);
+        message.error(`${file.name} file upload failed.`);
+      }
+    },
+    showUploadList: false,
+  };
+
   return (
     <div
       ref={sidebarRef}
@@ -87,6 +110,12 @@ const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
           </button>
         </Dropdown>
       ))}
+      <Upload {...props} className='chatbot__sidebar--upload'>
+        <button className='chatbot__sidebar--upload'>
+          {<UploadOutlined />}
+          {isExpanded && <span>Upload Document</span>}
+        </button>
+      </Upload>
     </div>
   );
 };
