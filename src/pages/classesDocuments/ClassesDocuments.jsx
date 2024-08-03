@@ -57,16 +57,6 @@ const ClassesDocuments = () => {
       key: "nombre",
     },
     {
-      title: "Section",
-      dataIndex: "section",
-      key: "section",
-    },
-    {
-      title: "Category",
-      dataIndex: "category",
-      key: "category",
-    },
-    {
       title: "Document",
       dataIndex: "document",
       key: "document",
