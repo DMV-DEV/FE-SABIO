@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../studentsList/stylesStudentsList.css";
 import { Modal, Button, Input, Space, message } from "antd";
 import TableComponent from "../../components/table/TableComponent";
-import { CloseOutlined, PlusOutlined, CopyOutlined } from "@ant-design/icons"; 
+import { CloseOutlined, PlusOutlined } from "@ant-design/icons"; 
 import { SearchIcon } from "../../assets/icons/SearchIcon";
-import { CopyIcon } from "../../assets/icons/copyIcon";
 import {
   useGetStudentsQuery,
   useAddStudentMutation,
@@ -46,8 +45,9 @@ const StudentsList = () => {
   }, [documents]);
 
   const handleAddStudent = async () => {
+    console.log("Adding student with classId:", classId, "and email:", newStudentEmail);
     try {
-      await addStudent({ email: newStudentEmail });
+      await addStudent({ classId, email: newStudentEmail });
       message.success("Student added successfully");
       setIsAddStudentModalVisible(false);
     } catch (error) {
@@ -57,7 +57,7 @@ const StudentsList = () => {
 
   const handleDeleteStudent = async (id) => {
     try {
-      await deleteStudent(id);
+      await deleteStudent({ classId, id });
       message.success("Student deleted successfully");
     } catch (error) {
       message.error("Failed to delete student");
@@ -170,20 +170,6 @@ const StudentsList = () => {
         }
       >
         <Space direction="vertical" className="modal-content">
-          <div className="input-group">
-            <Input
-              className="inputModal"
-              defaultValue="wwwinterfacefjfd5345/we23fwf4g851d14g414/g43ertetrr"
-            />
-            <Button
-              icon={<CopyOutlined />}
-              className="button-copy-invite"
-              type="primary"
-            >
-              Copy
-            </Button>
-          </div>
-          <p className="tx-or">Or</p>
           <div className="input-group">
             <div className="inputModal">
               <label>Email</label>
