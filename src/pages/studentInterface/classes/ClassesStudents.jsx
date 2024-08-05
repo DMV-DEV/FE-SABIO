@@ -10,7 +10,6 @@ const ClassesStudents = () => {
   const handleClick = (id) => {
     setClassSelected(id);
     navigate(`/dashboard`);
-    // navigate(`/dashboard/${id}`)
   };
   console.log(classSelected);
   const data = [

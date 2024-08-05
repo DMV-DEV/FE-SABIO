@@ -6,16 +6,21 @@ import AIChecker from "../pages/AIChecker/AIChecker";
 import Dashboard from "../pages/Dash/Dashboard";
 import Chatbot from "../pages/chatbot/Chatbot";
 import Authentication from "../pages/authentication/Authentication";
-
 import ClassesDocuments from "../pages/classesDocuments/ClassesDocuments";
 import StudentsList from "../pages/studentsList/StudentsList";
 import Auth from "../pages/studentInterface/login/Authentication";
 import ClassesStudents from "../pages/studentInterface/classes/ClassesStudents";
+import LoginRoute from "../HOC/LoginRoute";
+import PrivateRoute from "../HOC/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <PrivateRoute>
+        <App />
+      </PrivateRoute>
+    ),
     children: [
       { path: "/", element: <Classes /> },
       { path: "/documents", element: <ClassesDocuments /> },
@@ -29,12 +34,15 @@ export const router = createBrowserRouter([
       { path: "/student/classes", element: <ClassesStudents /> },
       { path: "/student/accountsettings", element: <Profile /> },
       { path: "/student/chatbot", element: <Chatbot /> },
-      
     ],
   },
   {
     path: "/authentication",
-    element: <Authentication />,
+    element: (
+      // <LoginRoute>
+        <Authentication />
+      // </LoginRoute>
+    ),
   },
   {
     path: "/student/authentication",

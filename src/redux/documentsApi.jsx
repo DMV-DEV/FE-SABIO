@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '../app.config';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: BASE_URL, // URL base correcta
+  baseUrl: BASE_URL,
   prepareHeaders: (headers, { getState }) => {
     const token = getState().user.accessToken;
     if (token) {
@@ -17,10 +17,10 @@ export const documentsApi = createApi({
   baseQuery,
   endpoints: (builder) => ({
     getDocuments: builder.query({
-      query: (clase_id) => `documents/list_documents/class/?clase_id=${clase_id}`, // Endpoint para listar documentos de clase
+      query: (clase_id) => `documents/list_documents/class/?clase_id=${clase_id}`,
     }),
     getDocumentsByHilo: builder.query({
-      query: (hilo_id) => `documents/list_documents/chat/?hilo_id=${hilo_id}`, // Endpoint para listar documentos de hilo
+      query: (hilo_id) => `documents/list_documents/chat/?hilo_id=${hilo_id}`,
     }),
     uploadDocuments: builder.mutation({
       query: ({ clase_id, hilo_id, archivo }) => {

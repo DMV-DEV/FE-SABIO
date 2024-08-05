@@ -27,14 +27,14 @@ export const studentsApi = createApi({
     }),
     updateStudent: builder.mutation({
       query: ({ classId, id, ...rest }) => ({
-        url: `/class/students/?clase_id=${classId}&student_id=${id}`, // Asegúrate de que el endpoint sea correcto para la actualización
+        url: `/class/students/?clase_id=${classId}&student_id=${id}`,
         method: "PUT",
         body: rest,
       }),
     }),
     deleteStudent: builder.mutation({
       query: ({ classId, id }) => ({
-        url: `/class/students/?clase_id=${classId}&student_id=${id}`, // Asegúrate de que el endpoint sea correcto para la eliminación
+        url: `/class/students/?clase_id=${classId}&student_id=${id}`,
         method: "DELETE",
       }),
     }),

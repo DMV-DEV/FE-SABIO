@@ -37,7 +37,7 @@ export const userSlice = createSlice({
       const { name, email, profileImage } = action.payload;
       state.name = name;
       state.email = email;
-      state.profileImage = profileImage;  // assuming you have this field in your state
+      state.profileImage = profileImage; 
     },
   },
 });

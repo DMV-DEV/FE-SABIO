@@ -29,8 +29,14 @@ const Log = ({ setActiveComponent }) => {
       const { email, password } = formData;
       const response = await login({ username: email, password }).unwrap();
       const { access, refresh } = response;
-      dispatch(addUser({ name: email, email, id: '', accessToken: access, refreshToken: refresh }));
-      navigate('/');
+      console.log(response);
+      if (access) { 
+        localStorage.setItem("accessToken", access);
+        dispatch(addUser({ name: email, email, id: '', accessToken: access, refreshToken: refresh }));
+        navigate('/', { replace: true });
+      } else {
+        console.error('Authentication failed:', response.error || 'Unknown error');
+      }
     } catch (err) {
       console.error('Failed to login:', err);
     }

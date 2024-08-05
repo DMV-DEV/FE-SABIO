@@ -1,5 +1,3 @@
-// src/redux/authApi.js
-
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '../app.config.js';
 import { addUser, removeUser, updateAccessToken } from './userSlice';
@@ -48,8 +46,15 @@ export const authApi = createApi({
           console.error('Failed to refresh access token:', error);
         }
       }
+    }),
+    register: builder.mutation({
+      query: (credentials) => ({
+      url: '/api/register/student/',
+      method: 'POST',
+      body: credentials,
+      })
     })
   })
 });
 
-export const { useLoginMutation, useRefreshAccessTokenMutation } = authApi;
+export const { useLoginMutation, useRefreshAccessTokenMutation, useRegisterMutation } = authApi;
