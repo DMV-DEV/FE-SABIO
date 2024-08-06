@@ -23,16 +23,32 @@ const Log = ({ setActiveComponent }) => {
     }));
   };
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { email, password } = formData;
-      const response = await login({ username: email, password }).unwrap();
-      const { access, refresh } = response;
+      const { username, password } = formData;
+      const response = await login({ username: username, password }).unwrap();
       console.log(response);
+      const { access, refresh, id, email, first_name, last_name, profesion, fecha_nacimiento, sexo, tipo_usuario, has_temporary_password, foto } = response;
       if (access) { 
         localStorage.setItem("accessToken", access);
-        dispatch(addUser({ name: email, email, id: '', accessToken: access, refreshToken: refresh }));
+        localStorage.setItem("refreshToken", refresh);
+        dispatch(addUser({
+          username, // or any other field you prefer
+          email,
+          id,
+          accessToken: access,
+          refreshToken: refresh,
+          first_name,
+          last_name,
+          profesion,
+          fecha_nacimiento,
+          sexo,
+          tipo_usuario,
+          has_temporary_password,
+          foto
+        }));
         navigate('/', { replace: true });
       } else {
         console.error('Authentication failed:', response.error || 'Unknown error');
@@ -51,11 +67,11 @@ const Log = ({ setActiveComponent }) => {
         </label>
         <input
           type="name"
-          id="email"
-          name="email"
+          id="username"
+          name="username"
           className="login__input"
           placeholder="Enter your username"
-          value={formData.email}
+          value={formData.username}
           onChange={handleChange}
         />
         <label className="login__label" htmlFor="password">

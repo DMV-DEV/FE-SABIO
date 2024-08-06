@@ -8,14 +8,14 @@ import { addClasses } from '../../redux/classesSlice';
 
 const Classes = () => {
   const navigate = useNavigate();
-  // const profesorId = useSelector((state) => state.user.id);
-  const profesorId = 7
+  const profesorId = useSelector((state)=>state.user.id)
   const token = localStorage.getItem('accessToken');
   const profesor = useSelector((state) => state.user.name)
   const dispatch = useDispatch();
   
 
   const { data, error, isLoading } = useGetClassesByEducatorQuery(profesorId);
+  console.log(data);
   const [addClass, { isLoading: isAdding }] = useAddClassMutation();
 
   useEffect(() => {
