@@ -1,61 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './StyleSidebar.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useGetClassesByEducatorQuery } from '../../redux/classesApi';
+import { addClasses } from '../../redux/classesSlice';
 
 const Dropdown = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const profesorId= 7;
+//   const profesorId = useSelector((state) => state.user.id)
+  const { data: classes = [], error, isLoading } = useGetClassesByEducatorQuery(profesorId);
+  const [selectedOption, setSelectedOption] = useState('Select a class');
 
-    const navigate = useNavigate();
+  const handleChange = (event) => {
+    const selectedClassId = event.target.value;
+    const selectedClass = classes.find(cls => cls.id === selectedClassId);
 
-    const data = [
-        {
-            title: 'Class 1',
-            instructor: 'Marti',
-            subject: 'biology',
-            section: '10',
-            id: 1,
-        },
-        {
-            title: 'Class 2',
-            instructor: 'Delfi',
-            subject: 'biol',
-            section: '1',
-            id: 2,
-        },
-        {
-            title: 'Class 3',
-            instructor: 'Vicky',
-            subject: 'biol',
-            section: '1',
-            id: 3,
-        },]
+    if (selectedClass) {
+      setSelectedOption(selectedClass.nombre);
+      dispatch(addClasses({ nombre: selectedClass.nombre, id: selectedClass.id }));
 
-    // logica dropdown elijo clase
-    const [selectedOption, setSelectedOption] = useState('Select a class');
+      if (location.pathname === '/') {
+        navigate(`/dashboard`);
+      }
+    }
+  };
 
-    const handleChange = (event) => {
-        setSelectedOption(event.target.value);
-        navigate(`/dashboard`)
-        // navigate(`/dashboard/${id}`)
-    };
+  useEffect(() => {
+    if (error) {
+      console.error('Error fetching classes:', error);
+    }
+  }, [error]);
 
-
-    return (
-
-        <div className="sidebar__dropdown">
-
-            <select id="dropdown" value={selectedOption} onChange={handleChange}>
-            <option value="Select a class" disabled>Select a class</option>
-                {data.map(data => (
-
-                    <option
-                        value={data.title}
-                    >{data.title} </option>
-                ))}
-            </select>
-
-        </div>
-
-
-    );
+  return (
+    <div className="sidebar__dropdown">
+      <select id="dropdown" value={selectedOption} onChange={handleChange}>
+        <option value="Select a class" disabled>Select a class</option>
+        {isLoading ? (
+          <option value="loading">Loading...</option>
+        ) : (
+          classes.map(cls => (
+            <option key={cls.id} value={cls.id}>
+              {cls.nombre}
+            </option>
+          ))
+        )}
+      </select>
+    </div>
+  );
 };
+
 export default Dropdown;
