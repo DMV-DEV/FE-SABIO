@@ -7,9 +7,11 @@ const baseQuery = fetchBaseQuery({
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);
     }
+    headers.set('Content-Type', 'application/json');
     return headers;
   },
 });
+
 
 export const studentsApi = createApi({
   reducerPath: "studentsApi",
@@ -19,27 +21,28 @@ export const studentsApi = createApi({
       query: (classId) => `/class/students/?clase_id=${classId}`,
     }),
     addStudent: builder.mutation({
-      query: ({ classId, ...newStudent }) => ({
-        url: `/class/students/?clase_id=${classId}`,
+      query: ({ classId, student_email }) => ({
+        url: `/add_student/`,
         method: "POST",
-        body: newStudent,
+        body: { clase_id: classId, student_email }, // Incluir clase_id y student_email en el cuerpo
       }),
     }),
     updateStudent: builder.mutation({
       query: ({ classId, id, ...rest }) => ({
-        url: `/class/students/?clase_id=${classId}&student_id=${id}`, // Asegúrate de que el endpoint sea correcto para la actualización
+        url: `/class/students/?clase_id=${classId}&student_id=${id}`,
         method: "PUT",
         body: rest,
       }),
     }),
     deleteStudent: builder.mutation({
       query: ({ classId, id }) => ({
-        url: `/class/students/?clase_id=${classId}&student_id=${id}`, // Asegúrate de que el endpoint sea correcto para la eliminación
+        url: `/class/students/?clase_id=${classId}&student_id=${id}`,
         method: "DELETE",
       }),
     }),
   }),
 });
+
 
 export const {
   useGetStudentsQuery,
@@ -47,4 +50,3 @@ export const {
   useUpdateStudentMutation,
   useDeleteStudentMutation,
 } = studentsApi;
-

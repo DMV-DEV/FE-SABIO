@@ -43,17 +43,18 @@ const StudentsList = () => {
       setCurrentDocuments(documents);
     }
   }, [documents]);
-
   const handleAddStudent = async () => {
     console.log("Adding student with classId:", classId, "and email:", newStudentEmail);
     try {
-      await addStudent({ classId, email: newStudentEmail });
+      await addStudent({ classId, student_email: newStudentEmail }).unwrap();
       message.success("Student added successfully");
       setIsAddStudentModalVisible(false);
     } catch (error) {
       message.error("Failed to add student");
+      console.error("Error adding student:", error);
     }
   };
+  
 
   const handleDeleteStudent = async (id) => {
     try {
@@ -218,9 +219,9 @@ const StudentsList = () => {
                     href={doc.archivo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="black-link"
+                    className="documentLink"
                   >
-                    View PDF
+                    View document
                   </a>
                 </td>
               </tr>
