@@ -6,7 +6,7 @@ import TableComponent from "../../components/table/TableComponent";
 import { useGetClassesByEducatorQuery } from "../../redux/classesApi";
 import {
   useUploadDocumentsMutation,
-  useGetDocumentsQuery,
+  useGetDocumentsByClassQuery,
 } from "../../redux/documentsApi";
 import { useSelector } from "react-redux";
 
@@ -30,7 +30,7 @@ const ClassesDocuments = () => {
     data: documentsData,
     error: documentsError,
     isLoading: documentsLoading,
-  } = useGetDocumentsQuery(classId);
+  } = useGetDocumentsByClassQuery(classId);
 
   useEffect(() => {
     if (classesError) {
