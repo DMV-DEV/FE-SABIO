@@ -10,7 +10,6 @@ import ClassesDocuments from "../pages/classesDocuments/ClassesDocuments";
 import StudentsList from "../pages/studentsList/StudentsList";
 import Auth from "../pages/studentInterface/login/Authentication";
 import ClassesStudents from "../pages/studentInterface/classes/ClassesStudents";
-import LoginRoute from "../HOC/LoginRoute";
 import PrivateRoute from "../HOC/PrivateRoute";
 
 export const router = createBrowserRouter([
@@ -31,7 +30,7 @@ export const router = createBrowserRouter([
       { path: "/chatbot", element: <Chatbot /> },
 
       //student interface
-      { path: "/student/classes", element: <ClassesStudents /> },
+      { path: "/student", element: <ClassesStudents /> },
       { path: "/student/accountsettings", element: <Profile /> },
       { path: "/student/chatbot", element: <Chatbot /> },
     ],
@@ -39,9 +38,7 @@ export const router = createBrowserRouter([
   {
     path: "/authentication",
     element: (
-      // <LoginRoute>
         <Authentication />
-      // </LoginRoute>
     ),
   },
   {

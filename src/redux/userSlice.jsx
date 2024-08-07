@@ -104,9 +104,27 @@ export const userSlice = createSlice({
       state.profileImage = profileImage;
       saveState(state);
     },
+    logoutUser: (state) => {
+      state.name = '';
+      state.email = '';
+      state.id = '';
+      state.accessToken = '';
+      state.refreshToken = '';
+      state.isAuthenticated = false;
+      state.first_name = '';
+      state.last_name = '';
+      state.profesion = '';
+      state.fecha_nacimiento = '';
+      state.sexo = '';
+      state.tipo_usuario = '';
+      state.has_temporary_password = false;
+      state.foto = '';
+      state.username = '';
+      saveState(state);
+    },
   },
 });
 
-export const { addUser, removeUser, updateAccessToken, updateUser } = userSlice.actions;
+export const { addUser, removeUser, updateAccessToken, updateUser, logoutUser } = userSlice.actions;
 
 export default userSlice.reducer;

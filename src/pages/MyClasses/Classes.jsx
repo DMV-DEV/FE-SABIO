@@ -59,7 +59,7 @@ const Classes = () => {
         {data.map(data => (
           <div key={data.id} onClick={() => handleClick(data.nombre, data.id)}>
             <CardComponent
-              title={data.id}
+              id={data.id}
               instructor={profesor}
               subject={data.nombre}
               section={data.id}

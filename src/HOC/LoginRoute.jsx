@@ -1,11 +1,13 @@
 import { Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
+import { useSelector } from "react-redux";
 
 const LoginRoute = () => {
   const accessToken = localStorage.getItem('accessToken')
   const [isAuthenticated, setIsAuthenticated] = useState()
-
+  const tipoUsuario = useSelector((state) => state.user.tipo_usuario)
+  console.log(tipoUsuario);
   useEffect(() => {
     if (accessToken) {
       setIsAuthenticated(true)
@@ -18,11 +20,16 @@ const LoginRoute = () => {
     return <Spin/>
   }
 
-  return isAuthenticated ? (
-    <Navigate to="/" />
-  ) : (
-    <Navigate to="/authentication" />
-  )
+  if (isAuthenticated) {
+    if (tipoUsuario === 'alumno') {
+      return <Navigate to="/student" />
+    } else {
+      return <Navigate to="/" />
+    }
+  } else {
+    return <Navigate to="/authentication" />
+  }
 }
+
 
 export default LoginRoute

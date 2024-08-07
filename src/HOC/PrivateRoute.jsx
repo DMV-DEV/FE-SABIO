@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const PrivateRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const tipoUsuario = useSelector((state) => state.user.tipo_usuario);
+
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
@@ -14,15 +17,25 @@ const PrivateRoute = ({ children }) => {
     setLoading(false); 
   }, []);
 
+  console.log('Loading:', loading);
+  console.log('Is Authenticated:', isAuthenticated);
+  console.log('User Type:', tipoUsuario);
+
   if (loading) {
     return <div>Loading...</div>; 
   }
 
-  return isAuthenticated ? (
-    <>{children}</>
-  ) : (
-    <Navigate to="/authentication" />
-  );
+  if (!isAuthenticated) {
+    return <Navigate to="/authentication" />;
+  }
+
+  if (tipoUsuario === 'alumno') {
+     <Navigate to="/student" />;
+  return children;
+
+  }
+
+  return children;
 };
 
 export default PrivateRoute;
