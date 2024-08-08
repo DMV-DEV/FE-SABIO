@@ -18,7 +18,6 @@ const Dropdown = () => {
 
   const handleChange = (value) => {
     if (value === undefined) {
-      // User cleared the selection
       setSelectedOption('');
       dispatch(addClasses({ nombre: '', id: '' }));
       navigate('/');
@@ -50,7 +49,7 @@ const Dropdown = () => {
         onChange={handleChange}
         style={{ width: '100%' }}
         disabled={isLoading}
-        allowClear // Allows clearing the selection
+        allowClear
       >
         {isLoading ? (
           <Option value="loading">
