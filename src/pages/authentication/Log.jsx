@@ -49,7 +49,11 @@ const Log = ({ setActiveComponent }) => {
           has_temporary_password,
           foto
         }));
-        navigate('/', { replace: true });
+        if (tipo_usuario === 'alumno') {
+          navigate('/student', { replace: true });
+        } else {
+          navigate('/', { replace: true });
+        }
       } else {
         console.error('Authentication failed:', response.error || 'Unknown error');
       }

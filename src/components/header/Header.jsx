@@ -12,6 +12,7 @@ import { logoutUser } from "../../redux/userSlice";
 
 const Header = () => {
   const user = useSelector((state) => state.user);
+  console.log(user);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -104,16 +105,15 @@ const Header = () => {
         trigger={["click"]}
         className="header__dropdownMenu"
       >
-        <a onClick={(e) => e.preventDefault()}>
+        {/* <a onClick={(e) => e.preventDefault()}> */}
           <Space>
             <div>
-              <p className="header__user-info">{user.name}</p>
-              <p className="header__user-info">School Code: 1235</p>
+              <p className="header__user-info">{user.first_name}</p>
             </div>
             <Avatar size={50} icon={<UserOutlined />} />
             <DownOutlined />
           </Space>
-        </a>
+        {/* </a> */}
       </Dropdown>
     </header>
   );

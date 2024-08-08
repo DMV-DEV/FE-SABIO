@@ -29,12 +29,6 @@ const PrivateRoute = ({ children }) => {
     return <Navigate to="/authentication" />;
   }
 
-  if (tipoUsuario === 'alumno') {
-     <Navigate to="/student" />;
-  return children;
-
-  }
-
   return children;
 };
 
