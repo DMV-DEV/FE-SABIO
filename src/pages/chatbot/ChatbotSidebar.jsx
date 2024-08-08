@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useGetHilosQuery } from '../../redux/chatApi';
-import { useGetDocumentsQuery, useGetDocumentsByHiloQuery, useUploadDocumentsMutation } from '../../redux/documentsApi';
+import { useGetDocumentsByClassQuery, useGetDocumentsByHiloQuery, useUploadDocumentsMutation } from '../../redux/documentsApi';
 import { UndoOutlined, FolderOpenOutlined, TeamOutlined, UploadOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, message, Upload } from 'antd';
 import { useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ import './StyleChatbot.css';
 const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
   const clase_id = useSelector((state) => state.classes.id);
   const { data: hilos = [], refetch: refetchHilos } = useGetHilosQuery();
-  const { data: documentsByclass = [], refetch: refetchDocumentsByclass } = useGetDocumentsQuery(clase_id);
+  const { data: documentsByClass = [], refetch: refetchDocumentsByClass } = useGetDocumentsByClassQuery(clase_id);
   const { data: documentsByHilo = [], refetch: refetchDocumentsByHilo} = useGetDocumentsByHiloQuery(selectedHilo, {
     skip: !selectedHilo,
   });
@@ -55,7 +55,7 @@ const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
 
   const menuDocumentsByClass = (
     <Menu>
-      {Array.isArray(documentsByclass) ? documentsByclass.map(document => (
+      {Array.isArray(documentsByClass) ? documentsByClass.map(document => (
         <Menu.Item key={document.id} style={{ fontSize: 16 }}>
           id: {document.id} <a href={document.archivo} className="black-link">View pdf</a>
         </Menu.Item>
@@ -66,7 +66,7 @@ const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
   const buttons = [
     { key: 'history', icon: <UndoOutlined />, text: 'History', dropdown: menuHistory },
     { key: 'uploads', icon: <FolderOpenOutlined />, text: 'My Uploads', dropdown: menuDocumentsByHilo },
-    { key: 'documents', icon: <TeamOutlined />, text: 'Teacher’s uploaded', dropdown: menuDocumentsByClass}
+    { key: 'documents', icon: <TeamOutlined />, text: 'Teacher’s uploaded', dropdown: menuDocumentsByClass }
   ];
 
   const props = {
@@ -76,13 +76,9 @@ const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
         message.error("Please select a chat thread (hilo) first.");
         return;
       }
-  
-      // const formData = new FormData();
-      // formData.append('hilo_id', selectedHilo);
-      // formData.append('archivo', file);
-  
+
       try {
-        await uploadDocuments({  hilo_id: selectedHilo, archivo: file }).unwrap();
+        await uploadDocuments({ hilo_id: selectedHilo, archivo: file }).unwrap();
         message.success(`${file.name} file uploaded successfully`);
         refetchDocumentsByHilo();
       } catch (error) {

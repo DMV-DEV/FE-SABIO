@@ -4,26 +4,34 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useGetClassesByEducatorQuery } from '../../redux/classesApi';
 import { addClasses } from '../../redux/classesSlice';
+import { Select, Spin } from 'antd';
+
+const { Option } = Select;
 
 const Dropdown = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const profesorId= 7;
-//   const profesorId = useSelector((state) => state.user.id)
-  const { data: classes = [], error, isLoading } = useGetClassesByEducatorQuery(profesorId);
-  const [selectedOption, setSelectedOption] = useState('Select a class');
+  const profesorId = useSelector((state) => state.user.id);
+  const { data: classes, error, isLoading } = useGetClassesByEducatorQuery(profesorId);
+  const [selectedOption, setSelectedOption] = useState('');
 
-  const handleChange = (event) => {
-    const selectedClassId = event.target.value;
-    const selectedClass = classes.find(cls => cls.id === selectedClassId);
-
-    if (selectedClass) {
-      setSelectedOption(selectedClass.nombre);
-      dispatch(addClasses({ nombre: selectedClass.nombre, id: selectedClass.id }));
-
-      if (location.pathname === '/') {
-        navigate(`/dashboard`);
+  const handleChange = (value) => {
+    if (value === undefined) {
+      // User cleared the selection
+      setSelectedOption('');
+      dispatch(addClasses({ nombre: '', id: '' }));
+      navigate('/');
+    } else {
+      const selectedClass = classes?.find(cls => cls.id === value);
+  
+      if (selectedClass) {
+        setSelectedOption(value);
+        dispatch(addClasses({ nombre: selectedClass.nombre, id: selectedClass.id }));
+  
+        if (location.pathname === '/') {
+          navigate(`/dashboard`);
+        }
       }
     }
   };
@@ -36,18 +44,27 @@ const Dropdown = () => {
 
   return (
     <div className="sidebar__dropdown">
-      <select id="dropdown" value={selectedOption} onChange={handleChange}>
-        <option value="Select a class" disabled>Select a class</option>
+      <Select
+        placeholder="Select a class"
+        value={selectedOption || undefined}
+        onChange={handleChange}
+        style={{ width: '100%' }}
+        disabled={isLoading}
+        allowClear // Allows clearing the selection
+      >
         {isLoading ? (
-          <option value="loading">Loading...</option>
+          <Option value="loading">
+            <Spin size="small" />
+            Loading...
+          </Option>
         ) : (
-          classes.map(cls => (
-            <option key={cls.id} value={cls.id}>
+          (classes || []).map(cls => (
+            <Option key={cls.id} value={cls.id}>
               {cls.nombre}
-            </option>
+            </Option>
           ))
         )}
-      </select>
+      </Select>
     </div>
   );
 };

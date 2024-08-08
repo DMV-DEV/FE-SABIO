@@ -10,7 +10,7 @@ import {
   useAddStudentMutation,
   useDeleteStudentMutation,
 } from "../../redux/studentsApi";
-import { useGetDocumentsQuery } from "../../redux/documentsApi";
+import { useGetDocumentsByClassQuery } from "../../redux/documentsApi";
 import { useSelector } from "react-redux";
 
 const StudentsList = () => {
@@ -23,7 +23,7 @@ const StudentsList = () => {
   const [searchText, setSearchText] = useState("");
 
   const { data: students, error: studentsError, isLoading } = useGetStudentsQuery(classId);
-  const { data: documents, error: documentsError } = useGetDocumentsQuery(classId);
+  const { data: documents, error: documentsError } = useGetDocumentsByClassQuery(classId);
   const [addStudent] = useAddStudentMutation();
   const [deleteStudent] = useDeleteStudentMutation();
 

@@ -10,7 +10,7 @@ import { useLocation } from 'react-router-dom';
 const App = () => {
   
   const location = useLocation();
-  const isMyClassesRoute = location.pathname === '/myclasses';
+  const isMyClassesRoute = location.pathname === '/';
   return (
     <>
     <div className="app">
