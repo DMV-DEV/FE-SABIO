@@ -101,17 +101,17 @@ const Log = ({ setActiveComponent }) => {
               Remember me
             </label>
           </div>
-          <button
+          {/* <button
             className="button__underlined login__forgot-password"
             onClick={() => setActiveComponent("Reset")}
           >
             Forgot Password
-          </button>
+          </button> */}
         </div>
         <button className="login__button" type="submit" disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Sign In'}
         </button>
-        <div className="account__container">
+        {/* <div className="account__container">
           <h4>
             Don't have an account?
             <button
@@ -121,7 +121,7 @@ const Log = ({ setActiveComponent }) => {
               Sign Up Now
             </button>
           </h4>
-        </div>
+        </div> */}
         <p className="login__lorem">
           By connecting with the services above you agree to our Terms of
           Services and acknowledge our Privacy Policy describing how we handle

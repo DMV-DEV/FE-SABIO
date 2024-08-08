@@ -6,10 +6,14 @@ import { useState, useEffect } from "react";
 import { useGetProfilePictureUrlQuery, useUploadProfilePictureMutation , useUpdateUserInfoMutation} from "../../redux/accountApi";
 import { useSelector } from "react-redux";
 
+import { updateUser } from '../../redux/userSlice';
+import { useDispatch } from 'react-redux';
+
 const ProfileForm = () => {
   const userId = useSelector((state)=>state.user.id)
   const userEmail = useSelector((state) => state.user.email);
   const username = useSelector((state) => state.user.username);
+  const dispatch = useDispatch();
   const profilePic = useSelector((state) => state.user.foto);
   const [email, setEmail] = useState(userEmail);
   const [fullName, setFullName] = useState(username);
@@ -52,9 +56,11 @@ const ProfileForm = () => {
 
 
 
+  
   const handleUpdateUserInfo = async () => {
     try {
-      await updateUserInfo({ username: fullName, email });
+      const result = await updateUserInfo({ username: fullName, email }).unwrap();
+      dispatch(updateUser({ username: result.username, email: result.email }));
       message.success("User info updated successfully!");
     } catch (error) {
       message.error("Error updating user info!");
