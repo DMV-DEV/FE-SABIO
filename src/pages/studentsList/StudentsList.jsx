@@ -9,11 +9,13 @@ import {
   useAddStudentMutation,
   useDeleteStudentMutation,
 } from "../../redux/studentsApi";
-import { useGetDocumentsByClassQuery } from "../../redux/documentsApi";
+import { useGetDocumentsByHiloQuery } from "../../redux/documentsApi";
 import { useSelector } from "react-redux";
 
 const StudentsList = () => {
   const classId = useSelector((state) => state.classes.id);
+  // const hiloId = useSelector((state) => state.hilo.id); // Asegúrate de tener el hilo ID en tu estado de Redux
+  const hiloId = 5; 
 
   const [isAddStudentModalVisible, setIsAddStudentModalVisible] = useState(false);
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
@@ -22,7 +24,7 @@ const StudentsList = () => {
   const [searchText, setSearchText] = useState("");
 
   const { data: students, error: studentsError, isLoading } = useGetStudentsQuery(classId);
-  const { data: documents, error: documentsError } = useGetDocumentsByClassQuery(classId);
+  const { data: documents, error: documentsError } = useGetDocumentsByHiloQuery(hiloId); // Usando la nueva consulta
   const [addStudent] = useAddStudentMutation();
   const [deleteStudent] = useDeleteStudentMutation();
 
@@ -43,6 +45,7 @@ const StudentsList = () => {
       setCurrentDocuments(documents);
     }
   }, [documents]);
+  
   const handleAddStudent = async () => {
     console.log("Adding student with classId:", classId, "and email:", newStudentEmail);
     try {
@@ -54,7 +57,6 @@ const StudentsList = () => {
       console.error("Error adding student:", error);
     }
   };
-  
 
   const handleDeleteStudent = async (id) => {
     try {
