@@ -24,6 +24,7 @@ const StudentsList = () => {
   const [searchText, setSearchText] = useState("");
 
   const { data: students, error: studentsError, isLoading } = useGetStudentsQuery(classId);
+  // const { data: documents, error: documentsError } = useGetDocumentsByClassQuery(classId);
   const { data: documents, error: documentsError } = useGetDocumentsByHiloQuery(hiloId); // Usando la nueva consulta
   const [addStudent] = useAddStudentMutation();
   const [deleteStudent] = useDeleteStudentMutation();
@@ -34,18 +35,18 @@ const StudentsList = () => {
     }
   }, [studentsError]);
 
-  useEffect(() => {
-    if (documentsError) {
-      console.error("Error fetching documents:", documentsError);
-    }
-  }, [documentsError]);
+  // useEffect(() => {
+  //   if (documentsError) {
+  //     console.error("Error fetching documents:", documentsError);
+  //   }
+  // }, [documentsError]);
 
   useEffect(() => {
     if (documents) {
       setCurrentDocuments(documents);
     }
   }, [documents]);
-  
+
   const handleAddStudent = async () => {
     console.log("Adding student with classId:", classId, "and email:", newStudentEmail);
     try {
@@ -110,12 +111,12 @@ const StudentsList = () => {
     },
   ];
 
-  const showDocumentModal = () => {
-    if (documents) {
-      setCurrentDocuments(documents);
-    }
-    setIsDocumentModalVisible(true);
-  };
+  // const showDocumentModal = () => {
+  //   if (documents) {
+  //     setCurrentDocuments(documents);
+  //   }
+  //   setIsDocumentModalVisible(true);
+  // };
 
   const handleDocumentModalOk = () => {
     setIsDocumentModalVisible(false);
@@ -150,7 +151,7 @@ const StudentsList = () => {
         type="student"
         columns={columns}
         data={filteredStudents}
-        onDocumentClick={showDocumentModal}
+        // onDocumentClick={showDocumentModal}
       />
       <Modal
         title="Add New Student"

@@ -23,14 +23,40 @@ const Log = ({ setActiveComponent }) => {
     }));
   };
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { email, password } = formData;
-      const response = await login({ username: email, password }).unwrap();
-      const { access, refresh } = response;
-      dispatch(addUser({ name: email, email, id: '', accessToken: access, refreshToken: refresh }));
-      navigate('/');
+      const { username, password } = formData;
+      const response = await login({ username: username, password }).unwrap();
+      console.log(response);
+      const { access, refresh, id, email, first_name, last_name, profesion, fecha_nacimiento, sexo, tipo_usuario, has_temporary_password, foto } = response;
+      if (access) { 
+        localStorage.setItem("accessToken", access);
+        localStorage.setItem("refreshToken", refresh);
+        dispatch(addUser({
+          username, // or any other field you prefer
+          email,
+          id,
+          accessToken: access,
+          refreshToken: refresh,
+          first_name,
+          last_name,
+          profesion,
+          fecha_nacimiento,
+          sexo,
+          tipo_usuario,
+          has_temporary_password,
+          foto
+        }));
+        if (tipo_usuario === 'alumno') {
+          navigate('/student', { replace: true });
+        } else {
+          navigate('/', { replace: true });
+        }
+      } else {
+        console.error('Authentication failed:', response.error || 'Unknown error');
+      }
     } catch (err) {
       console.error('Failed to login:', err);
     }
@@ -45,11 +71,11 @@ const Log = ({ setActiveComponent }) => {
         </label>
         <input
           type="name"
-          id="email"
-          name="email"
+          id="username"
+          name="username"
           className="login__input"
           placeholder="Enter your username"
-          value={formData.email}
+          value={formData.username}
           onChange={handleChange}
         />
         <label className="login__label" htmlFor="password">
@@ -75,17 +101,17 @@ const Log = ({ setActiveComponent }) => {
               Remember me
             </label>
           </div>
-          <button
+          {/* <button
             className="button__underlined login__forgot-password"
             onClick={() => setActiveComponent("Reset")}
           >
             Forgot Password
-          </button>
+          </button> */}
         </div>
         <button className="login__button" type="submit" disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Sign In'}
         </button>
-        <div className="account__container">
+        {/* <div className="account__container">
           <h4>
             Don't have an account?
             <button
@@ -95,7 +121,7 @@ const Log = ({ setActiveComponent }) => {
               Sign Up Now
             </button>
           </h4>
-        </div>
+        </div> */}
         <p className="login__lorem">
           By connecting with the services above you agree to our Terms of
           Services and acknowledge our Privacy Policy describing how we handle

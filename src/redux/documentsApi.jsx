@@ -3,6 +3,7 @@ import { BASE_URL } from '../app.config';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
+  baseUrl: BASE_URL,
   prepareHeaders: (headers, { getState }) => {
     const token = getState().user.accessToken;
     if (token) {

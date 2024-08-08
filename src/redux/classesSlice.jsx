@@ -10,6 +10,7 @@ export const classesSlice = createSlice({
   initialState,
   reducers: {
     addClasses: (state, action) => {
+      console.log(state);
       const { nombre, id} = action.payload;
       state.nombre = nombre;
       state.id = id;

@@ -2,21 +2,27 @@ import React, { useState } from "react";
 import "./authentication.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../../redux/userSlice";
+import { useRegisterMutation } from "../../../redux/authApi";
+import { message } from "antd";
 
 const Signup = ({ setActiveComponent }) => {
-  const dispatch = useDispatch();
-  const { name, email, password } = useSelector((state) => state.user);
+  // const dispatch = useDispatch();
+  // const { name, email, password } = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
-    name: name,
-    lastName: "",
+    // name: name,
+    // lastName: "",
     username: "",
-    email: email,
-    password: password,
-    confirmPassword: "",
-    birthdate: "",
-    gender: "",
+    email: "",
+    password: "",
+    password2:"",
+    fecha_nacimiento: "",
+    sexo: "",
+    tipo_usuario:""
   });
+
+  const [register] = useRegisterMutation();
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -28,26 +34,20 @@ const Signup = ({ setActiveComponent }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(
-      addUser({
-        name: formData.name,
-        lastName: formData.lastName,
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-        birthdate: formData.birthdate,
-        gender: formData.gender,
-      })
-    );
-    console.log("Form data submitted:", formData);
-  };
+    try {
+      register({...formData, tipo_usuario: "student"});
+      message.success("User register successfully!");
+    } catch (error) {
+      message.error("Error register!");  //cambiar
+    }
+    };
 
   return (
     <div className="login__card">
       <h2 className="login__title">Sign Up</h2>
       <form onSubmit={handleSubmit} className="login__form">
         <div className="login__form-column">
-          <label className="login__label" htmlFor="name">
+          {/* <label className="login__label" htmlFor="name">
             First name
           </label>
           <input
@@ -58,7 +58,7 @@ const Signup = ({ setActiveComponent }) => {
             placeholder="Enter your first name"
             value={formData.name}
             onChange={handleChange}
-          />
+          /> */}
           <label className="login__label" htmlFor="username">
             Username
           </label>
@@ -83,20 +83,20 @@ const Signup = ({ setActiveComponent }) => {
             value={formData.password}
             onChange={handleChange}
           />
-          <label className="login__label" htmlFor="birthdate">
+          <label className="login__label" htmlFor="fecha_nacimiento">
             Date of Birth
           </label>
           <input
             type="date"
-            id="birthdate"
-            name="birthdate"
+            id="fecha_nacimiento"
+            name="fecha_nacimiento"
             className="login__input"
-            value={formData.birthdate}
+            value={formData.fecha_nacimiento}
             onChange={handleChange}
           />
         </div>
         <div className="login__form-column">
-          <label className="login__label" htmlFor="lastName">
+          {/* <label className="login__label" htmlFor="lastName">
             Last name
           </label>
           <input
@@ -107,7 +107,7 @@ const Signup = ({ setActiveComponent }) => {
             placeholder="Enter your last name"
             value={formData.lastName}
             onChange={handleChange}
-          />
+          /> */}
           <label className="login__label" htmlFor="email">
             Email
           </label>
@@ -120,33 +120,33 @@ const Signup = ({ setActiveComponent }) => {
             value={formData.email}
             onChange={handleChange}
           />
-          <label className="login__label" htmlFor="confirmPassword">
+          <label className="login__label" htmlFor="password2">
             Confirm password
           </label>
           <input
             type="password"
-            name="confirmPassword"
-            id="confirmPassword"
+            name="password2"
+            id="password2"
             className="login__input"
             placeholder="Confirm your password"
-            value={formData.confirmPassword}
+            value={formData.password2}
             onChange={handleChange}
           />
-          <label className="login__label" htmlFor="gender">
+          <label className="login__label" htmlFor="sexo">
             Gender
           </label>
           <select
-            id="gender"
-            name="gender"
+            id="sexo"
+            name="sexo"
             className="login__input"
-            value={formData.gender}
+            value={formData.sexo}
             onChange={handleChange}
           >
             <option value="" disabled>
               Select your gender
             </option>
-            <option value="male">M</option>
-            <option value="female">F</option>
+            <option value="M">M</option>
+            <option value="F">F</option>
           </select>
         </div>
         <button type="submit" className="login__button">
