@@ -8,14 +8,14 @@ import { addClasses } from '../../redux/classesSlice';
 
 const Classes = () => {
   const navigate = useNavigate();
-  // const profesorId = useSelector((state) => state.user.id);
-  const profesorId = 8
+  const profesorId = useSelector((state)=>state.user.id)
   const token = localStorage.getItem('accessToken');
   const profesor = useSelector((state) => state.user.name)
   const dispatch = useDispatch();
   
 
   const { data, error, isLoading } = useGetClassesByEducatorQuery(profesorId);
+  console.log(data);
   const [addClass, { isLoading: isAdding }] = useAddClassMutation();
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const Classes = () => {
         {data.map(data => (
           <div key={data.id} onClick={() => handleClick(data.nombre, data.id)}>
             <CardComponent
-              title={data.id}
+              id={data.id}
               instructor={profesor}
               subject={data.nombre}
               section={data.id}
