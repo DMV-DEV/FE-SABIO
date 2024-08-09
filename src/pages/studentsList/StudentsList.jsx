@@ -10,7 +10,7 @@ import {
   useAddStudentMutation,
   useDeleteStudentMutation,
 } from "../../redux/studentsApi";
-import { useGetDocumentsQuery } from "../../redux/documentsApi";
+import { useGetDocumentsByClassQuery } from "../../redux/documentsApi";
 import { useSelector } from "react-redux";
 
 const StudentsList = () => {
@@ -23,7 +23,7 @@ const StudentsList = () => {
   const [searchText, setSearchText] = useState("");
 
   const { data: students, error: studentsError, isLoading } = useGetStudentsQuery(classId);
-  const { data: documents, error: documentsError } = useGetDocumentsQuery(classId);
+  // const { data: documents, error: documentsError } = useGetDocumentsByClassQuery(classId);
   const [addStudent] = useAddStudentMutation();
   const [deleteStudent] = useDeleteStudentMutation();
 
@@ -33,17 +33,17 @@ const StudentsList = () => {
     }
   }, [studentsError]);
 
-  useEffect(() => {
-    if (documentsError) {
-      console.error("Error fetching documents:", documentsError);
-    }
-  }, [documentsError]);
+  // useEffect(() => {
+  //   if (documentsError) {
+  //     console.error("Error fetching documents:", documentsError);
+  //   }
+  // }, [documentsError]);
 
-  useEffect(() => {
-    if (documents) {
-      setCurrentDocuments(documents);
-    }
-  }, [documents]);
+  // useEffect(() => {
+  //   if (documents) {
+  //     setCurrentDocuments(documents);
+  //   }
+  // }, [documents]);
 
   const handleAddStudent = async () => {
     try {
@@ -107,12 +107,12 @@ const StudentsList = () => {
     },
   ];
 
-  const showDocumentModal = () => {
-    if (documents) {
-      setCurrentDocuments(documents);
-    }
-    setIsDocumentModalVisible(true);
-  };
+  // const showDocumentModal = () => {
+  //   if (documents) {
+  //     setCurrentDocuments(documents);
+  //   }
+  //   setIsDocumentModalVisible(true);
+  // };
 
   const handleDocumentModalOk = () => {
     setIsDocumentModalVisible(false);
@@ -147,7 +147,7 @@ const StudentsList = () => {
         type="student"
         columns={columns}
         data={filteredStudents}
-        onDocumentClick={showDocumentModal}
+        // onDocumentClick={showDocumentModal}
       />
       <Modal
         title="Add New Student"

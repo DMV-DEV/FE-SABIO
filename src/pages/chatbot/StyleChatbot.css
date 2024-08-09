@@ -68,6 +68,10 @@
   color: #555;
 }
 
+.chatbot__message.user .chatbot__message-header .time {
+  color: white; /* Cambiar el color del texto a blanco */
+}
+
 .chatbot__message-text {
   font-size: 14px;
 }

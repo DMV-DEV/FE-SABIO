@@ -7,10 +7,10 @@ const baseQuery = fetchBaseQuery({
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);
     }
+    console.log(token);
     return headers;
   },
 });
-
 export const classesApi = createApi({
   reducerPath: 'classesApi',
   baseQuery,

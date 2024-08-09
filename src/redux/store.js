@@ -20,17 +20,17 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [accountApi.reducerPath]: accountApi.reducer,
     [studentsApi.reducerPath]: studentsApi.reducer, 
-    [documentsApi.reducerPath]: documentsApi.reducer, // Agrega documentsApi.reducer
+    [documentsApi.reducerPath]: documentsApi.reducer,
   },
   
-  middleware: (gDM) => gDM().concat(chatApi.middleware,classesApi.middleware, authApi.middleware, accountApi.middleware, studentsApi.middleware),
   middleware: (getDefaultMiddleware) => 
     getDefaultMiddleware().concat(
       chatApi.middleware,
       classesApi.middleware,
+      accountApi.middleware,
       authApi.middleware,
       studentsApi.middleware,
-      documentsApi.middleware // Agrega documentsApi.middleware
+      documentsApi.middleware 
     ),
 });
 

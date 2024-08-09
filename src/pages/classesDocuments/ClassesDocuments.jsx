@@ -6,21 +6,20 @@ import TableComponent from "../../components/table/TableComponent";
 import { useGetClassesByEducatorQuery } from "../../redux/classesApi";
 import {
   useUploadDocumentsMutation,
-  useGetDocumentsQuery,
+  useGetDocumentsByClassQuery,
 } from "../../redux/documentsApi";
 import { useSelector } from "react-redux";
 
 const ClassesDocuments = () => {
-  const profesorId = 8; // ID del profesor
+  const profesorId = useSelector((state)=>state.user.id)
   const classId = useSelector((state) => state.classes.id);
-  const [uploadDocuments] = useUploadDocumentsMutation(); // Hook para subir documentos
+  const [uploadDocuments] = useUploadDocumentsMutation(); 
 
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
   const [isInfoModalVisible, setIsInfoModalVisible] = useState(false);
   const [currentDocuments, setCurrentDocuments] = useState([]);
   const [currentInfo, setCurrentInfo] = useState("");
 
-  // Obtener datos y errores de los hooks
   const {
     data: classesData,
     error: classesError,
@@ -30,7 +29,7 @@ const ClassesDocuments = () => {
     data: documentsData,
     error: documentsError,
     isLoading: documentsLoading,
-  } = useGetDocumentsQuery(classId);
+  } = useGetDocumentsByClassQuery(classId);
 
   useEffect(() => {
     if (classesError) {
@@ -169,21 +168,21 @@ const ClassesDocuments = () => {
       >
         <table className="documentTable">
           <tbody>
-            {currentDocuments.map((doc, index) => (
-              <tr key={index}>
-                <td>{doc.archivo}</td>
-                <td>
-                  <a
-                    href={doc.archivo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="black-link"
-                  >
-                    View PDF
-                  </a>
-                </td>
-              </tr>
-            ))}
+          {Array.isArray(currentDocuments) && currentDocuments.map((doc, index) => (
+  <tr key={index}>
+    <td>{doc.archivo}</td>
+    <td>
+      <a
+        href={doc.archivo}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="black-link"
+      >
+        View PDF
+      </a>
+    </td>
+  </tr>
+))}
           </tbody>
         </table>
       </Modal>

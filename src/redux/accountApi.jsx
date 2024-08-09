@@ -34,7 +34,7 @@ export const accountApi = createApi({
       query: (userId) => ({
         url: '/upload/profile-picture/',
         method: 'GET',
-        params: { user_id: 10 },
+        params: { user_id: userId  },
       }),
     }),
   }),
