@@ -13,8 +13,16 @@ const Dropdown = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const profesorId = useSelector((state) => state.user.id);
+  const selectedClassFromRedux = useSelector((state) => state.classes.id);
   const { data: classes, error, isLoading } = useGetClassesByEducatorQuery(profesorId);
   const [selectedOption, setSelectedOption] = useState('');
+
+
+  useEffect(() => {
+    if (selectedClassFromRedux) {
+      setSelectedOption(selectedClassFromRedux);
+    }
+  }, [selectedClassFromRedux]);
 
   const handleChange = (value) => {
     if (value === undefined) {
@@ -23,11 +31,12 @@ const Dropdown = () => {
       navigate('/');
     } else {
       const selectedClass = classes?.find(cls => cls.id === value);
-  
+
       if (selectedClass) {
         setSelectedOption(value);
+        console.log('Despachando acción con:', { nombre: selectedClass.nombre, id: selectedClass.id });
         dispatch(addClasses({ nombre: selectedClass.nombre, id: selectedClass.id }));
-  
+
         if (location.pathname === '/') {
           navigate(`/dashboard`);
         }
@@ -38,17 +47,19 @@ const Dropdown = () => {
   useEffect(() => {
     if (error) {
       console.error('Error fetching classes:', error);
+    } else {
+      console.log('Classes fetched:', classes);
     }
-  }, [error]);
+  }, [error, classes]);
 
   return (
     <div className="sidebar__dropdown">
       <Select
         placeholder="Select a class"
         value={selectedOption || undefined}
-        onChange={handleChange}
+        onChange={handleChange }
         style={{ width: '100%' }}
-        disabled={isLoading}
+        disabled={isLoading || error}
         allowClear
       >
         {isLoading ? (
@@ -64,6 +75,7 @@ const Dropdown = () => {
           ))
         )}
       </Select>
+      {error && <div className="error">Error loading classes. Please try again later.</div>}
     </div>
   );
 };

@@ -8,7 +8,7 @@ import './StyleChatbot.css';
 
 const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
   const clase_id = useSelector((state) => state.classes.id);
-  const { data: hilos = [], refetch: refetchHilos } = useGetHilosQuery();
+  const { data: hilos = [], refetch: refetchHilos } = useGetHilosQuery(clase_id );
   const { data: documentsByClass = [], refetch: refetchDocumentsByClass } = useGetDocumentsByClassQuery(clase_id);
   const { data: documentsByHilo = [], refetch: refetchDocumentsByHilo} = useGetDocumentsByHiloQuery(selectedHilo, {
     skip: !selectedHilo,
@@ -37,7 +37,7 @@ const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
     <Menu>
       {hilos.map(hilo => (
         <Menu.Item key={hilo.id} style={{ fontSize: 16 }} onClick={() => setSelectedHilo(hilo.id)}>
-          Hilo: {hilo.id}, creado: {hilo.fecha_creacion}
+          Hilo: {hilo.id}, creado: {hilo.fecha_creacion}, para la clase {hilo.clase_id}
         </Menu.Item>
       ))}
     </Menu>
