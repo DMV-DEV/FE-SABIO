@@ -33,13 +33,7 @@ const Classes = () => {
     navigate(`/dashboard`);
   };
 
-  const selectedClassId = useSelector((state) => state.classes.id);
-  const selectedClassName = useSelector((state) => state.classes.nombre);
 
-  useEffect(() => {
-    console.log(`Selected Class ID in Redux: ${selectedClassId}`);
-    console.log(`Selected Class Name in Redux: ${selectedClassName}`);
-  }, [selectedClassId, selectedClassName]);
  
 
 
@@ -53,7 +47,7 @@ const Classes = () => {
     <div className='classes'>
       <div className='classes__header'>
         <h1>My classes</h1>
-        <button>+ Add new class</button>
+        {/* <button>+ Add new class</button> */}
       </div>
       <div className='classes__body'>
         {data.map(data => (
@@ -62,7 +56,7 @@ const Classes = () => {
               id={data.id}
               instructor={profesor}
               subject={data.nombre}
-              section={data.id}
+              
             />
           </div>
         ))}

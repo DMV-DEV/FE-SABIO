@@ -1,5 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const loadState = () => {
+  try {
+    const serializedState = sessionStorage.getItem('classesState');
+    if (serializedState === null) {
+      return undefined;
+    }
+    return JSON.parse(serializedState);
+  } catch (err) {
+    return undefined;
+  }
+};
+
+const saveState = (state) => {
+  try {
+    const serializedState = JSON.stringify(state);
+    sessionStorage.setItem('classesState', serializedState);
+  } catch (err) {
+    console.error('Could not save state', err);
+  }
+};
+
 const initialState = {
   nombre: '',
   id: '',
@@ -7,17 +28,19 @@ const initialState = {
 
 export const classesSlice = createSlice({
   name: 'classes',
-  initialState,
+  initialState: loadState() || initialState,
   reducers: {
     addClasses: (state, action) => {
-      console.log(state);
+      console.log('Acción recibida en el reducer:', action.payload);
       const { nombre, id} = action.payload;
       state.nombre = nombre;
       state.id = id;
+      saveState(state);
     },
     removeClasses: (state) => {
       state.nombre = '';
       state.id = '';
+      saveState(state);
     },
   },
 });

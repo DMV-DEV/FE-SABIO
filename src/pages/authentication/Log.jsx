@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../redux/authApi";
 import { addUser } from "../../redux/userSlice";
+import { addClasses } from '../../redux/classesSlice';
 
 const Log = ({ setActiveComponent }) => {
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ const Log = ({ setActiveComponent }) => {
           has_temporary_password,
           foto
         }));
+        dispatch(addClasses({ nombre: '', id: '' }));
         if (tipo_usuario === 'alumno') {
           navigate('/student', { replace: true });
         } else {
