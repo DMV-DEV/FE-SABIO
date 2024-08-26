@@ -15,6 +15,8 @@ import { useSelector } from "react-redux";
 
 const StudentsList = () => {
   const classId = useSelector((state) => state.classes.id);
+  const inputRef = React.createRef();
+  const copyButtonRef = React.createRef();
 
   const [isAddStudentModalVisible, setIsAddStudentModalVisible] = useState(false);
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
@@ -29,9 +31,20 @@ const StudentsList = () => {
 
   useEffect(() => {
     if (studentsError) {
-      console.error("Error fetching students:", studentsError);
+      message.error("Error fetching students:", studentsError);
     }
   }, [studentsError]);
+
+  const [inputValue, setInputValue] = useState("");
+  
+  const handleCopyClick = () => {
+    navigator.clipboard.writeText(inputValue).then(() => {
+      message.success('Text copied to clipboard');
+    }).catch(() => {
+      message.error('Failed to copy text to clipboard');
+    });
+  };
+  
 
   // useEffect(() => {
   //   if (documentsError) {
@@ -172,13 +185,16 @@ const StudentsList = () => {
         <Space direction="vertical" className="modal-content">
           <div className="input-group">
             <Input
+              ref={inputRef}
               className="inputModal"
-              defaultValue="wwwinterfacefjfd5345/we23fwf4g851d14g414/g43ertetrr"
-            />
+              defaultValue="www.invitation.com"
+              onChange={(e) => setInputValue(e.target.value)}
+              />
             <Button
               icon={<CopyOutlined />}
               className="button-copy-invite"
               type="primary"
+              onClick={handleCopyClick}
             >
               Copy
             </Button>
@@ -188,10 +204,11 @@ const StudentsList = () => {
             <div className="inputModal">
               <label>Email</label>
               <Input
+               ref={inputRef}
                 className="inputModal"
                 defaultValue="user3456@mail.com"
                 onChange={(e) => setNewStudentEmail(e.target.value)}
-              />
+             />
             </div>
             <Button
               className="button-copy-invite"

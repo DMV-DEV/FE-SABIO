@@ -87,6 +87,19 @@
 .inputProfile::placeholder{
   font-size: 0.75rem;
 }
+.inputProfile {
+  margin-bottom: 0; 
+  width: 100%;
+}
+
+.input-error {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+}
 .button-save:hover, .button-save:focus {
   background-color: var(--blue1) !important;
   color: white !important;

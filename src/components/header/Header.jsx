@@ -1,6 +1,6 @@
 import React from "react";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
-import { Dropdown, Space, Avatar, Button, Menu } from "antd";
+import { Dropdown, Space, Avatar, Button, Menu, message } from "antd";
 import "./StyleHeader.css";
 import { SettingIcon } from "../../assets/icons/Settings";
 // import { IacheckerIcon } from '../../assets/icons/IaChecker';
@@ -26,6 +26,7 @@ const Header = () => {
 
     // Limpiar el estado de usuario en Redux (opcional)
     dispatch(logoutUser());
+    message.success('Logout successful')
 
     // Redirigir al usuario a la página de login
     navigate("/authentication");

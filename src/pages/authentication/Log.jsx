@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./authentication.css";
+import { Form, Input, Button, Checkbox } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../redux/authApi";
@@ -12,31 +12,45 @@ const Log = ({ setActiveComponent }) => {
   const [login, { isLoading }] = useLoginMutation();
 
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+  const validateUsername = (username) => {
+    const usernameRegex = /^[A-Za-z0-9@./+/-/_]+$/;
+    if (!usernameRegex.test(username)) {
+      return "Please input your username!";
+    }
+    return "";
   };
 
+  const validatePassword = (password) => {
+    if (password.length === 0) {
+      return "Please input your password!";
+    }
+    if (password.length < 8) {
+      return "Your password must contain at least 8 characters.";
+    }
+    if (/^\d+$/.test(password)) {
+      return "Your password can’t be entirely numeric.";
+    }
+    const commonPasswords = ["12345678", "password", "123456789"];
+    if (commonPasswords.includes(password)) {
+      return "Your password can’t be a commonly used password.";
+    }
+    return "";
+  };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const onFinish = async (values) => {
     try {
-      const { username, password } = formData;
-      const response = await login({ username: username, password }).unwrap();
-      console.log(response);
+      const response = await login(values).unwrap();
       const { access, refresh, id, email, first_name, last_name, profesion, fecha_nacimiento, sexo, tipo_usuario, has_temporary_password, foto } = response;
-      if (access) { 
+      
+      if (access) {
         localStorage.setItem("accessToken", access);
         localStorage.setItem("refreshToken", refresh);
         dispatch(addUser({
-          username, // or any other field you prefer
+          username: values.username,
           email,
           id,
           accessToken: access,
@@ -51,11 +65,8 @@ const Log = ({ setActiveComponent }) => {
           foto
         }));
         dispatch(addClasses({ nombre: '', id: '' }));
-        if (tipo_usuario === 'alumno') {
-          navigate('/student', { replace: true });
-        } else {
-          navigate('/', { replace: true });
-        }
+
+        navigate(tipo_usuario === 'alumno' ? '/student' : '/', { replace: true });
       } else {
         console.error('Authentication failed:', response.error || 'Unknown error');
       }
@@ -67,69 +78,68 @@ const Log = ({ setActiveComponent }) => {
   return (
     <div className="login__card">
       <h2 className="login__title">Log In</h2>
-      <form onSubmit={handleSubmit}>
-        <label className="login__label" htmlFor="name">
-          Username
-        </label>
-        <input
-          type="name"
-          id="username"
+      <Form
+        name="login"
+        onFinish={onFinish}
+        autoComplete="off"
+        layout="vertical"
+      >
+        <Form.Item
+          label="Username"
+          className="login__label"
           name="username"
-          className="login__input"
-          placeholder="Enter your username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-        <label className="login__label" htmlFor="password">
-          Password
-        </label>
-        <input
-          type="password"
-          id="password"
+          rules={[
+            {
+              message: "Please input your username!",
+            },
+            {
+              validator: (rule, value) => {
+                const error = validateUsername(value);
+                if (error) {
+                  return Promise.reject(error);
+                }
+                return Promise.resolve();
+              },
+            },
+          ]}
+        >
+          <Input className="login__input" placeholder="Enter your username" />
+        </Form.Item>
+        <Form.Item
+          className="login__label"
+          label="Password"
           name="password"
-          className="login__input"
-          placeholder="Enter your password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <div className="login__options">
-          <div className="login__checkbox-container">
-            <input
-              type="checkbox"
-              id="rememberMe"
-              className="login__checkbox"
-            />
-            <label htmlFor="rememberMe" className="login__checkbox-label">
-              Remember me
-            </label>
-          </div>
-          {/* <button
-            className="button__underlined login__forgot-password"
-            onClick={() => setActiveComponent("Reset")}
-          >
-            Forgot Password
-          </button> */}
-        </div>
+          rules={[
+            {
+              message: "Please input your password!",
+            },
+            {
+              validator: (rule, value) => {
+                const error = validatePassword(value);
+                if (error) {
+                  return Promise.reject(error);
+                }
+                return Promise.resolve();
+              },
+            },
+          ]}
+        >
+          <Input.Password className="login__input" placeholder="Enter your password" />
+        </Form.Item>
+        <Form.Item>
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
+        <Form.Item>
         <button className="login__button" type="submit" disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Sign In'}
         </button>
-        {/* <div className="account__container">
-          <h4>
-            Don't have an account?
-            <button
-              className="button__underlined login__forgot-password button__underlined"
-              onClick={() => setActiveComponent("Signup")}
-            >
-              Sign Up Now
-            </button>
-          </h4>
-        </div> */}
+        </Form.Item>
         <p className="login__lorem">
           By connecting with the services above you agree to our Terms of
           Services and acknowledge our Privacy Policy describing how we handle
           your personal data.
         </p>
-      </form>
+      </Form>
     </div>
   );
 };
