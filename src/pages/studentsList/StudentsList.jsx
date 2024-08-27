@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../studentsList/stylesStudentsList.css";
 import { Modal, Button, Input, Space, message } from "antd";
 import TableComponent from "../../components/table/TableComponent";
@@ -14,8 +14,8 @@ import { useSelector } from "react-redux";
 
 const StudentsList = () => {
   const classId = useSelector((state) => state.classes.id);
-  // const hiloId = useSelector((state) => state.hilo.id); // Asegúrate de tener el hilo ID en tu estado de Redux
   const hiloId = 5; 
+  const inputRef = useRef(null);
 
   const [isAddStudentModalVisible, setIsAddStudentModalVisible] = useState(false);
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
@@ -24,33 +24,15 @@ const StudentsList = () => {
   const [searchText, setSearchText] = useState("");
 
   const { data: students, error: studentsError, isLoading } = useGetStudentsQuery(classId);
-  // const { data: documents, error: documentsError } = useGetDocumentsByClassQuery(classId);
-  const { data: documents, error: documentsError } = useGetDocumentsByHiloQuery(hiloId); // Usando la nueva consulta
+  const { data: documents, error: documentsError } = useGetDocumentsByHiloQuery(hiloId); 
   const [addStudent] = useAddStudentMutation();
   const [deleteStudent] = useDeleteStudentMutation();
 
   useEffect(() => {
     if (studentsError) {
-      message.error("Error fetching students:", studentsError);
+      console.error("Error fetching students:", studentsError);
     }
   }, [studentsError]);
-
-  const [inputValue, setInputValue] = useState("");
-  
-  const handleCopyClick = () => {
-    navigator.clipboard.writeText(inputValue).then(() => {
-      message.success('Text copied to clipboard');
-    }).catch(() => {
-      message.error('Failed to copy text to clipboard');
-    });
-  };
-  
-
-  // useEffect(() => {
-  //   if (documentsError) {
-  //     console.error("Error fetching documents:", documentsError);
-  //   }
-  // }, [documentsError]);
 
   useEffect(() => {
     if (documents) {
@@ -122,13 +104,6 @@ const StudentsList = () => {
     },
   ];
 
-  // const showDocumentModal = () => {
-  //   if (documents) {
-  //     setCurrentDocuments(documents);
-  //   }
-  //   setIsDocumentModalVisible(true);
-  // };
-
   const handleDocumentModalOk = () => {
     setIsDocumentModalVisible(false);
   };
@@ -143,6 +118,7 @@ const StudentsList = () => {
         <h1>Students</h1>
         <Space direction="horizontal" className="search-button-container">
           <Input
+            ref={inputRef}  // Aquí estamos usando la referencia
             suffix={<SearchIcon />}
             placeholder="Search your student..."
             allowClear
@@ -162,7 +138,6 @@ const StudentsList = () => {
         type="student"
         columns={columns}
         data={filteredStudents}
-        // onDocumentClick={showDocumentModal}
       />
       <Modal
         title="Add New Student"
@@ -189,11 +164,10 @@ const StudentsList = () => {
             <div className="inputModal">
               <label>Email</label>
               <Input
-               ref={inputRef}
                 className="inputModal"
                 defaultValue="user3456@mail.com"
                 onChange={(e) => setNewStudentEmail(e.target.value)}
-             />
+              />
             </div>
             <Button
               className="button-copy-invite"
@@ -226,21 +200,27 @@ const StudentsList = () => {
       >
         <table className="documentTable">
           <tbody>
-            {currentDocuments.map((doc, index) => (
-              <tr key={index}>
-                <td>{doc.archivo}</td>
-                <td>
-                  <a
-                    href={doc.archivo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="documentLink"
-                  >
-                    View document
-                  </a>
-                </td>
+            {Array.isArray(currentDocuments) && currentDocuments.length > 0 ? (
+              currentDocuments.map((doc, index) => (
+                <tr key={index}>
+                  <td>{doc.archivo}</td>
+                  <td>
+                    <a
+                      href={doc.archivo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="documentLink"
+                    >
+                      View document
+                    </a>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="2">No documents available</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </Modal>
