@@ -4,7 +4,7 @@ import "../table/StyleTable.css";
 import { UserOutlined } from "@ant-design/icons";
 
 const TableComponent = ({ columns, data, onDocumentClick, onInfoClick, type }) => {
-  const scroll = { x: 'max-content' };
+  const scroll = { x: "max-content" };
 
   // Renderiza el encabezado de la columna
   const renderColumnHeader = (text) => <p>{text}</p>;
@@ -12,36 +12,53 @@ const TableComponent = ({ columns, data, onDocumentClick, onInfoClick, type }) =
   // Renderiza el contenido de la celda
   const renderTableCell = (text, record, index) => {
     // Verifica si text es un objeto, si es así, convierte a JSON
-    const cellContent = typeof text === 'object' ? JSON.stringify(text) : text;
+    const cellContent = typeof text === "object" ? JSON.stringify(text) : text;
     return <p>{cellContent}</p>;
   };
 
   // Modifica las columnas para incluir renderizadores personalizados
-  const columnsWithRender = columns.map(column => ({
+  const columnsWithRender = columns.map((column) => ({
     ...column,
     title: renderColumnHeader(column.title),
     render: (text, record, index) => {
-      if (column.key === 'document') {
+      if (column.key === "document") {
         return (
-          <Button className="button" onClick={() => onDocumentClick(record.documents)}>Document</Button>
+          <Button
+            className="button"
+            onClick={() => onDocumentClick(record.documents)}
+          >
+            Document
+          </Button>
         );
       }
-      if (column.key === 'info') {
+      if (column.dataIndex === "archivo") {
         return (
-          <a href="#" className="black-link" onClick={() => onInfoClick(record.info) }>Details</a>
+          <a href={text} className="black-link" target="_blank" rel="noopener noreferrer">
+            {text}
+          </a>
         );
       }
-      if (type === 'student' && column.key === 'image'){
+      if (type === "student" && column.key === "image") {
         return (
-          <Avatar size={36} icon={<UserOutlined />} className="avatar" src={record.image} />
+          <Avatar
+            size={36}
+            icon={<UserOutlined />}
+            className="avatar"
+            src={record.image}
+          />
         );
       }
       return renderTableCell(text, record, index);
-    }
+    },
   }));
 
   return (
-    <Table className="table" columns={columnsWithRender} dataSource={data} scroll={scroll} />
+    <Table
+      className="table"
+      columns={columnsWithRender}
+      dataSource={data}
+      scroll={scroll}
+    />
   );
 };
 

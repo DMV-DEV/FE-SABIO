@@ -33,16 +33,16 @@ const ClassesDocuments = () => {
 
   useEffect(() => {
     if (classesError) {
-      console.error("Error fetching classes:", classesError);
+      message.error("Error fetching classes:");
     }
   }, [classesError]);
 
   useEffect(() => {
     if (documentsError) {
-      console.error("Error fetching documents:", documentsError);
+      message.error("Error fetching documents:");
     }
   }, [documentsError]);
-
+console.log(classId)
   useEffect(() => {
     if (classesData) {
       console.log("Clases:", classesData);
@@ -51,25 +51,27 @@ const ClassesDocuments = () => {
 
   const columns = [
     {
-      title: "Class",
-      dataIndex: "nombre",
-      key: "nombre",
+      title: "Nombre",
+      dataIndex: "id",
+      key: "id",
     },
+
     {
       title: "Document",
-      dataIndex: "document",
-      key: "document",
+      dataIndex: "archivo",
+      key: "archivo",
+      render: (text) => (
+        <a href={text} target="_blank" rel="noopener noreferrer">
+          {text}
+        </a>
+      ),
     },
     {
       title: "Date",
-      dataIndex: "date",
-      key: "date",
-    },
-    {
-      title: "Info",
-      dataIndex: "info",
-      key: "info",
-    },
+      dataIndex: "fecha_subida",
+      key: "fecha_subida",
+    }
+    
   ];
 
   const handleUpload = async (file) => {
@@ -143,7 +145,7 @@ const ClassesDocuments = () => {
       </div>
       <TableComponent
         columns={columns}
-        data={classesData}
+        data={documentsData}
         onDocumentClick={showDocumentModal}
         onInfoClick={showInfoModal}
       />

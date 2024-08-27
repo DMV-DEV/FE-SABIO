@@ -126,9 +126,7 @@ const Log = ({ setActiveComponent }) => {
         >
           <Input.Password className="login__input" placeholder="Enter your password" />
         </Form.Item>
-        <Form.Item>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
+        
         <Form.Item>
         <button className="login__button" type="submit" disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Sign In'}

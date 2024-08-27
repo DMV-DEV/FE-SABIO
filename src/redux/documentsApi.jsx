@@ -22,6 +22,18 @@ export const documentsApi = createApi({
         url: 'documents/list_documents/class/',
         params: { clase_id },
       }),
+      transformResponse: (response) => {
+        if (response === null || response === undefined) {
+          return []; // o cualquier otro valor que desees devolver cuando no hay datos
+        } else if (Array.isArray(response)) {
+          return response.map(document => ({
+            ...document,
+            fecha_subida: document.fecha_subida ? document.fecha_subida.substring(0, 10) : null
+          }));
+        } else {
+          // maneja el caso en que la respuesta no sea un array ni null/undefined
+        }
+      },
     }),
     getDocumentsByHilo: builder.query({
       query: (hilo_id) => ({
