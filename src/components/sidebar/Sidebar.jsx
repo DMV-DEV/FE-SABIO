@@ -29,7 +29,7 @@ const Sidebar = () => {
         <button
           className={selectedButton === 1 ? 'sidebar__list--button-select' : 'sidebar__list--button'}
           onClick={() => handleClick(1, '/student')}>
-          {/* Add appropriate icon or text for "Classes" */}
+          
           <AppstoreOutlined />
           Classes
         </button>

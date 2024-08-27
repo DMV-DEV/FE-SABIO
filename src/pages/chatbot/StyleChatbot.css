@@ -1,13 +1,13 @@
 .chatbot__container {
   display: flex;
-  height: 75vh; /* Ocupa toda la altura de la ventana */
+  height: 75vh; 
   margin: 2rem;
   background-color: var(--white);
   border-radius: 8px;
   position: relative;
   margin: 2rem;
     padding: 1rem;
-  overflow: hidden; /* Oculta el desbordamiento del contenedor principal */
+  overflow: hidden; 
 }
 
 .chatbot__content {
@@ -20,15 +20,15 @@
 .chatbot__messages {
   flex: 1;
   padding: 10px;
-  overflow-y: auto; /* Habilita el desplazamiento vertical */
-  scrollbar-width: none; /* Oculta la barra de desplazamiento en Firefox */
+  overflow-y: auto; 
+  scrollbar-width: none; 
   display: flex;
   flex-direction: column;
  
 }
 
 .chatbot__messages::-webkit-scrollbar {
-  display: none; /* Oculta la barra de desplazamiento en WebKit (Chrome, Safari) */
+  display: none; 
 }
 
 .chatbot__message {
@@ -44,12 +44,12 @@
 
 .chatbot__message.bot {
   align-self: flex-start;
-  background-color: #f0f0f0; /* Fondo gris para el bot */
+  background-color: #f0f0f0; 
 }
 
 .chatbot__message.user {
   align-self: flex-end;
-  background-color: var(--blue1); /* Fondo azul para el usuario */
+  background-color: var(--blue1); 
   color: white;
 }
 
@@ -69,7 +69,7 @@
 }
 
 .chatbot__message.user .chatbot__message-header .time {
-  color: white; /* Cambiar el color del texto a blanco */
+  color: white; 
 }
 
 .chatbot__message-text {
@@ -93,7 +93,7 @@
 .chatbot__input button {
   border-radius: 0 10px 10px 0;
   border: none;
-  background-color: #007bff;
+  background-color: var(--blue1);
   color: white;
   padding: 10px;
   cursor: pointer;
