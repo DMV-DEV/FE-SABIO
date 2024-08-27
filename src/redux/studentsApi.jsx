@@ -7,9 +7,11 @@ const baseQuery = fetchBaseQuery({
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);
     }
+    headers.set('Content-Type', 'application/json');
     return headers;
   },
 });
+
 
 export const studentsApi = createApi({
   reducerPath: "studentsApi",
@@ -19,10 +21,10 @@ export const studentsApi = createApi({
       query: (classId) => `/class/students/?clase_id=${classId}`,
     }),
     addStudent: builder.mutation({
-      query: ({ classId, ...newStudent }) => ({
-        url: `/class/students/?clase_id=${classId}`,
+      query: ({ classId, student_email }) => ({
+        url: `/add_student/`,
         method: "POST",
-        body: newStudent,
+        body: { clase_id: classId, student_email }, // Incluir clase_id y student_email en el cuerpo
       }),
     }),
     updateStudent: builder.mutation({
@@ -41,10 +43,10 @@ export const studentsApi = createApi({
   }),
 });
 
+
 export const {
   useGetStudentsQuery,
   useAddStudentMutation,
   useUpdateStudentMutation,
   useDeleteStudentMutation,
 } = studentsApi;
-

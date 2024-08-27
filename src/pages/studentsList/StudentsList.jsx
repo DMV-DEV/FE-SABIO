@@ -2,21 +2,20 @@ import React, { useState, useEffect } from "react";
 import "../studentsList/stylesStudentsList.css";
 import { Modal, Button, Input, Space, message } from "antd";
 import TableComponent from "../../components/table/TableComponent";
-import { CloseOutlined, PlusOutlined, CopyOutlined } from "@ant-design/icons"; 
+import { CloseOutlined, PlusOutlined } from "@ant-design/icons"; 
 import { SearchIcon } from "../../assets/icons/SearchIcon";
-import { CopyIcon } from "../../assets/icons/copyIcon";
 import {
   useGetStudentsQuery,
   useAddStudentMutation,
   useDeleteStudentMutation,
 } from "../../redux/studentsApi";
-import { useGetDocumentsByClassQuery } from "../../redux/documentsApi";
+import { useGetDocumentsByHiloQuery } from "../../redux/documentsApi";
 import { useSelector } from "react-redux";
 
 const StudentsList = () => {
   const classId = useSelector((state) => state.classes.id);
-  const inputRef = React.createRef();
-  const copyButtonRef = React.createRef();
+  // const hiloId = useSelector((state) => state.hilo.id); // Asegúrate de tener el hilo ID en tu estado de Redux
+  const hiloId = 5; 
 
   const [isAddStudentModalVisible, setIsAddStudentModalVisible] = useState(false);
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
@@ -26,6 +25,7 @@ const StudentsList = () => {
 
   const { data: students, error: studentsError, isLoading } = useGetStudentsQuery(classId);
   // const { data: documents, error: documentsError } = useGetDocumentsByClassQuery(classId);
+  const { data: documents, error: documentsError } = useGetDocumentsByHiloQuery(hiloId); // Usando la nueva consulta
   const [addStudent] = useAddStudentMutation();
   const [deleteStudent] = useDeleteStudentMutation();
 
@@ -52,25 +52,27 @@ const StudentsList = () => {
   //   }
   // }, [documentsError]);
 
-  // useEffect(() => {
-  //   if (documents) {
-  //     setCurrentDocuments(documents);
-  //   }
-  // }, [documents]);
+  useEffect(() => {
+    if (documents) {
+      setCurrentDocuments(documents);
+    }
+  }, [documents]);
 
   const handleAddStudent = async () => {
+    console.log("Adding student with classId:", classId, "and email:", newStudentEmail);
     try {
-      await addStudent({ email: newStudentEmail });
+      await addStudent({ classId, student_email: newStudentEmail }).unwrap();
       message.success("Student added successfully");
       setIsAddStudentModalVisible(false);
     } catch (error) {
       message.error("Failed to add student");
+      console.error("Error adding student:", error);
     }
   };
 
   const handleDeleteStudent = async (id) => {
     try {
-      await deleteStudent(id);
+      await deleteStudent({ classId, id });
       message.success("Student deleted successfully");
     } catch (error) {
       message.error("Failed to delete student");
@@ -184,23 +186,6 @@ const StudentsList = () => {
       >
         <Space direction="vertical" className="modal-content">
           <div className="input-group">
-            <Input
-              ref={inputRef}
-              className="inputModal"
-              defaultValue="www.invitation.com"
-              onChange={(e) => setInputValue(e.target.value)}
-              />
-            <Button
-              icon={<CopyOutlined />}
-              className="button-copy-invite"
-              type="primary"
-              onClick={handleCopyClick}
-            >
-              Copy
-            </Button>
-          </div>
-          <p className="tx-or">Or</p>
-          <div className="input-group">
             <div className="inputModal">
               <label>Email</label>
               <Input
@@ -249,9 +234,9 @@ const StudentsList = () => {
                     href={doc.archivo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="black-link"
+                    className="documentLink"
                   >
-                    View PDF
+                    View document
                   </a>
                 </td>
               </tr>

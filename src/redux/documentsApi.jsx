@@ -37,7 +37,7 @@ export const documentsApi = createApi({
     }),
     getDocumentsByHilo: builder.query({
       query: (hilo_id) => ({
-        url: 'documents/list_documents/chat/',
+        url: 'get_student_hilo_documents_per_class/',
         params: { hilo_id },
       }),
     }),
