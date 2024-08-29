@@ -3,7 +3,6 @@ import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { Dropdown, Space, Avatar, Button, Menu, message } from "antd";
 import "./StyleHeader.css";
 import { SettingIcon } from "../../assets/icons/Settings";
-// import { IacheckerIcon } from '../../assets/icons/IaChecker';
 import { LogoutIcon } from "../../assets/icons/LogoutIcon";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
