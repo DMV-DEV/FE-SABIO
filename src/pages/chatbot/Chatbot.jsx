@@ -13,7 +13,6 @@ const Chatbot = () => {
     skip: !selectedHilo,
   });
 
-  
   const { refetch: refetchHilos } = useGetHilosQuery();
   const [postMessage] = usePostMessageMutation();
   const [createHilo] = useCreateHiloMutation();
@@ -23,9 +22,6 @@ const Chatbot = () => {
   const messagesEndRef = useRef(null);
   const class_id = useSelector((state) => state.classes.id);
   const Token = useSelector((state) =>state.user.accessToken );
-  // console.log(messagesData);
-  // console.log(Token, class_id);
-
 
   useEffect(() => {
     if (selectedHilo) {
@@ -45,6 +41,7 @@ const Chatbot = () => {
     };
   }, [sidebarRef]);
 
+  
   useEffect(() => {
     scrollToBottom();
   }, [messagesData]);
@@ -70,7 +67,6 @@ const Chatbot = () => {
     } catch (error) {
       console.error('Error sending message:', error);
       console.error('Error details:', error.data);
-      // Manejar errores según sea necesario
     }
   };
 
@@ -82,25 +78,21 @@ const Chatbot = () => {
 
   return (
     <div className="chatbot__container">
-    
       <div className="chatbot__content">
         <div className="chatbot__messages">
-        {selectedHilo && messagesData.mensajes.slice().reverse().map((msg, index)=> (
+          {selectedHilo && messagesData.mensajes.slice().reverse().map((msg, index)=> (
             <div key={index} className={`chatbot__message ${msg.es_del_bot === 'assistant' ? 'bot' : 'user'}`}>
               <div className="chatbot__message-header">
-                <div className={`icon ${msg.es_del_bot === 'assistant' ? 'bot-icon' : 'user-icon'}`}>
-                  {/* Aquí puedes poner el icono correspondiente */}
-                </div>
-                <div className="time">
-                  {/* Aquí puedes poner la hora y la fecha del mensaje */}
-                  {new Date(msg.timestamp).toLocaleString()}
-                </div>
+                <div className={`icon ${msg.es_del_bot === 'assistant' ? 'bot-icon' : 'user-icon'}`}></div>
+                <div className="time">{new Date(msg.timestamp).toLocaleString()}</div>
               </div>
               <div className="chatbot__message-text">
                 {msg.texto}
               </div>
             </div>
           ))}
+          
+          <div ref={messagesEndRef}></div>
         </div>
         <div className="chatbot__input">
           <input
@@ -113,7 +105,7 @@ const Chatbot = () => {
           <button onClick={handleSendMessage}><SendOutlined rotate={-35} /></button>
         </div>
       </div>
-      <ChatbotSidebar selectedHilo = {selectedHilo} setSelectedHilo={setSelectedHilo} />
+      <ChatbotSidebar selectedHilo={selectedHilo} setSelectedHilo={setSelectedHilo} />
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '../app.config.js';
 import { addUser, removeUser, updateAccessToken } from './userSlice';
+import { message } from 'antd';
+
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
@@ -62,9 +64,10 @@ export const authApi = createApi({
           localStorage.setItem('accessToken', data.access);
           localStorage.setItem('refreshToken', data.refresh);
           dispatch(addUser({ name: data.first_name, email, id: data.id, accessToken: data.access, refreshToken: data.refresh }));
+          message.success('Login successful')
         } catch (error) {
-          console.error('Failed to login:', error);
-          throw error; // re-throw the error
+          const errorMessage = error?.error?.data?.detail || 'An error occurred';
+          message.error(errorMessage);
         }
       }
     }),
@@ -98,6 +101,7 @@ export const authApi = createApi({
       })
     })
   })
+  
   
 });
 

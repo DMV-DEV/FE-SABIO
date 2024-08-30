@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../studentsList/stylesStudentsList.css";
 import { Modal, Button, Input, Space, message } from "antd";
 import TableComponent from "../../components/table/TableComponent";
-import { CloseOutlined, PlusOutlined, CopyOutlined } from "@ant-design/icons"; 
+import { CloseOutlined, PlusOutlined } from "@ant-design/icons"; 
 import { SearchIcon } from "../../assets/icons/SearchIcon";
-import { CopyIcon } from "../../assets/icons/copyIcon";
 import {
   useGetStudentsQuery,
   useAddStudentMutation,
   useDeleteStudentMutation,
 } from "../../redux/studentsApi";
-import { useGetDocumentsByClassQuery } from "../../redux/documentsApi";
+import { useGetDocumentsByHiloQuery } from "../../redux/documentsApi";
 import { useSelector } from "react-redux";
 
 const StudentsList = () => {
   const classId = useSelector((state) => state.classes.id);
+  const hiloId = 5; 
+  const inputRef = useRef(null);
 
   const [isAddStudentModalVisible, setIsAddStudentModalVisible] = useState(false);
   const [isDocumentModalVisible, setIsDocumentModalVisible] = useState(false);
@@ -23,7 +24,7 @@ const StudentsList = () => {
   const [searchText, setSearchText] = useState("");
 
   const { data: students, error: studentsError, isLoading } = useGetStudentsQuery(classId);
-  // const { data: documents, error: documentsError } = useGetDocumentsByClassQuery(classId);
+  const { data: documents, error: documentsError } = useGetDocumentsByHiloQuery(hiloId); 
   const [addStudent] = useAddStudentMutation();
   const [deleteStudent] = useDeleteStudentMutation();
 
@@ -33,31 +34,27 @@ const StudentsList = () => {
     }
   }, [studentsError]);
 
-  // useEffect(() => {
-  //   if (documentsError) {
-  //     console.error("Error fetching documents:", documentsError);
-  //   }
-  // }, [documentsError]);
-
-  // useEffect(() => {
-  //   if (documents) {
-  //     setCurrentDocuments(documents);
-  //   }
-  // }, [documents]);
+  useEffect(() => {
+    if (documents) {
+      setCurrentDocuments(documents);
+    }
+  }, [documents]);
 
   const handleAddStudent = async () => {
+    console.log("Adding student with classId:", classId, "and email:", newStudentEmail);
     try {
-      await addStudent({ email: newStudentEmail });
+      await addStudent({ classId, student_email: newStudentEmail }).unwrap();
       message.success("Student added successfully");
       setIsAddStudentModalVisible(false);
     } catch (error) {
       message.error("Failed to add student");
+      console.error("Error adding student:", error);
     }
   };
 
   const handleDeleteStudent = async (id) => {
     try {
-      await deleteStudent(id);
+      await deleteStudent({ classId, id });
       message.success("Student deleted successfully");
     } catch (error) {
       message.error("Failed to delete student");
@@ -107,13 +104,6 @@ const StudentsList = () => {
     },
   ];
 
-  // const showDocumentModal = () => {
-  //   if (documents) {
-  //     setCurrentDocuments(documents);
-  //   }
-  //   setIsDocumentModalVisible(true);
-  // };
-
   const handleDocumentModalOk = () => {
     setIsDocumentModalVisible(false);
   };
@@ -128,6 +118,7 @@ const StudentsList = () => {
         <h1>Students</h1>
         <Space direction="horizontal" className="search-button-container">
           <Input
+            ref={inputRef}  // Aquí estamos usando la referencia
             suffix={<SearchIcon />}
             placeholder="Search your student..."
             allowClear
@@ -147,7 +138,6 @@ const StudentsList = () => {
         type="student"
         columns={columns}
         data={filteredStudents}
-        // onDocumentClick={showDocumentModal}
       />
       <Modal
         title="Add New Student"
@@ -170,20 +160,6 @@ const StudentsList = () => {
         }
       >
         <Space direction="vertical" className="modal-content">
-          <div className="input-group">
-            <Input
-              className="inputModal"
-              defaultValue="wwwinterfacefjfd5345/we23fwf4g851d14g414/g43ertetrr"
-            />
-            <Button
-              icon={<CopyOutlined />}
-              className="button-copy-invite"
-              type="primary"
-            >
-              Copy
-            </Button>
-          </div>
-          <p className="tx-or">Or</p>
           <div className="input-group">
             <div className="inputModal">
               <label>Email</label>
@@ -224,21 +200,27 @@ const StudentsList = () => {
       >
         <table className="documentTable">
           <tbody>
-            {currentDocuments.map((doc, index) => (
-              <tr key={index}>
-                <td>{doc.archivo}</td>
-                <td>
-                  <a
-                    href={doc.archivo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="black-link"
-                  >
-                    View PDF
-                  </a>
-                </td>
+            {Array.isArray(currentDocuments) && currentDocuments.length > 0 ? (
+              currentDocuments.map((doc, index) => (
+                <tr key={index}>
+                  <td>{doc.archivo}</td>
+                  <td>
+                    <a
+                      href={doc.archivo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="documentLink"
+                    >
+                      View document
+                    </a>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="2">No documents available</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </Modal>

@@ -16,6 +16,7 @@ const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
   const [uploadDocuments] = useUploadDocumentsMutation();
   const [isExpanded, setIsExpanded] = useState(false);
   const sidebarRef = useRef(null);
+  console.log(clase_id)
 
   useEffect(() => {
     const handleClickOutside = (event) => {

@@ -15,12 +15,13 @@ export const chatApi = createApi({
   }),
   endpoints: (builder) => ({
     getHilos: builder.query({
-      // Asegúrate de incluir el parámetro de consulta clase_id si está presente
-      query: ({ clase_id }) => {
-        const url = clase_id ? `/chat/hilos/?clase_id=${clase_id}` : '/chat/hilos/';
-        return url;
-      },
+      query: ( clase_id ) => ({
+        url :  `/chat/hilos/` ,
+        params: { clase_id },
+        
+      }),
     }),
+  
     createHilo: builder.mutation({
       query: (clase_id) => ({
         url: '/chat/crear_hilo/',

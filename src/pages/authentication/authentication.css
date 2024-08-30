@@ -87,7 +87,6 @@ body {
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-bottom: 1rem;
   font-size: 0.875rem;
 }
 
@@ -124,6 +123,17 @@ body {
 
 .login__checkbox-label {
   margin: 1rem;
+}
+.login__input + .validation-message {
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+  color: red;
+  font-size: 10px;
+}
+
+.ant-form-item-has-error .login__button {
+  background-color: #ff7875; /* or any other color you prefer */
+  border-color: #ff7875;
 }
 
 @media (max-width: 768px) {

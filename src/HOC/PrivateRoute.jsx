@@ -6,23 +6,27 @@ const PrivateRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const tipoUsuario = useSelector((state) => state.user.tipo_usuario);
+  const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
-      setIsAuthenticated(true);
+      const tokenExpiration = JSON.parse(atob(accessToken.split('.')[1])).exp;
+      const currentTime = Math.floor(Date.now() / 1000);
+      if (tokenExpiration < currentTime) {
+        // Token ha expirado, elimina el token del almacenamiento local
+        localStorage.removeItem("accessToken");
+        setIsAuthenticated(false);
+      } else {
+        setIsAuthenticated(true);
+      }
     } else {
       setIsAuthenticated(false);
     }
-    setLoading(false); 
+    setLoading(false);
   }, []);
 
-  console.log('Loading:', loading);
-  console.log('Is Authenticated:', isAuthenticated);
-  console.log('User Type:', tipoUsuario);
-
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   if (!isAuthenticated) {
