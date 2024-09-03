@@ -4,6 +4,7 @@ import { useGetMessagesQuery, usePostMessageMutation, useCreateHiloMutation, use
 import { SendOutlined } from '@ant-design/icons';
 import './StyleChatbot.css';
 import ChatbotSidebar from './ChatbotSidebar';
+import { message } from 'antd';
 
 const Chatbot = () => {
   const dispatch = useDispatch();
@@ -51,22 +52,18 @@ const Chatbot = () => {
 
     try {
       if (!selectedHilo) {
-        // Crear un nuevo hilo y enviar el mensaje
         const newHilo = await createHilo({class_id}).unwrap();
-        console.log(newHilo);
         setSelectedHilo(newHilo.hilo_id);
         await postMessage({ hilo_id: newHilo.hilo_id, message: input });
         refetchHilos();
       } else {
-        // Enviar el mensaje en el hilo seleccionado
         await postMessage({ hilo_id: selectedHilo, message: input });
       }
 
       setInput('');
       refetchMessages();
     } catch (error) {
-      console.error('Error sending message:', error);
-      console.error('Error details:', error.data);
+      message.error('Error sending message:', error);
     }
   };
 

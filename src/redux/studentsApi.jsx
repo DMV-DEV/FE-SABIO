@@ -24,7 +24,7 @@ export const studentsApi = createApi({
       query: ({ classId, student_email }) => ({
         url: `/add_student/`,
         method: "POST",
-        body: { clase_id: classId, student_email }, // Incluir clase_id y student_email en el cuerpo
+        body: { clase_id: classId, student_email },
       }),
     }),
     updateStudent: builder.mutation({

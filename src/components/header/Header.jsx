@@ -11,23 +11,19 @@ import { logoutUser } from "../../redux/userSlice";
 
 const Header = () => {
   const user = useSelector((state) => state.user);
-  console.log(user);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   let pathText = "";
 
   const handleLogout = () => {
-    // Eliminar tokens del localStorage
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("userState");
 
-    // Limpiar el estado de usuario en Redux (opcional)
     dispatch(logoutUser());
     message.success('Logout successful')
 
-    // Redirigir al usuario a la página de login
     navigate("/authentication");
   };
 
@@ -105,7 +101,6 @@ const Header = () => {
         trigger={["click"]}
         className="header__dropdownMenu"
       >
-        {/* <a onClick={(e) => e.preventDefault()}> */}
           <Space>
             <div>
               <p className="header__user-info">{user.first_name}</p>
@@ -113,7 +108,6 @@ const Header = () => {
             <Avatar size={50} icon={<UserOutlined />} />
             <DownOutlined />
           </Space>
-        {/* </a> */}
       </Dropdown>
     </header>
   );

@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useGetClassesByEducatorQuery } from '../../redux/classesApi';
 import { addClasses } from '../../redux/classesSlice';
-import { Select, Spin } from 'antd';
+import { message, Select, Spin } from 'antd';
 
 const { Option } = Select;
 
@@ -34,7 +34,6 @@ const Dropdown = () => {
 
       if (selectedClass) {
         setSelectedOption(value);
-        console.log('Despachando acción con:', { nombre: selectedClass.nombre, id: selectedClass.id });
         dispatch(addClasses({ nombre: selectedClass.nombre, id: selectedClass.id }));
 
         if (location.pathname === '/') {
@@ -46,9 +45,9 @@ const Dropdown = () => {
 
   useEffect(() => {
     if (error) {
-      console.error('Error fetching classes:', error);
+      message.error('Error fetching classes:', error);
     } else {
-      console.log('Classes fetched:', classes);
+      message.log('Classes fetched:', classes);
     }
   }, [error, classes]);
 

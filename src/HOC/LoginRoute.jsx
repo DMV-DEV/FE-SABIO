@@ -7,7 +7,6 @@ const LoginRoute = () => {
   const accessToken = localStorage.getItem('accessToken')
   const [isAuthenticated, setIsAuthenticated] = useState()
   const tipoUsuario = useSelector((state) => state.user.tipo_usuario)
-  console.log(tipoUsuario);
   useEffect(() => {
     if (accessToken) {
       setIsAuthenticated(true)

@@ -6,12 +6,8 @@ import { useRegisterMutation } from "../../../redux/authApi";
 import { message } from "antd";
 
 const Signup = ({ setActiveComponent }) => {
-  // const dispatch = useDispatch();
-  // const { name, email, password } = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
-    // name: name,
-    // lastName: "",
     username: "",
     email: "",
     password: "",
@@ -38,7 +34,7 @@ const Signup = ({ setActiveComponent }) => {
       register({...formData, tipo_usuario: "student"});
       message.success("User register successfully!");
     } catch (error) {
-      message.error("Error register!");  //cambiar
+      message.error("Error register!"); 
     }
     };
 
@@ -47,18 +43,6 @@ const Signup = ({ setActiveComponent }) => {
       <h2 className="login__title">Sign Up</h2>
       <form onSubmit={handleSubmit} className="login__form">
         <div className="login__form-column">
-          {/* <label className="login__label" htmlFor="name">
-            First name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            className="login__input"
-            placeholder="Enter your first name"
-            value={formData.name}
-            onChange={handleChange}
-          /> */}
           <label className="login__label" htmlFor="username">
             Username
           </label>
@@ -96,18 +80,6 @@ const Signup = ({ setActiveComponent }) => {
           />
         </div>
         <div className="login__form-column">
-          {/* <label className="login__label" htmlFor="lastName">
-            Last name
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            className="login__input"
-            placeholder="Enter your last name"
-            value={formData.lastName}
-            onChange={handleChange}
-          /> */}
           <label className="login__label" htmlFor="email">
             Email
           </label>

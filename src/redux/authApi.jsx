@@ -87,8 +87,8 @@ export const authApi = createApi({
           localStorage.setItem('accessToken', data.access);
           dispatch(updateAccessToken(data.access));
         } catch (error) {
-          console.error('Failed to refresh access token:', error);
-          throw error; // re-throw the error
+          message.error('Failed to refresh access token:', error);
+          throw error; 
         }
       }
     }),

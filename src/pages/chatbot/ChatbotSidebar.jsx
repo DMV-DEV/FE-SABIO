@@ -16,7 +16,6 @@ const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
   const [uploadDocuments] = useUploadDocumentsMutation();
   const [isExpanded, setIsExpanded] = useState(false);
   const sidebarRef = useRef(null);
-  console.log(clase_id)
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -83,7 +82,6 @@ const ChatbotSidebar = ({ setSelectedHilo, selectedHilo }) => {
         message.success(`${file.name} file uploaded successfully`);
         refetchDocumentsByHilo();
       } catch (error) {
-        console.error("Error uploading document:", error);
         message.error(`${file.name} file upload failed.`);
       }
     },

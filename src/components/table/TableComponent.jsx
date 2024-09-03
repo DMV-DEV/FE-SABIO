@@ -6,17 +6,13 @@ import { UserOutlined } from "@ant-design/icons";
 const TableComponent = ({ columns, data, onDocumentClick, onInfoClick, type }) => {
   const scroll = { x: "max-content" };
 
-  // Renderiza el encabezado de la columna
   const renderColumnHeader = (text) => <p>{text}</p>;
 
-  // Renderiza el contenido de la celda
   const renderTableCell = (text, record, index) => {
-    // Verifica si text es un objeto, si es así, convierte a JSON
     const cellContent = typeof text === "object" ? JSON.stringify(text) : text;
     return <p>{cellContent}</p>;
   };
 
-  // Modifica las columnas para incluir renderizadores personalizados
   const columnsWithRender = columns.map((column) => ({
     ...column,
     title: renderColumnHeader(column.title),

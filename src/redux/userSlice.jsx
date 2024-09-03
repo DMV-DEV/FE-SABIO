@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { message } from 'antd';
 
 const loadState = () => {
   try {
@@ -17,7 +18,7 @@ const saveState = (state) => {
     const serializedState = JSON.stringify(state);
     localStorage.setItem('userState', serializedState);
   } catch (err) {
-    console.error('Could not save state', err);
+    message.error('Could not save state', err);
   }
 };
 

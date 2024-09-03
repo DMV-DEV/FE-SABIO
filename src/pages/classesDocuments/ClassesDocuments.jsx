@@ -42,7 +42,6 @@ const ClassesDocuments = () => {
       message.error("Error fetching documents:");
     }
   }, [documentsError]);
-console.log(classId)
   useEffect(() => {
     if (classesData) {
       console.log("Clases:", classesData);
@@ -77,8 +76,8 @@ console.log(classId)
   const handleUpload = async (file) => {
     const formData = new FormData();
     formData.append("archivo", file);
-    const claseId = classesData?.[0]?.id; // O el id de la clase que elijas
-    const hiloId = null; // O el id del hilo si es aplicable
+    const claseId = classesData?.[0]?.id; 
+    const hiloId = null; 
     if (claseId) formData.append("clase_id", claseId);
     if (hiloId) formData.append("hilo_id", hiloId);
 
@@ -136,7 +135,7 @@ console.log(classId)
               .then(() => onSuccess())
               .catch((error) => onError(error));
           }}
-          showUploadList={false} // Oculta la lista de archivos cargados
+          showUploadList={false}
         >
           <Button icon={<PlusOutlined />} className="button-upload">
             Upload document
