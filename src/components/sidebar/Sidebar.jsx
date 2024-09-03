@@ -6,13 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const Sidebar = () => {
-  // Sidebar collapse logic
   const [isCollapsed, setIsCollapsed] = useState(false);
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
 
-  // Sidebar selection logic
   const navigate = useNavigate();
   const [selectedButton, setSelectedButton] = useState(null);
   const tipoUsuario = useSelector((state) => state.user.tipo_usuario);
@@ -22,7 +20,6 @@ const Sidebar = () => {
     navigate(path);
   };
 
-  // Sidebar items for 'alumno' user type
   const alumnoItems = (
     <>
       <li>
@@ -45,7 +42,6 @@ const Sidebar = () => {
     </>
   );
 
-  // Sidebar items for other user types
   const defaultItems = (
     <>
       <li>

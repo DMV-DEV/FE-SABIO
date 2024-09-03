@@ -13,7 +13,6 @@ const PrivateRoute = ({ children }) => {
       const tokenExpiration = JSON.parse(atob(accessToken.split('.')[1])).exp;
       const currentTime = Math.floor(Date.now() / 1000);
       if (tokenExpiration < currentTime) {
-        // Token ha expirado, elimina el token del almacenamiento local
         localStorage.removeItem("accessToken");
         setIsAuthenticated(false);
       } else {

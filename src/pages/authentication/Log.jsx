@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, message } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../redux/authApi";
@@ -68,10 +68,10 @@ const Log = ({ setActiveComponent }) => {
 
         navigate(tipo_usuario === 'alumno' ? '/student' : '/', { replace: true });
       } else {
-        console.error('Authentication failed:', response.error || 'Unknown error');
+        message.error('Authentication failed:', response.error || 'Unknown error');
       }
     } catch (err) {
-      console.error('Failed to login:', err);
+      message.error('Failed to login:', err);
     }
   };
 

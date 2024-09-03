@@ -16,7 +16,6 @@ const RecentQuestion = () => {
      <div className="recent-questions-container">
       <div className="recent-questions-header">
         <h3>Recent Questions Asked</h3>
-        {/* <button className="recent-questions-button">Weekly (2024)</button> */}
       </div>
       <div className="recent-questions-list">
         {questions.map(question => (

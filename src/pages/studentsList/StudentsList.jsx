@@ -30,7 +30,7 @@ const StudentsList = () => {
 
   useEffect(() => {
     if (studentsError) {
-      console.error("Error fetching students:", studentsError);
+      message.error("Error fetching students:", studentsError);
     }
   }, [studentsError]);
 
@@ -41,14 +41,12 @@ const StudentsList = () => {
   }, [documents]);
 
   const handleAddStudent = async () => {
-    console.log("Adding student with classId:", classId, "and email:", newStudentEmail);
     try {
       await addStudent({ classId, student_email: newStudentEmail }).unwrap();
       message.success("Student added successfully");
       setIsAddStudentModalVisible(false);
     } catch (error) {
       message.error("Failed to add student");
-      console.error("Error adding student:", error);
     }
   };
 
@@ -118,7 +116,7 @@ const StudentsList = () => {
         <h1>Students</h1>
         <Space direction="horizontal" className="search-button-container">
           <Input
-            ref={inputRef}  // Aquí estamos usando la referencia
+            ref={inputRef}  
             suffix={<SearchIcon />}
             placeholder="Search your student..."
             allowClear

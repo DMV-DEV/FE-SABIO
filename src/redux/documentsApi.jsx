@@ -24,7 +24,7 @@ export const documentsApi = createApi({
       }),
       transformResponse: (response) => {
         if (response === null || response === undefined) {
-          return []; // o cualquier otro valor que desees devolver cuando no hay datos
+          return []; 
         } else if (Array.isArray(response)) {
           return response.map(document => ({
             ...document,

@@ -10,13 +10,11 @@ import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { updateUser } from '../../redux/userSlice';
 
-// Schema for profile form validation
 const profileSchema = yup.object().shape({
   email: yup.string().email("Invalid email format").required("Email is required"),
   fullName: yup.string().required("Full name is required"),
 });
 
-// Schema for password form validation
 const passwordSchema = yup.object().shape({
   newPassword: yup.string().min(8, "Password must be at least 8 characters long").required("New password is required"),
   confirmPassword: yup.string().oneOf([yup.ref('newPassword')], "Passwords must match").required("Confirm password is required"),
@@ -87,12 +85,10 @@ const ProfileForm = () => {
   };
 
   const handleUpdatePassword = async (data) => {
-    // Handle password update logic here
   };
 
   return (
     <div className="profile-form-container">
-      {/* Profile Form */}
       <section className="form-section">
         <div className="container-row">
           <div className="container-row__col1">
@@ -117,7 +113,6 @@ const ProfileForm = () => {
         </div>
       </section>
 
-      {/* Profile Information Form */}
       <section className="form-section">
         <div className="container-row">
           <div className="container-row__col1">
@@ -165,7 +160,6 @@ const ProfileForm = () => {
         </div>
       </section>
 
-      {/* Password Form */}
       <section className="form-section">
         <div className="container-row">
           <div className="container-row__col1">

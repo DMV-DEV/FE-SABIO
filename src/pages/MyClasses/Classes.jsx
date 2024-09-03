@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useGetClassesByEducatorQuery, useAddClassMutation } from '../../redux/classesApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { addClasses } from '../../redux/classesSlice';
+import { message } from 'antd';
 
 const Classes = () => {
   const navigate = useNavigate();
@@ -15,7 +16,6 @@ const Classes = () => {
   
 
   const { data, error, isLoading } = useGetClassesByEducatorQuery(profesorId);
-  console.log(data);
   const [addClass, { isLoading: isAdding }] = useAddClassMutation();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const Classes = () => {
       console.log('Clases:', data);
     }
     if (error) {
-      console.error('Error:', error);
+      message.error('Error:', error);
     }
   }, [data, error]);
 
@@ -39,7 +39,7 @@ const Classes = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (error) {
-    console.error('Error:', error);
+    message.error('Error:', error);
     return <div>Error: {error.data?.error || 'An error occurred'}</div>;
   }
 
@@ -47,7 +47,6 @@ const Classes = () => {
     <div className='classes'>
       <div className='classes__header'>
         <h1>My classes</h1>
-        {/* <button>+ Add new class</button> */}
       </div>
       <div className='classes__body'>
         {data.map(data => (

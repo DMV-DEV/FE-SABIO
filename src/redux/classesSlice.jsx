@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { message } from 'antd';
 
 const loadState = () => {
   try {
@@ -17,7 +18,7 @@ const saveState = (state) => {
     const serializedState = JSON.stringify(state);
     sessionStorage.setItem('classesState', serializedState);
   } catch (err) {
-    console.error('Could not save state', err);
+    message.error('Could not save state', err);
   }
 };
 
@@ -31,7 +32,6 @@ export const classesSlice = createSlice({
   initialState: loadState() || initialState,
   reducers: {
     addClasses: (state, action) => {
-      console.log('Acción recibida en el reducer:', action.payload);
       const { nombre, id} = action.payload;
       state.nombre = nombre;
       state.id = id;
