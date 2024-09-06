@@ -47,7 +47,7 @@ const Dropdown = () => {
     if (error) {
       message.error('Error fetching classes:', error);
     } else {
-      message.log('Classes fetched:', classes);
+      message.success('Classes fetched:', classes);
     }
   }, [error, classes]);
 
