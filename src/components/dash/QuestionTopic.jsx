@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { Button } from "antd";
 import TopicAnalysisModal from "./TopicAnalysisModal";
 import "../../components/dash/questionTopic.css";
 
