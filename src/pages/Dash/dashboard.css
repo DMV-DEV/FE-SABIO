@@ -1,0 +1,32 @@
+.dashboard__container {
+  display: grid;
+  height: 100%; 
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.dashboard__content {
+  width: 100%;
+  max-height: 20rem;
+  background-color: var(--white); 
+  border: none;
+  border-radius: 4px;
+  resize: none;
+  font-size: 16px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dashboard__content {
+    height: 20rem;
+  }
+}

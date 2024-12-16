@@ -34,16 +34,12 @@ padding: 1rem;
     height: min-content;
 }
 
-.dropdown-container {
+.sidebar__dropdown {
     display: flex;
     flex-direction: column;
     width: 100%;
     margin-top: 1rem;
     
-  }
-  
-  label {
-    margin-bottom: 5px;
   }
   
   select {
@@ -53,29 +49,66 @@ padding: 1rem;
     font-family: inherit;
   }
   
-  
+  .sidebar__list{
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar__list--title{
+    color: #6c6d6e;
+  }
   .sidebar ul {
     list-style: none;
-    padding: 0 1rem;
+    padding: 0 0;
   }
   
   .sidebar ul li {
     margin: 0.5rem 0;
   }
+
+  .sidebar__list--button{
+    background-color: transparent;
+    color: var(--black);
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .sidebar__list--button:hover{
+    color: var(--white);
+  }
+
+  .sidebar__list--button-select{
+    margin-left: 1rem;
+    background-color: var(--blue3);
+    color: var(--white);
+    display: flex;
+    gap: 0.75rem;
+  }
   
-  .sidebar-toggle {
+  .sidebar__toggle{
     display: none;
-    
-  
+  }
+
+  .sidebar__noclass{
+    background-color: rgba(239, 143, 55, 0.22); 
+    margin: 0.25rem;
+    margin-top: 1rem;
+    padding: 0.5rem 0.4rem;
+    border-radius: 0.5rem;
+  }
+  .sidebar__noclass--text{
+    color: #523112;
   }
   
   @media (max-width: 768px) {
 
     .sidebar {
         display: flex;
-        position: absolute;
-        width: 12.5rem;
-        
+        position: fixed;
+        width: 14rem;
+        height: 100vh;
+        padding: 0.5rem;
         transition: transform 0.3s ease;
       }
       
@@ -92,9 +125,15 @@ padding: 1rem;
     .sidebar__list{
         margin-top: 1rem;
     }
-    .sidebar-toggle {
+    
+    .sidebar__list--button{
+    
+      padding: 0.5rem 0.1rem;
+    }
+    
+    .sidebar__toggle {
       display: flex;
-      position: sticky;
+      position: fixed;
       top: 10px;
     left: 10px;
     

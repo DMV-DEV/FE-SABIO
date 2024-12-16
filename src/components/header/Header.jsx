@@ -1,10 +1,114 @@
-import React from 'react';
-import './StyleHeader.css';
+import React from "react";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import { Dropdown, Space, Avatar, Button, Menu, message } from "antd";
+import "./StyleHeader.css";
+import { SettingIcon } from "../../assets/icons/Settings";
+import { LogoutIcon } from "../../assets/icons/LogoutIcon";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../redux/userSlice";
 
 const Header = () => {
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  let pathText = "";
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("userState");
+
+    dispatch(logoutUser());
+    message.success('Logout successful')
+
+    navigate("/authentication");
+  };
+
+  if (location.pathname === "/dashboard") {
+    pathText = " / Analytics";
+  } else if (location.pathname === "/myclasses") {
+    pathText = " / My classes";
+  } else if (location.pathname === "/documents") {
+    pathText = " / Classes";
+  } else if (location.pathname === "/accountsettings") {
+    pathText = " / Account settings";
+  } else if (location.pathname === "/checker") {
+    pathText = " / AI checker";
+  } else if (location.pathname === "/students") {
+    pathText = " / Students";
+  }
+  const items = [
+    {
+      label: (
+        <span
+          className="link"
+          onClick={() => {
+            navigate("/accountsettings");
+          }}
+        >
+          Account settings
+        </span>
+      ),
+      key: "0",
+      icon: <SettingIcon />,
+    },
+  ];
+
+  const menu = (
+    <Menu>
+      {items.map((item) => (
+        <Menu.Item key={item.key} icon={item.icon} style={{ fontSize: 16 }}>
+          {item.label}
+        </Menu.Item>
+      ))}
+      <Menu.Item key="logout" style={{ textAlign: "center" }}>
+        <Button
+          type="primary"
+          onClick={handleLogout}
+          style={{
+            backgroundColor: "#EF8F37",
+            borderColor: "#EF8F37 !important",
+            color: "black",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "start",
+            fontSize: 16,
+            width: "150px",
+            padding: "0 16px",
+          }}
+        >
+          <LogoutIcon style={{ marginRight: 8 }} />
+          Logout
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <header className="header">
-      <h1>My Application</h1>
+      <div className="header__paths">
+        <p>
+          <div className="header__paths">
+            Dashboard&nbsp; <span style={{ color: "#1C4B82" }}>{pathText}</span>
+          </div>
+        </p>
+      </div>
+      <Dropdown
+        overlay={menu}
+        trigger={["click"]}
+        className="header__dropdownMenu"
+      >
+          <Space>
+            <div>
+              <p className="header__user-info">{user.first_name}</p>
+            </div>
+            <Avatar size={50} icon={<UserOutlined />} />
+            <DownOutlined />
+          </Space>
+      </Dropdown>
     </header>
   );
 };
