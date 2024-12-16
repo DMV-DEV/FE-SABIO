@@ -16,8 +16,9 @@ margin-bottom: 2rem;
 
 .classes__body{
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   flex-wrap: wrap;
+  gap:2rem;
 }
 
 @media (max-width: 1180px) {

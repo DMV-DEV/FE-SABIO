@@ -29,12 +29,8 @@ const AIChecker = () => {
     setText(e.target.value);
   };
 
-  // const handleFileChange = (e) => {
-  //   setFile(e.target.files[0]);
-  // };
 
   const handleScan = () => {
-    // Add logic for scanning text or file for plagiarism
     console.log("Scanning for plagiarism...");
   };
 
@@ -61,7 +57,6 @@ const AIChecker = () => {
               Upload file
             </Button>
           </Upload>
-          {/* <button className="button__nobackground" onClick={handleScan}>⇧  Upload file</button> */}
         </div>
       </div>
       <p className="ai-checker__char-count">{text.length}/10000</p>

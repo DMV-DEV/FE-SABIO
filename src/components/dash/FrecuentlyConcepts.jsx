@@ -16,7 +16,6 @@ const FrecuentlyConcepts = () => {
     <div className="frequently-misunderstood-concepts-container">
       <div className="frequently-misunderstood-concepts-header">
         <h3>Frequently Misunderstood Concepts</h3>
-        {/* <button className="frequently-misunderstood-concepts-button">Latest</button> */}
       </div>
       <div className="frequently-misunderstood-concepts-list">
         {concepts.map(concept => (

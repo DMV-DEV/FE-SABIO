@@ -4,7 +4,6 @@ import Dropdown from './Dropdown';
 
 const SidebarNoClass = () => {
 
-  // logica colapso sidebar
     const [isCollapsed, setIsCollapsed] = useState(false);
   
     const toggleSidebar = () => {
@@ -12,7 +11,6 @@ const SidebarNoClass = () => {
     };
 
 
-// logica selecciono opciones del sidebar
 const [selectedButton, setSelectedButton] = useState(null);
 
   const handleClick = (id) => {

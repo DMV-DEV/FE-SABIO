@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import "./authentication.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 const Log = ({ setActiveComponent }) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  // const { email, password } =
-  //   useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -25,9 +24,7 @@ const Log = ({ setActiveComponent }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Form data submitted:", formData);
-    // Aquí puedes enviar los datos a un servidor o hacer algo con ellos
-    // navigate('/myclasses');
+    message.success("Form data submitted:", formData);
   };
 
   return (

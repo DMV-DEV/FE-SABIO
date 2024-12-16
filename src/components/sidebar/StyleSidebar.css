@@ -91,7 +91,7 @@ padding: 1rem;
   }
 
   .sidebar__noclass{
-    background-color: rgba(239, 143, 55, 0.22); /* #EF8F37 con 50% de opacidad */
+    background-color: rgba(239, 143, 55, 0.22); 
     margin: 0.25rem;
     margin-top: 1rem;
     padding: 0.5rem 0.4rem;
